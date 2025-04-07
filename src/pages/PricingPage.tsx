@@ -13,7 +13,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ShoppingCart, Plus, Minus, Check } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ShoppingCart, Plus, Minus, Check, Shield, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface CartItem {
@@ -27,6 +28,7 @@ interface CartItem {
 const PricingPage: React.FC = () => {
   const { toast } = useToast();
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [activeTab, setActiveTab] = useState('all');
 
   // Essential item
   const essentialItems = [
@@ -193,225 +195,465 @@ const PricingPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow container mx-auto px-4 py-12">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-brand-teal">iHealth-Sync – Complete Price List</h1>
-          <p className="text-gray-600 mt-2">Choose the products and services that work for you</p>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            {/* Essential Device Section */}
-            <section className="mb-12">
-              <h2 className="text-xl font-bold mb-4 text-brand-teal flex items-center">
-                <Badge variant="outline" className="mr-2 text-xs border-blue-500 text-blue-700">
-                  Essential
-                </Badge>
-                Essential Device
-              </h2>
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-blue-50">
-                    <TableHead className="font-medium">Product</TableHead>
-                    <TableHead className="font-medium">One-Time Purchase</TableHead>
-                    <TableHead className="font-medium w-[150px]">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {essentialItems.map((item) => (
-                    <TableRow key={item.id} className="bg-blue-50">
-                      <TableCell className="font-medium">{item.name}</TableCell>
-                      <TableCell>€{item.oneTimePrice.toFixed(2)}</TableCell>
-                      <TableCell>
-                        <Button 
-                          size="sm" 
-                          onClick={() => addToCart(item, false)}
-                          disabled={isInCart(item.id, false)}
-                          className="bg-brand-teal hover:bg-brand-teal/90 flex items-center gap-1"
-                        >
-                          {isInCart(item.id, false) ? 
-                            <><Check className="h-4 w-4" /> Added</> : 
-                            <><Plus className="h-4 w-4" /> Add</>}
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </section>
-
-            {/* AI-Powered Devices Section */}
-            <section className="mb-12">
-              <h2 className="text-xl font-bold mb-4 text-brand-teal">AI-Powered Devices</h2>
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-gray-50">
-                    <TableHead className="font-medium">Product</TableHead>
-                    <TableHead className="font-medium">One-Time Purchase</TableHead>
-                    <TableHead className="font-medium">Monthly Subscription</TableHead>
-                    <TableHead className="font-medium w-[150px]">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {aiPoweredDevices.map((device, index) => (
-                    <TableRow key={device.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <TableCell className="font-medium">{device.name}</TableCell>
-                      <TableCell>{device.oneTimePrice ? `€${device.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
-                      <TableCell>{device.monthlyPrice ? `€${device.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {device.oneTimePrice !== null && (
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              onClick={() => addToCart(device, false)}
-                              disabled={isInCart(device.id, false)}
-                              className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
-                            >
-                              <Plus className="h-3 w-3" /> Buy
-                            </Button>
-                          )}
-                          {device.monthlyPrice !== null && (
-                            <Button 
-                              size="sm" 
-                              onClick={() => addToCart(device, true)}
-                              disabled={isInCart(device.id, true)}
-                              className="bg-brand-orange hover:bg-brand-orange/90 flex items-center gap-1"
-                            >
-                              <Plus className="h-3 w-3" /> Sub
-                            </Button>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </section>
-
-            {/* Professional Care Services Section */}
-            <section className="mb-12">
-              <h2 className="text-xl font-bold mb-4 text-brand-teal">Professional Care Services</h2>
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-purple-50">
-                    <TableHead className="font-medium">Service</TableHead>
-                    <TableHead className="font-medium">One-Time Purchase</TableHead>
-                    <TableHead className="font-medium">Monthly Subscription</TableHead>
-                    <TableHead className="font-medium w-[150px]">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {professionalServices.map((service, index) => (
-                    <TableRow key={service.id} className={index % 2 === 0 ? "bg-white" : "bg-purple-50"}>
-                      <TableCell className="font-medium">{service.name}</TableCell>
-                      <TableCell>{service.oneTimePrice ? `€${service.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
-                      <TableCell>{service.monthlyPrice ? `€${service.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {service.oneTimePrice !== null && (
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              onClick={() => addToCart(service, false)}
-                              disabled={isInCart(service.id, false)}
-                              className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
-                            >
-                              <Plus className="h-3 w-3" /> Buy
-                            </Button>
-                          )}
-                          {service.monthlyPrice !== null && (
-                            <Button 
-                              size="sm" 
-                              onClick={() => addToCart(service, true)}
-                              disabled={isInCart(service.id, true)}
-                              className="bg-brand-purple hover:bg-brand-purple/90 flex items-center gap-1"
-                            >
-                              <Plus className="h-3 w-3" /> Sub
-                            </Button>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </section>
-
-            <div className="mt-8 text-center text-sm text-gray-500">
-              <p>* All prices are inclusive of applicable taxes. Monthly subscriptions are subject to 10% VAT, while one-time purchases include 21% IVA (Spanish VAT).</p>
-              <p className="mt-2">* Service contracts require minimum 12-month commitment. Early termination fees may apply.</p>
+      <main className="flex-grow">
+        {/* Hero banner for pricing page */}
+        <div className="bg-gradient-to-r from-brand-teal/10 to-brand-orange/10 py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold text-brand-teal mb-4">iHealth-Sync Complete Product Catalog</h1>
+              <p className="text-xl text-gray-600">Customize your health monitoring system with our innovative products and services</p>
             </div>
           </div>
+        </div>
 
-          {/* Shopping Cart */}
-          <div className="lg:sticky lg:top-24 h-fit">
-            <Card className="border-2 border-brand-teal/20">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold flex items-center gap-2">
-                    <ShoppingCart className="h-5 w-5 text-brand-teal" />
-                    Your Cart
-                  </h2>
-                  <Badge variant="outline" className="text-brand-teal">
-                    {cart.length} item(s)
-                  </Badge>
-                </div>
+        <div className="container mx-auto px-4 py-12">
+          <div className="flex flex-wrap items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-brand-teal">Product Selection</h2>
+              <p className="text-gray-600">Choose the products and services that work for you</p>
+            </div>
+            
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4 sm:mt-0">
+              <TabsList>
+                <TabsTrigger value="all">All Products</TabsTrigger>
+                <TabsTrigger value="essential">Essential</TabsTrigger>
+                <TabsTrigger value="ai-devices">AI Devices</TabsTrigger>
+                <TabsTrigger value="professional">Professional Care</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
 
-                {cart.length === 0 ? (
-                  <div className="text-center py-6 text-gray-500">
-                    <p>Your cart is empty</p>
-                    <p className="text-sm mt-2">Add items from the price list</p>
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <TabsContent value="all" className="mt-0">
+                {/* Essential Device Section */}
+                <section className="mb-12">
+                  <div className="flex items-center mb-4">
+                    <Shield className="h-5 w-5 text-blue-600 mr-2" />
+                    <h2 className="text-xl font-bold text-brand-teal">Essential Device</h2>
+                    <Badge variant="outline" className="ml-2 text-xs border-blue-500 text-blue-700">
+                      Required
+                    </Badge>
                   </div>
-                ) : (
-                  <>
-                    <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
-                      {cart.map((item, index) => (
-                        <div key={index} className="flex justify-between items-center border-b pb-2">
-                          <div>
-                            <p className="font-medium">{item.name}</p>
-                            <Badge variant="outline" className={`text-xs ${
-                              item.type === 'essential' 
-                                ? 'border-blue-500 text-blue-700' 
-                                : item.type === 'ai-device'
-                                  ? 'border-brand-teal text-brand-teal'
-                                  : 'border-purple-500 text-purple-700'
-                            }`}>
-                              {item.isSubscription ? 'Monthly' : 'One-time'}
-                            </Badge>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono">€{item.price.toFixed(2)}</span>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              onClick={() => removeFromCart(index)}
-                              className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
-                            >
-                              <Minus className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="bg-blue-50 rounded-lg overflow-hidden border border-blue-100">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-blue-100/50">
+                          <TableHead className="font-medium">Product</TableHead>
+                          <TableHead className="font-medium">One-Time Purchase</TableHead>
+                          <TableHead className="font-medium w-[150px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {essentialItems.map((item) => (
+                          <TableRow key={item.id}>
+                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell>€{item.oneTimePrice.toFixed(2)}</TableCell>
+                            <TableCell>
+                              <Button 
+                                size="sm" 
+                                onClick={() => addToCart(item, false)}
+                                disabled={isInCart(item.id, false)}
+                                className="bg-brand-teal hover:bg-brand-teal/90 flex items-center gap-1"
+                              >
+                                {isInCart(item.id, false) ? 
+                                  <><Check className="h-4 w-4" /> Added</> : 
+                                  <><Plus className="h-4 w-4" /> Add</>}
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
 
-                    <div className="mt-6 pt-4 border-t">
-                      <div className="flex justify-between font-bold text-lg mb-4">
-                        <span>Total:</span>
-                        <span className="font-mono">€{calculateTotal().toFixed(2)}</span>
-                      </div>
-                      <Button 
-                        className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white flex items-center justify-center gap-2"
-                        onClick={checkout}
-                      >
-                        <ShoppingCart className="h-5 w-5" />
-                        Proceed to Checkout
-                      </Button>
+                {/* AI-Powered Devices Section */}
+                <section className="mb-12">
+                  <h2 className="text-xl font-bold mb-4 text-brand-teal flex items-center">
+                    <Badge variant="outline" className="mr-2 text-xs border-brand-teal text-brand-teal">
+                      Smart
+                    </Badge>
+                    AI-Powered Devices
+                  </h2>
+                  <div className="rounded-lg overflow-hidden border border-gray-200">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-gray-50">
+                          <TableHead className="font-medium">Product</TableHead>
+                          <TableHead className="font-medium">One-Time Purchase</TableHead>
+                          <TableHead className="font-medium">Monthly Subscription</TableHead>
+                          <TableHead className="font-medium w-[150px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {aiPoweredDevices.map((device, index) => (
+                          <TableRow key={device.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                            <TableCell className="font-medium">{device.name}</TableCell>
+                            <TableCell>{device.oneTimePrice ? `€${device.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>{device.monthlyPrice ? `€${device.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                {device.oneTimePrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline" 
+                                    onClick={() => addToCart(device, false)}
+                                    disabled={isInCart(device.id, false)}
+                                    className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Buy
+                                  </Button>
+                                )}
+                                {device.monthlyPrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    onClick={() => addToCart(device, true)}
+                                    disabled={isInCart(device.id, true)}
+                                    className="bg-brand-orange hover:bg-brand-orange/90 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Sub
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
+
+                {/* Professional Care Services Section */}
+                <section className="mb-12">
+                  <h2 className="text-xl font-bold mb-4 text-brand-teal flex items-center">
+                    <Badge variant="outline" className="mr-2 text-xs border-purple-500 text-purple-700">
+                      Premium
+                    </Badge>
+                    Professional Care Services
+                  </h2>
+                  <div className="rounded-lg overflow-hidden border border-purple-100">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-purple-50">
+                          <TableHead className="font-medium">Service</TableHead>
+                          <TableHead className="font-medium">One-Time Purchase</TableHead>
+                          <TableHead className="font-medium">Monthly Subscription</TableHead>
+                          <TableHead className="font-medium w-[150px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {professionalServices.map((service, index) => (
+                          <TableRow key={service.id} className={index % 2 === 0 ? "bg-white" : "bg-purple-50"}>
+                            <TableCell className="font-medium">{service.name}</TableCell>
+                            <TableCell>{service.oneTimePrice ? `€${service.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>{service.monthlyPrice ? `€${service.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                {service.oneTimePrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline" 
+                                    onClick={() => addToCart(service, false)}
+                                    disabled={isInCart(service.id, false)}
+                                    className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Buy
+                                  </Button>
+                                )}
+                                {service.monthlyPrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    onClick={() => addToCart(service, true)}
+                                    disabled={isInCart(service.id, true)}
+                                    className="bg-brand-purple hover:bg-brand-purple/90 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Sub
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
+              </TabsContent>
+
+              <TabsContent value="essential" className="mt-0">
+                {/* Essential Device Section - Tab Content */}
+                <section>
+                  <div className="flex items-center mb-4">
+                    <Shield className="h-5 w-5 text-blue-600 mr-2" />
+                    <h2 className="text-xl font-bold text-brand-teal">Essential Device</h2>
+                    <Badge variant="outline" className="ml-2 text-xs border-blue-500 text-blue-700">
+                      Required
+                    </Badge>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg overflow-hidden border border-blue-100">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-blue-100/50">
+                          <TableHead className="font-medium">Product</TableHead>
+                          <TableHead className="font-medium">One-Time Purchase</TableHead>
+                          <TableHead className="font-medium w-[150px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {essentialItems.map((item) => (
+                          <TableRow key={item.id}>
+                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell>€{item.oneTimePrice.toFixed(2)}</TableCell>
+                            <TableCell>
+                              <Button 
+                                size="sm" 
+                                onClick={() => addToCart(item, false)}
+                                disabled={isInCart(item.id, false)}
+                                className="bg-brand-teal hover:bg-brand-teal/90 flex items-center gap-1"
+                              >
+                                {isInCart(item.id, false) ? 
+                                  <><Check className="h-4 w-4" /> Added</> : 
+                                  <><Plus className="h-4 w-4" /> Add</>}
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
+              </TabsContent>
+
+              <TabsContent value="ai-devices" className="mt-0">
+                {/* AI-Powered Devices Section - Tab Content */}
+                <section>
+                  <h2 className="text-xl font-bold mb-4 text-brand-teal flex items-center">
+                    <Badge variant="outline" className="mr-2 text-xs border-brand-teal text-brand-teal">
+                      Smart
+                    </Badge>
+                    AI-Powered Devices
+                  </h2>
+                  <div className="rounded-lg overflow-hidden border border-gray-200">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-gray-50">
+                          <TableHead className="font-medium">Product</TableHead>
+                          <TableHead className="font-medium">One-Time Purchase</TableHead>
+                          <TableHead className="font-medium">Monthly Subscription</TableHead>
+                          <TableHead className="font-medium w-[150px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {aiPoweredDevices.map((device, index) => (
+                          <TableRow key={device.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                            <TableCell className="font-medium">{device.name}</TableCell>
+                            <TableCell>{device.oneTimePrice ? `€${device.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>{device.monthlyPrice ? `€${device.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                {device.oneTimePrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline" 
+                                    onClick={() => addToCart(device, false)}
+                                    disabled={isInCart(device.id, false)}
+                                    className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Buy
+                                  </Button>
+                                )}
+                                {device.monthlyPrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    onClick={() => addToCart(device, true)}
+                                    disabled={isInCart(device.id, true)}
+                                    className="bg-brand-orange hover:bg-brand-orange/90 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Sub
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
+              </TabsContent>
+
+              <TabsContent value="professional" className="mt-0">
+                {/* Professional Care Services Section - Tab Content */}
+                <section>
+                  <h2 className="text-xl font-bold mb-4 text-brand-teal flex items-center">
+                    <Badge variant="outline" className="mr-2 text-xs border-purple-500 text-purple-700">
+                      Premium
+                    </Badge>
+                    Professional Care Services
+                  </h2>
+                  <div className="rounded-lg overflow-hidden border border-purple-100">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-purple-50">
+                          <TableHead className="font-medium">Service</TableHead>
+                          <TableHead className="font-medium">One-Time Purchase</TableHead>
+                          <TableHead className="font-medium">Monthly Subscription</TableHead>
+                          <TableHead className="font-medium w-[150px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {professionalServices.map((service, index) => (
+                          <TableRow key={service.id} className={index % 2 === 0 ? "bg-white" : "bg-purple-50"}>
+                            <TableCell className="font-medium">{service.name}</TableCell>
+                            <TableCell>{service.oneTimePrice ? `€${service.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>{service.monthlyPrice ? `€${service.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                {service.oneTimePrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline" 
+                                    onClick={() => addToCart(service, false)}
+                                    disabled={isInCart(service.id, false)}
+                                    className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Buy
+                                  </Button>
+                                )}
+                                {service.monthlyPrice !== null && (
+                                  <Button 
+                                    size="sm" 
+                                    onClick={() => addToCart(service, true)}
+                                    disabled={isInCart(service.id, true)}
+                                    className="bg-brand-purple hover:bg-brand-purple/90 flex items-center gap-1"
+                                  >
+                                    <Plus className="h-3 w-3" /> Sub
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
+              </TabsContent>
+
+              <div className="mt-8 p-6 bg-brand-grey rounded-lg">
+                <div className="flex flex-col md:flex-row items-start gap-4">
+                  <div className="rounded-full bg-white p-3 flex items-center justify-center">
+                    <Shield className="h-6 w-6 text-brand-teal" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-brand-teal mb-2">Product Information</h3>
+                    <div className="space-y-2 text-sm text-gray-600">
+                      <p>* All prices are inclusive of applicable taxes. Monthly subscriptions are subject to 10% VAT, while one-time purchases include 21% IVA (Spanish VAT).</p>
+                      <p>* Service contracts require minimum 12-month commitment. Early termination fees may apply.</p>
+                      <p>* Product warranty: All devices come with a standard 2-year manufacturer warranty.</p>
                     </div>
-                  </>
-                )}
-              </CardContent>
-            </Card>
+                    <Button 
+                      variant="link" 
+                      className="text-brand-teal p-0 h-auto mt-2"
+                      onClick={() => toast({
+                        title: "Documentation",
+                        description: "Product documentation would open in a new window."
+                      })}
+                    >
+                      View Complete Documentation <ArrowRight className="ml-1 h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Shopping Cart */}
+            <div className="lg:sticky lg:top-24 h-fit">
+              <Card className="border-2 border-brand-teal/20 shadow-md">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-bold flex items-center gap-2">
+                      <ShoppingCart className="h-5 w-5 text-brand-teal" />
+                      Your Cart
+                    </h2>
+                    <Badge variant="outline" className="bg-brand-teal/10 text-brand-teal border-brand-teal">
+                      {cart.length} item(s)
+                    </Badge>
+                  </div>
+
+                  {cart.length === 0 ? (
+                    <div className="text-center py-12 text-gray-500">
+                      <ShoppingCart className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                      <p className="font-medium">Your cart is empty</p>
+                      <p className="text-sm mt-2">Add products from our catalog to get started</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 mb-6">
+                        {cart.map((item, index) => (
+                          <div key={index} className="flex justify-between items-center border-b pb-4">
+                            <div>
+                              <p className="font-medium">{item.name}</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <Badge variant="outline" className={`text-xs ${
+                                  item.type === 'essential' 
+                                    ? 'border-blue-500 text-blue-700 bg-blue-50' 
+                                    : item.type === 'ai-device'
+                                      ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
+                                      : 'border-purple-500 text-purple-700 bg-purple-50'
+                                }`}>
+                                  {item.isSubscription ? 'Monthly' : 'One-time'}
+                                </Badge>
+                                {item.isSubscription && (
+                                  <span className="text-xs text-gray-500">12-month commitment</span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono font-medium">€{item.price.toFixed(2)}</span>
+                              <Button 
+                                size="sm" 
+                                variant="ghost" 
+                                onClick={() => removeFromCart(index)}
+                                className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full"
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="pt-4 border-t border-gray-200">
+                        <div className="flex justify-between text-sm text-gray-500 mb-1">
+                          <span>Subtotal:</span>
+                          <span className="font-mono">€{calculateTotal().toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between text-sm text-gray-500 mb-3">
+                          <span>Estimated VAT:</span>
+                          <span className="font-mono">€{(calculateTotal() * 0.21).toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between font-bold text-lg mb-6">
+                          <span>Total:</span>
+                          <span className="font-mono">€{(calculateTotal() * 1.21).toFixed(2)}</span>
+                        </div>
+                        <Button 
+                          className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white flex items-center justify-center gap-2 py-6"
+                          onClick={checkout}
+                        >
+                          <ShoppingCart className="h-5 w-5" />
+                          Proceed to Checkout
+                        </Button>
+                        <p className="text-xs text-center text-gray-500 mt-3">
+                          Secure payment processing. No credit card data is stored on our servers.
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </main>
