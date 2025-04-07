@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -142,7 +141,7 @@ const Pricing: React.FC = () => {
 
   const professionalServices = [
     {
-      name: "SOS Call Centre",
+      name: "SOS Pendant & Call Centre",
       price: "€89.99",
       subscription: "+ €24.99/month",
       features: [
