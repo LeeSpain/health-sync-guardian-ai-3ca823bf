@@ -17,8 +17,8 @@ const PriceComparison: React.FC = () => {
     { name: "Subscribers App", basePrice: "€9.99", tax: "€1.00", total: "€10.99" }
   ];
 
-  // Reordered with iHealth Dashboard Tablet first
-  const deviceAddons = [
+  // Essential item in its own category
+  const essentialItems = [
     { 
       name: "iHealth Dashboard Tablet", 
       oneTimeBase: "€99.99", 
@@ -28,7 +28,11 @@ const PriceComparison: React.FC = () => {
       monthlyTax: "—", 
       monthlyTotal: "—",
       isEssential: true
-    },
+    }
+  ];
+
+  // AI-Powered Devices category
+  const aiPoweredDevices = [
     { 
       name: "Guardian Button", 
       oneTimeBase: "€49.99", 
@@ -85,6 +89,7 @@ const PriceComparison: React.FC = () => {
     }
   ];
 
+  // Professional Care Services
   const professionalServices = [
     { 
       name: "SOS Pendant & Call Centre", 
@@ -112,6 +117,24 @@ const PriceComparison: React.FC = () => {
       monthlyBase: "€24.99", 
       monthlyTax: "€2.50", 
       monthlyTotal: "€27.49" 
+    },
+    { 
+      name: "Nurse-Sync", 
+      oneTimeBase: "€149.99", 
+      oneTimeTax: "€31.50", 
+      oneTimeTotal: "€181.49", 
+      monthlyBase: "€29.99", 
+      monthlyTax: "€3.00", 
+      monthlyTotal: "€32.99" 
+    },
+    { 
+      name: "Medic-Sync", 
+      oneTimeBase: "€149.99", 
+      oneTimeTax: "€31.50", 
+      oneTimeTotal: "€181.49", 
+      monthlyBase: "€34.99", 
+      monthlyTax: "€3.50", 
+      monthlyTotal: "€38.49" 
     }
   ];
 
@@ -132,7 +155,7 @@ const PriceComparison: React.FC = () => {
               <span className="mr-2">📱</span> Device Add-Ons
             </TabsTrigger>
             <TabsTrigger value="services" className="text-sm">
-              <span className="mr-2">🧑‍⚕️</span> Professional Services
+              <span className="mr-2">🧑‍⚕️</span> Professional Care
             </TabsTrigger>
           </TabsList>
 
@@ -193,40 +216,46 @@ const PriceComparison: React.FC = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {/* First render the essential item with special styling */}
-                  {deviceAddons
-                    .filter(device => device.isEssential)
-                    .map((device, index) => (
-                      <TableRow key={`essential-${index}`} className="bg-blue-50 border-b-2 border-blue-200">
-                        <TableCell className="font-medium">
-                          {device.name}
-                          <Badge variant="outline" className="ml-2 text-xs border-blue-500 text-blue-700">
-                            Essential
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{device.oneTimeBase}</TableCell>
-                        <TableCell>{device.oneTimeTax}</TableCell>
-                        <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
-                        <TableCell>{device.monthlyBase}</TableCell>
-                        <TableCell>{device.monthlyTax}</TableCell>
-                        <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
-                      </TableRow>
-                    ))}
+                  {/* Essential tablet - in its own section */}
+                  <TableRow className="bg-blue-50 border-b-2 border-blue-200">
+                    <TableCell className="font-medium" colSpan={7}>
+                      <h3 className="text-lg font-bold text-gray-800">Essential Device</h3>
+                    </TableCell>
+                  </TableRow>
+                  {essentialItems.map((device, index) => (
+                    <TableRow key={`essential-${index}`} className="bg-blue-50">
+                      <TableCell className="font-medium">
+                        {device.name}
+                        <Badge variant="outline" className="ml-2 text-xs border-blue-500 text-blue-700">
+                          Essential
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{device.oneTimeBase}</TableCell>
+                      <TableCell>{device.oneTimeTax}</TableCell>
+                      <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
+                      <TableCell>{device.monthlyBase}</TableCell>
+                      <TableCell>{device.monthlyTax}</TableCell>
+                      <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
+                    </TableRow>
+                  ))}
                   
-                  {/* Then render all non-essential items */}
-                  {deviceAddons
-                    .filter(device => !device.isEssential)
-                    .map((device, index) => (
-                      <TableRow key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                        <TableCell className="font-medium">{device.name}</TableCell>
-                        <TableCell>{device.oneTimeBase}</TableCell>
-                        <TableCell>{device.oneTimeTax}</TableCell>
-                        <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
-                        <TableCell>{device.monthlyBase}</TableCell>
-                        <TableCell>{device.monthlyTax}</TableCell>
-                        <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
-                      </TableRow>
-                    ))}
+                  {/* AI-Powered Devices section */}
+                  <TableRow className="bg-gray-50 border-b-2 border-gray-200">
+                    <TableCell className="font-medium" colSpan={7}>
+                      <h3 className="text-lg font-bold text-gray-800">AI-Powered Devices</h3>
+                    </TableCell>
+                  </TableRow>
+                  {aiPoweredDevices.map((device, index) => (
+                    <TableRow key={`ai-device-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <TableCell className="font-medium">{device.name}</TableCell>
+                      <TableCell>{device.oneTimeBase}</TableCell>
+                      <TableCell>{device.oneTimeTax}</TableCell>
+                      <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
+                      <TableCell>{device.monthlyBase}</TableCell>
+                      <TableCell>{device.monthlyTax}</TableCell>
+                      <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </div>
@@ -252,8 +281,13 @@ const PriceComparison: React.FC = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
+                  <TableRow className="bg-purple-50 border-b-2 border-purple-200">
+                    <TableCell className="font-medium" colSpan={7}>
+                      <h3 className="text-lg font-bold text-gray-800">Professional Care Services</h3>
+                    </TableCell>
+                  </TableRow>
                   {professionalServices.map((service, index) => (
-                    <TableRow key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <TableRow key={`service-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                       <TableCell className="font-medium">{service.name}</TableCell>
                       <TableCell>{service.oneTimeBase}</TableCell>
                       <TableCell>{service.oneTimeTax}</TableCell>
