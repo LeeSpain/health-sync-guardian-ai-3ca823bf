@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, Bell, Calendar, MessageSquare, Activity } from 'lucide-react';
 
 const Features: React.FC = () => {
@@ -33,27 +32,56 @@ const Features: React.FC = () => {
   ];
 
   return (
-    <section id="features" className="py-20 bg-brand-grey">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" className="pt-32 pb-20 bg-brand-grey relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-1/4 right-0 w-64 h-64 bg-brand-teal/10 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-1/3 left-10 w-72 h-72 bg-brand-orange/10 rounded-full filter blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
+          <span className="inline-block px-4 py-1 rounded-full bg-brand-teal/10 text-brand-teal text-sm font-medium mb-4">
+            Features
+          </span>
           <h2 className="text-brand-teal mb-4">Features Designed For Everyone</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Our comprehensive platform combines cutting-edge technology with human compassion to create a complete health solution for users of all ages.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <Card key={index} className="border-2 border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-              <CardHeader className="pb-2">
-                <div className="mb-3">{feature.icon}</div>
-                <CardTitle className="text-xl text-brand-teal">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">{feature.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="relative">
+          {/* Hexagon background pattern - decorative */}
+          <div className="absolute inset-0 grid grid-cols-6 h-full w-full opacity-5 z-0 pointer-events-none">
+            {Array.from({ length: 30 }).map((_, index) => (
+              <div key={index} className="aspect-square bg-brand-teal rounded-lg transform rotate-45"></div>
+            ))}
+          </div>
+          
+          {/* Feature items with alternating layout */}
+          <div className="space-y-12 md:space-y-24 relative z-10">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className={`flex flex-col md:flex-row items-center ${index % 2 === 1 ? 'md:flex-row-reverse text-right' : 'text-left'} gap-8 md:gap-16`}
+              >
+                <div className="md:w-1/3 relative flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/20 to-brand-orange/20 rounded-full filter blur-xl transform scale-150"></div>
+                  <div className="relative bg-white shadow-lg rounded-2xl p-6 flex items-center justify-center aspect-square">
+                    <div className="bg-gradient-to-br from-brand-teal/10 to-brand-orange/10 rounded-full p-8 transform hover:scale-110 transition-transform duration-300">
+                      {feature.icon}
+                    </div>
+                  </div>
+                </div>
+                <div className="md:w-2/3">
+                  <h3 className="text-xl md:text-2xl font-bold text-brand-teal mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 text-base md:text-lg">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
