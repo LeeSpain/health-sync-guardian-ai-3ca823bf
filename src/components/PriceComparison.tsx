@@ -17,6 +17,7 @@ const PriceComparison: React.FC = () => {
     { name: "Subscribers App", basePrice: "€9.99", tax: "€1.00", total: "€10.99" }
   ];
 
+  // Reordered with iHealth Dashboard Tablet first
   const deviceAddons = [
     { 
       name: "iHealth Dashboard Tablet", 
@@ -25,16 +26,8 @@ const PriceComparison: React.FC = () => {
       oneTimeTotal: "€120.99", 
       monthlyBase: "—", 
       monthlyTax: "—", 
-      monthlyTotal: "—" 
-    },
-    { 
-      name: "Family Dashboard Access", 
-      oneTimeBase: "—", 
-      oneTimeTax: "—", 
-      oneTimeTotal: "—", 
-      monthlyBase: "€4.99", 
-      monthlyTax: "€0.50", 
-      monthlyTotal: "€5.49" 
+      monthlyTotal: "—",
+      isEssential: true
     },
     { 
       name: "Guardian Button", 
@@ -77,6 +70,15 @@ const PriceComparison: React.FC = () => {
       oneTimeBase: "€129.99", 
       oneTimeTax: "€27.30", 
       oneTimeTotal: "€157.29", 
+      monthlyBase: "€4.99", 
+      monthlyTax: "€0.50", 
+      monthlyTotal: "€5.49" 
+    },
+    { 
+      name: "Family Dashboard Access", 
+      oneTimeBase: "—", 
+      oneTimeTax: "—", 
+      oneTimeTotal: "—", 
       monthlyBase: "€4.99", 
       monthlyTax: "€0.50", 
       monthlyTotal: "€5.49" 
@@ -191,17 +193,40 @@ const PriceComparison: React.FC = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {deviceAddons.map((device, index) => (
-                    <TableRow key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <TableCell className="font-medium">{device.name}</TableCell>
-                      <TableCell>{device.oneTimeBase}</TableCell>
-                      <TableCell>{device.oneTimeTax}</TableCell>
-                      <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
-                      <TableCell>{device.monthlyBase}</TableCell>
-                      <TableCell>{device.monthlyTax}</TableCell>
-                      <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
-                    </TableRow>
-                  ))}
+                  {/* First render the essential item with special styling */}
+                  {deviceAddons
+                    .filter(device => device.isEssential)
+                    .map((device, index) => (
+                      <TableRow key={`essential-${index}`} className="bg-blue-50 border-b-2 border-blue-200">
+                        <TableCell className="font-medium">
+                          {device.name}
+                          <Badge variant="outline" className="ml-2 text-xs border-blue-500 text-blue-700">
+                            Essential
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{device.oneTimeBase}</TableCell>
+                        <TableCell>{device.oneTimeTax}</TableCell>
+                        <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
+                        <TableCell>{device.monthlyBase}</TableCell>
+                        <TableCell>{device.monthlyTax}</TableCell>
+                        <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
+                      </TableRow>
+                    ))}
+                  
+                  {/* Then render all non-essential items */}
+                  {deviceAddons
+                    .filter(device => !device.isEssential)
+                    .map((device, index) => (
+                      <TableRow key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                        <TableCell className="font-medium">{device.name}</TableCell>
+                        <TableCell>{device.oneTimeBase}</TableCell>
+                        <TableCell>{device.oneTimeTax}</TableCell>
+                        <TableCell className="font-medium">{device.oneTimeTotal}</TableCell>
+                        <TableCell>{device.monthlyBase}</TableCell>
+                        <TableCell>{device.monthlyTax}</TableCell>
+                        <TableCell className="font-medium">{device.monthlyTotal}</TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </div>
