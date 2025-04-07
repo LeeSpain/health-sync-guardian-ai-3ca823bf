@@ -7,7 +7,6 @@ import ProductShowcase from '@/components/ProductShowcase';
 import Pricing from '@/components/Pricing';
 import AIGuardianSection from '@/components/AIGuardian';
 import UserRoles from '@/components/UserRoles';
-import PriceComparison from '@/components/PriceComparison';
 import Footer from '@/components/Footer';
 
 const Index: React.FC = () => {
@@ -21,7 +20,6 @@ const Index: React.FC = () => {
         <AIGuardianSection />
         <UserRoles />
         <Pricing />
-        <PriceComparison />
       </main>
       <Footer />
     </div>

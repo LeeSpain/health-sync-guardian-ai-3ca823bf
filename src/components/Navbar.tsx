@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Logo from './Logo';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,12 +16,17 @@ const Navbar: React.FC = () => {
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
             <a href="#features" className="text-gray-700 hover:text-brand-teal transition-colors">Features</a>
             <a href="#products" className="text-gray-700 hover:text-brand-teal transition-colors">Products</a>
-            <a href="#pricing" className="text-gray-700 hover:text-brand-teal transition-colors">Pricing</a>
+            <Link to="/pricing" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
+              <ShoppingCart className="h-4 w-4" />
+              Pricing
+            </Link>
             <a href="#about" className="text-gray-700 hover:text-brand-teal transition-colors">About Us</a>
             <div className="flex items-center space-x-2">
               <Button 
@@ -65,13 +71,14 @@ const Navbar: React.FC = () => {
             >
               Products
             </a>
-            <a 
-              href="#pricing" 
-              className="text-gray-700 hover:text-brand-teal transition-colors py-2"
+            <Link
+              to="/pricing" 
+              className="text-gray-700 hover:text-brand-teal transition-colors py-2 flex items-center gap-1"
               onClick={() => setIsMenuOpen(false)}
             >
+              <ShoppingCart className="h-4 w-4" />
               Pricing
-            </a>
+            </Link>
             <a 
               href="#about" 
               className="text-gray-700 hover:text-brand-teal transition-colors py-2"
