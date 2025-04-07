@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Shield, Heart, Users } from 'lucide-react';
+import { ArrowRight, Shield, Heart, Users, Activity } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 const Hero: React.FC = () => {
@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
           <div className="lg:w-1/2 text-left lg:pr-10">
             <div className="relative inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <span className="bg-green-500 h-2 w-2 rounded-full inline-block animate-pulse"></span>
-              <span className="text-white/90 text-sm font-medium">Trusted by 10,000+ seniors worldwide</span>
+              <span className="text-white/90 text-sm font-medium">Trusted by 10,000+ users worldwide</span>
               <Badge 
                 variant="outline" 
                 className="absolute -right-1 -top-1 bg-brand-orange text-white border-0 rounded-full px-2 text-xs font-bold"
@@ -47,11 +47,11 @@ const Hero: React.FC = () => {
                 <svg className="absolute bottom-1 w-full h-2 text-brand-orange/60" viewBox="0 0 200 8" preserveAspectRatio="none">
                   <path d="M0,5 C50,0 150,0 200,5 L200,8 L0,8 Z" fill="currentColor" />
                 </svg>
-              </span> For Elderly Care
+              </span> For Everyone
             </h1>
             
             <p className="text-white/90 text-lg md:text-xl mb-10">
-              Providing peace of mind through intelligent health tracking, family connection, and professional support services.
+              Providing peace of mind through intelligent health tracking, family connection, and professional support services for all ages.
             </p>
             
             <div className="flex flex-wrap gap-4 mb-8">
@@ -132,8 +132,8 @@ const Hero: React.FC = () => {
                       </div>
                     </div>
                     <div className="bg-white/10 rounded-lg p-3">
-                      <div className="text-white/60 text-xs">Blood Pressure</div>
-                      <div className="text-white text-xl font-bold">120/80</div>
+                      <div className="text-white/60 text-xs">Activity</div>
+                      <div className="text-white text-xl font-bold">8,456 steps</div>
                       <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                         <div className="h-full w-3/4 bg-green-500 rounded-full"></div>
                       </div>
@@ -147,15 +147,15 @@ const Hero: React.FC = () => {
                         <span className="text-white text-xs">AI</span>
                       </div>
                       <div className="bg-white/10 rounded-lg p-2 text-white/90 text-sm">
-                        Good morning, Maria. Your vitals look good today. Don't forget to take your medication in 15 minutes.
+                        Good morning, Alex. Your vitals look good today. You've hit 85% of your daily step goal already!
                       </div>
                     </div>
                     <div className="flex items-start gap-2 justify-end">
                       <div className="bg-brand-orange/20 rounded-lg p-2 text-white/90 text-sm">
-                        Thank you! Can you remind me again at 9am?
+                        Thanks! Can you remind me of my workout schedule?
                       </div>
                       <div className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center flex-shrink-0">
-                        <span className="text-white text-xs">M</span>
+                        <span className="text-white text-xs">A</span>
                       </div>
                     </div>
                   </div>
@@ -163,10 +163,10 @@ const Hero: React.FC = () => {
                   {/* Controls */}
                   <div className="flex justify-between">
                     <button className="bg-brand-teal/70 hover:bg-brand-teal text-white text-xs py-1 px-3 rounded-md transition-colors">
-                      Contact Family
+                      Share Data
                     </button>
                     <button className="bg-brand-orange/70 hover:bg-brand-orange text-white text-xs py-1 px-3 rounded-md transition-colors">
-                      Emergency
+                      Health Insights
                     </button>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ const Hero: React.FC = () => {
             </div>
             <div className="absolute -bottom-8 right-20 bg-white/10 backdrop-blur-sm p-3 rounded-xl border border-white/20 shadow-lg transform -rotate-3">
               <div className="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center">
-                <Shield className="text-white h-6 w-6" />
+                <Activity className="text-white h-6 w-6" />
               </div>
             </div>
           </div>

@@ -9,8 +9,8 @@ const AIGuardianSection: React.FC = () => {
       ai: "Your heart rate is currently 72 bpm. That's within your normal range. Would you like to see your weekly trend?"
     },
     {
-      user: "I feel dizzy.",
-      ai: "I'm here for you. I've sent an alert to your daughter and the emergency response team. Help is on the way."
+      user: "I need to reach my step goal.",
+      ai: "You're at 8,456 steps so far today. Just 1,544 more to reach your 10,000 step goal. You've got this!"
     },
     {
       user: "¿Puedes hablar español?",
@@ -35,7 +35,7 @@ const AIGuardianSection: React.FC = () => {
                     <path d="M5 12L10 17L20 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <p className="text-gray-700">Warm, conversational tone designed for seniors</p>
+                <p className="text-gray-700">Friendly, conversational tone designed for all users</p>
               </div>
               
               <div className="flex items-start gap-3">
@@ -67,7 +67,7 @@ const AIGuardianSection: React.FC = () => {
             </div>
           </div>
           
-          <div className="bg-gray-50 p-6 rounded-2xl">
+          <div className="bg-gray-50 p-6 rounded-2xl shadow-lg">
             <div className="text-center mb-6">
               <div className="h-16 w-16 bg-brand-teal rounded-full mx-auto flex items-center justify-center mb-3">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

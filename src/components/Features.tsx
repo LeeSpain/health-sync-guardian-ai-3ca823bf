@@ -8,27 +8,27 @@ const Features: React.FC = () => {
     {
       icon: <Heart className="h-12 w-12 text-brand-orange" />,
       title: "Real-Time Health Monitoring",
-      description: "Track vital signs including heart rate, blood pressure, and oxygen levels through our connected devices."
+      description: "Track vital signs including heart rate, blood pressure, and activity levels through our connected devices."
     },
     {
       icon: <Bell className="h-12 w-12 text-brand-orange" />,
       title: "Intelligent Alerts",
-      description: "Receive immediate notifications when health metrics fall outside normal ranges, with automatic family updates."
+      description: "Receive immediate notifications when health metrics fall outside normal ranges, with automatic updates to your care network."
     },
     {
       icon: <Calendar className="h-12 w-12 text-brand-orange" />,
-      title: "Medication Reminders",
-      description: "Never miss important medications with personalized schedules and verification systems."
+      title: "Smart Reminders",
+      description: "Stay on track with personalized reminders for medications, workouts, and health check-ins."
     },
     {
       icon: <MessageSquare className="h-12 w-12 text-brand-orange" />,
       title: "AI Guardian Assistant",
-      description: "Interact with our caring AI companion for health advice, emotional support, and system guidance."
+      description: "Interact with our caring AI companion for health advice, motivation, and system guidance tailored to your needs."
     },
     {
       icon: <Activity className="h-12 w-12 text-brand-orange" />,
       title: "Professional Support",
-      description: "Access to professional nurses and emergency response teams when needed, 24/7."
+      description: "Access to healthcare professionals and emergency response teams when needed, 24/7."
     }
   ];
 
@@ -36,9 +36,9 @@ const Features: React.FC = () => {
     <section id="features" className="py-20 bg-brand-grey">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-brand-teal mb-4">Features Designed For Care</h2>
+          <h2 className="text-brand-teal mb-4">Features Designed For Everyone</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Our comprehensive platform combines cutting-edge technology with human compassion to create a complete care solution.
+            Our comprehensive platform combines cutting-edge technology with human compassion to create a complete health solution for users of all ages.
           </p>
         </div>
 

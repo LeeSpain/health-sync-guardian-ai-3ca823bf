@@ -6,10 +6,10 @@ const UserRoles: React.FC = () => {
   const roles = [
     {
       title: "Individual Users",
-      description: "Elderly or adults managing their own health with AI Guardian assistance.",
+      description: "Anyone wanting to take control of their health with AI Guardian assistance.",
       features: [
         "Personalized health dashboard",
-        "Daily check-ins and reminders",
+        "Daily insights and reminders",
         "Device management",
         "Emergency assistance"
       ],
@@ -28,7 +28,7 @@ const UserRoles: React.FC = () => {
     },
     {
       title: "Healthcare Professionals",
-      description: "Nurses and caregivers who provide services through the platform.",
+      description: "Doctors and caregivers who provide services through the platform.",
       features: [
         "Client management tools",
         "Medical reporting system",
@@ -39,7 +39,7 @@ const UserRoles: React.FC = () => {
     },
     {
       title: "Admins & Organizations",
-      description: "Organizations providing care services with administrative oversight.",
+      description: "Organizations providing health services with administrative oversight.",
       features: [
         "User and device management",
         "SOS alert monitoring",
@@ -56,13 +56,13 @@ const UserRoles: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-brand-teal mb-4">A Platform For Everyone</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            iHealth-Sync connects various roles in the care ecosystem to ensure comprehensive support.
+            iHealth-Sync connects various roles in the health ecosystem to ensure comprehensive support for users of all ages.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {roles.map((role, index) => (
-            <Card key={index} className="border border-gray-200 overflow-hidden">
+            <Card key={index} className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300">
               <div className={`h-2 ${role.color}`}></div>
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl text-brand-teal">{role.title}</CardTitle>

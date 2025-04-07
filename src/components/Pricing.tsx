@@ -37,7 +37,7 @@ const Pricing: React.FC = () => {
       features: [
         "Everything in Subscribers App",
         "SOS Call Centre access",
-        "Professional nurse monitoring",
+        "Professional monitoring",
         "Weekly care reports",
         "Video consultations",
         "Personalized care plans"
