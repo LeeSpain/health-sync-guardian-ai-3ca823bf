@@ -2,19 +2,27 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Heart, Shield, Activity, Thermometer, Bell } from 'lucide-react';
+import { ArrowRight, Heart, Shield, Activity, Thermometer, Bell, Tablet } from 'lucide-react';
 
 interface Product {
   name: string;
   image: string;
   description: string;
-  category: 'device' | 'service' | 'addon';
+  category: 'featured' | 'device' | 'service';
   type: string;
   icon: React.ReactNode;
 }
 
 const ProductShowcase: React.FC = () => {
   const products: Product[] = [
+    {
+      name: "iHealth Dashboard Tablet",
+      image: "/placeholder.svg",
+      description: "Simple, large-format tablet pre-configured for easy health tracking.",
+      category: "featured",
+      type: "Featured Device",
+      icon: <Tablet className="h-6 w-6" />
+    },
     {
       name: "Guardian Button",
       image: "/placeholder.svg",
@@ -32,12 +40,20 @@ const ProductShowcase: React.FC = () => {
       icon: <Heart className="h-6 w-6" />
     },
     {
-      name: "iHealth Dashboard Tablet",
+      name: "Smart Scales",
       image: "/placeholder.svg",
-      description: "Simple, large-format tablet pre-configured for easy health tracking.",
+      description: "Precise weight measurements with trend tracking and automatic syncing.",
       category: "device",
       type: "Health Monitoring",
       icon: <Activity className="h-6 w-6" />
+    },
+    {
+      name: "Thermometer",
+      image: "/placeholder.svg",
+      description: "Contactless temperature readings with fever detection and history.",
+      category: "device",
+      type: "Health Monitoring",
+      icon: <Thermometer className="h-6 w-6" />
     },
     {
       name: "Bed Sensor",
@@ -67,31 +83,32 @@ const ProductShowcase: React.FC = () => {
       name: "Glucose Monitor",
       image: "/placeholder.svg",
       description: "Continuous glucose tracking with alerts and trend analysis.",
-      category: "device",
-      type: "Health Monitoring",
+      category: "service",
+      type: "Professional Services",
       icon: <Activity className="h-6 w-6" />
     },
     {
-      name: "Smart Scales",
+      name: "Nurse-Sync",
       image: "/placeholder.svg",
-      description: "Precise weight measurements with trend tracking and automatic syncing.",
-      category: "device",
-      type: "Health Monitoring",
+      description: "Direct connection to qualified nurses for health advice and consultation.",
+      category: "service",
+      type: "Professional Services",
       icon: <Activity className="h-6 w-6" />
     },
     {
-      name: "Thermometer",
+      name: "Medic-Sync",
       image: "/placeholder.svg",
-      description: "Contactless temperature readings with fever detection and history.",
-      category: "device",
-      type: "Health Monitoring",
-      icon: <Thermometer className="h-6 w-6" />
+      description: "24/7 access to medical professionals for urgent health concerns.",
+      category: "service",
+      type: "Professional Services",
+      icon: <Activity className="h-6 w-6" />
     }
   ];
 
   // Filter products by category
-  const healthMonitoringDevices = products.filter(product => product.type === "Health Monitoring");
-  const professionalServices = products.filter(product => product.type === "Professional Services");
+  const featuredDevice = products.find(product => product.category === "featured");
+  const healthMonitoringDevices = products.filter(product => product.category === "device");
+  const professionalServices = products.filter(product => product.category === "service");
 
   return (
     <section id="products" className="py-28 relative overflow-hidden">
@@ -116,6 +133,82 @@ const ProductShowcase: React.FC = () => {
             Our integrated solutions work seamlessly together to provide comprehensive health tracking and emergency response.
           </p>
         </div>
+
+        {/* Featured Product Section */}
+        {featuredDevice && (
+          <div className="mb-20">
+            <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-lg bg-brand-orange/10 flex items-center justify-center mr-4">
+                  <Tablet className="h-6 w-6 text-brand-orange" />
+                </div>
+                <h3 className="text-2xl text-brand-orange font-bold">Featured Device</h3>
+              </div>
+              <Badge variant="outline" className="mt-4 md:mt-0 bg-brand-orange/10 text-brand-orange border-brand-orange px-4 py-1">
+                Flagship Product
+              </Badge>
+            </div>
+            
+            <div className="relative">
+              <div className="group relative z-10 max-w-3xl mx-auto">
+                {/* Featured product card with special design */}
+                <div className="relative flex flex-col md:flex-row overflow-hidden bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2">
+                  {/* Left side */}
+                  <div className="md:w-2/5 relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-200 z-0"></div>
+                    <div className="h-56 md:h-full w-full flex items-center justify-center p-8 relative z-10">
+                      <div className="w-32 h-32 rounded-full bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                        <img 
+                          src={featuredDevice.image} 
+                          alt={featuredDevice.name} 
+                          className="h-20 w-20 object-contain"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Accent corner */}
+                    <div className="absolute top-0 right-0 w-24 h-24 overflow-hidden md:block hidden">
+                      <div className="absolute top-0 right-0 w-12 h-12 bg-brand-orange rounded-bl-xl transform rotate-0 origin-top-right group-hover:rotate-90 transition-transform duration-300"></div>
+                      <div className="absolute top-2 right-2 text-white z-10">
+                        {featuredDevice.icon}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Right side content */}
+                  <div className="md:w-3/5 p-8 flex flex-col justify-center">
+                    <h4 className="text-2xl text-brand-orange font-semibold mb-3">{featuredDevice.name}</h4>
+                    <p className="text-lg text-gray-600 mb-6">{featuredDevice.description}</p>
+                    <ul className="space-y-2 mb-6">
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-5 h-5 rounded-full bg-brand-orange/10 flex items-center justify-center mr-2">
+                          <div className="w-2 h-2 rounded-full bg-brand-orange"></div>
+                        </div>
+                        Large format touchscreen for easy visibility
+                      </li>
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-5 h-5 rounded-full bg-brand-orange/10 flex items-center justify-center mr-2">
+                          <div className="w-2 h-2 rounded-full bg-brand-orange"></div>
+                        </div>
+                        Simple interface designed for all ages
+                      </li>
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-5 h-5 rounded-full bg-brand-orange/10 flex items-center justify-center mr-2">
+                          <div className="w-2 h-2 rounded-full bg-brand-orange"></div>
+                        </div>
+                        Integrates with all iHealth devices
+                      </li>
+                    </ul>
+                    <Button className="mt-auto bg-brand-orange hover:bg-brand-orange/90 group">
+                      <span>Learn More</span>
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Health Monitoring Devices Section */}
         <div className="mb-20">
