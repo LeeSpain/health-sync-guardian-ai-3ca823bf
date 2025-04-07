@@ -2,13 +2,12 @@
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 
 const Pricing: React.FC = () => {
   const plans = [
     {
       name: "Free App",
-      price: 0,
       features: [
         "Basic dashboard",
         "Single emergency contact",
@@ -16,11 +15,11 @@ const Pricing: React.FC = () => {
         "Daily health summaries"
       ],
       cta: "Download Free",
-      popular: false
+      popular: false,
+      color: "brand-accent-teal"
     },
     {
       name: "Subscribers App",
-      price: 9.99,
       features: [
         "Advanced AI dashboard",
         "Multiple emergency contacts",
@@ -29,12 +28,12 @@ const Pricing: React.FC = () => {
         "Data sharing with family members",
         "Customizable alert thresholds"
       ],
-      cta: "Start Subscription",
-      popular: true
+      cta: "View Subscription Details",
+      popular: true,
+      color: "brand-orange"
     },
     {
       name: "Professional Care",
-      price: 34.98,
       features: [
         "Everything in Subscribers App",
         "SOS Call Centre access",
@@ -44,17 +43,18 @@ const Pricing: React.FC = () => {
         "Personalized care plans"
       ],
       cta: "Contact Sales",
-      popular: false
+      popular: false,
+      color: "brand-teal"
     }
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-brand-grey">
+    <section id="pricing" className="py-24 bg-gradient-to-b from-brand-grey to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-brand-teal mb-4">Simple, Transparent Pricing</h2>
+          <h2 className="text-brand-teal mb-4">Choose Your Care Level</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Choose the plan that fits your needs. Add devices and services as required for complete customization.
+            Flexible plans designed to meet your specific needs. Add devices and services as required for complete customization.
           </p>
         </div>
 
@@ -64,27 +64,23 @@ const Pricing: React.FC = () => {
               key={index} 
               className={`border-2 ${
                 plan.popular 
-                  ? 'border-brand-accent-teal shadow-lg relative' 
-                  : 'border-gray-200'
+                  ? 'border-brand-orange shadow-lg relative' 
+                  : 'border-gray-200 hover:border-brand-accent-teal/50 transition-all duration-300'
               }`}
             >
               {plan.popular && (
-                <div className="absolute top-0 right-0 bg-brand-accent-teal text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
+                <div className="absolute top-0 right-0 bg-brand-orange text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
                   Popular
                 </div>
               )}
               <CardHeader className="text-center pb-2">
-                <CardTitle className="text-xl text-brand-teal">{plan.name}</CardTitle>
+                <CardTitle className={`text-xl text-${plan.color}`}>{plan.name}</CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">€{plan.price.toFixed(2)}</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
                 <ul className="space-y-3 text-left mb-6">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-brand-accent-teal mr-2 mt-0.5 flex-shrink-0" />
+                      <Check className={`h-5 w-5 text-${plan.color} mr-2 mt-0.5 flex-shrink-0`} />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -92,23 +88,27 @@ const Pricing: React.FC = () => {
               </CardContent>
               <CardFooter>
                 <Button 
-                  className={`w-full ${
+                  className={`w-full group ${
                     plan.popular 
                       ? 'bg-brand-orange hover:bg-brand-orange/90' 
-                      : 'bg-brand-accent-teal hover:bg-brand-accent-teal/90'
+                      : `bg-${plan.color} hover:bg-${plan.color}/90`
                   }`}
                 >
-                  {plan.cta}
+                  <span>{plan.cta}</span>
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-500">
-            All prices include applicable taxes. Device purchases may require additional one-time costs.
+        <div className="mt-16 text-center">
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Our transparent pricing model ensures you only pay for what you need. Contact our sales team for detailed pricing information and personalized recommendations.
           </p>
+          <Button variant="outline" className="mt-6 border-brand-teal text-brand-teal hover:bg-brand-teal/10">
+            Request Pricing Details
+          </Button>
         </div>
       </div>
     </section>
