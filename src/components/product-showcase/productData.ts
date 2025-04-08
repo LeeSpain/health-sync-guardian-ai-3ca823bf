@@ -28,7 +28,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Guardian Button",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/a660c44d-8542-4391-91d0-94af264456a4.png", // Updated image path
     description: "One-press emergency button that works anywhere in your home, no phone needed.",
     category: "device",
     type: "Health Monitoring",
