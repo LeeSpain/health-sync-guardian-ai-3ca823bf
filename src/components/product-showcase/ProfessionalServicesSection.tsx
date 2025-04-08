@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Shield, PhoneCall } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 import { Product } from './types';
 
 interface ProfessionalServicesSectionProps {
@@ -34,19 +35,23 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
         {products.map((product, index) => (
           <Card key={index} className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex flex-col md:flex-row bg-white h-full">
-              {/* Image container (left side) - Removed all backgrounds and containers */}
-              <div className="md:w-2/5 p-4 flex items-center justify-center">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="professional-service-image w-32 h-32 object-contain" 
-                  width={128}
-                  height={128}
-                  loading="eager"
-                  onLoad={() => console.log(`Image loaded successfully: ${product.name} - ${product.image}`)}
-                  onError={(e) => console.error(`Image failed to load: ${product.name} - ${product.image}`, e)}
-                  data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
-                />
+              {/* Image container - Direct image without container */}
+              <div className="md:w-2/5 p-6 flex items-center justify-center">
+                {product.image.includes('placeholder') ? (
+                  <div className="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center">
+                    {product.icon}
+                  </div>
+                ) : (
+                  <OptimizedImage
+                    src={product.image}
+                    alt={product.name}
+                    className="w-36 h-36 object-contain professional-service-image"
+                    width={144}
+                    height={144}
+                    priority={true}
+                    data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
+                  />
+                )}
               </div>
               
               {/* Content container (right side) */}

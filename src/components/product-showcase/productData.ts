@@ -133,7 +133,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Nurse-Sync",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png",
     description: "Direct connection to qualified nurses for health advice and consultation.",
     category: "healthcare",
     type: "Healthcare Professionals",
@@ -146,7 +146,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Medic-Sync",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png",
     description: "24/7 access to medical professionals for urgent health concerns.",
     category: "healthcare",
     type: "Healthcare Professionals",
