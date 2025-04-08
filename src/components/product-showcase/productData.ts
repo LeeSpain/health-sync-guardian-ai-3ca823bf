@@ -93,7 +93,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "SOS Call Centre",
-    image: "/placeholder.svg", 
+    image: "/lovable-uploads/b2787b08-7a7b-4046-bcd7-4c29b1b7b8e1.png", 
     description: "Professional emergency response team available 24/7 at the touch of a button.",
     category: "service",
     type: "Professional Services",
@@ -157,3 +157,4 @@ export const getProductsData = (): Product[] => [
     ]
   }
 ];
+

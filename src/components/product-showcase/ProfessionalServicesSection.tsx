@@ -12,6 +12,11 @@ interface ProfessionalServicesSectionProps {
 }
 
 export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSectionProps) => {
+  // Log products to help with debugging
+  React.useEffect(() => {
+    console.log("Professional Services products:", products.map(p => `${p.name}: ${p.image}`));
+  }, [products]);
+
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between mb-12">
@@ -34,16 +39,34 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
               <div className="md:w-2/5 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100/70 z-0"></div>
                 <div className="h-48 md:h-full w-full flex items-center justify-center relative z-10 p-6">
-                  <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <OptimizedImage 
-                      src={product.image} 
-                      alt={product.name} 
-                      className="h-12 w-12 object-contain"
-                      width={48}
-                      height={48}
-                      loadingClassName="bg-transparent"
-                    />
-                  </div>
+                  {/* Prioritize image loading for SOS Call Centre */}
+                  {product.name === "SOS Call Centre" ? (
+                    <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src={product.image} 
+                        alt={product.name} 
+                        className="h-12 w-12 object-contain"
+                        width={48}
+                        height={48}
+                        loading="eager"
+                        fetchPriority="high"
+                        onLoad={() => console.log(`Image loaded: ${product.name}`)}
+                        onError={() => console.error(`Failed to load image: ${product.name}`)}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <OptimizedImage 
+                        src={product.image} 
+                        alt={product.name} 
+                        className="h-12 w-12 object-contain"
+                        width={48}
+                        height={48}
+                        loadingClassName="bg-transparent"
+                        preload={product.name === "SOS Call Centre"}
+                      />
+                    </div>
+                  )}
                 </div>
                 
                 {/* Decorative element */}
@@ -78,3 +101,4 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
     </div>
   );
 };
+
