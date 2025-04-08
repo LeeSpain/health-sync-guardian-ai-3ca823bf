@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -404,7 +403,7 @@ const ProductShowcase: React.FC = () => {
             </div>
           )}
 
-          {/* Health Monitoring Devices Section - REDESIGNED */}
+          {/* Health Monitoring Devices Section - REDESIGNED & FIXED */}
           <div>
             <div className="flex flex-col md:flex-row items-center justify-between mb-12">
               <div className="flex items-center">
@@ -435,50 +434,77 @@ const ProductShowcase: React.FC = () => {
               </Carousel>
             </div>
             
-            {/* Desktop view: Curved flowing layout */}
+            {/* Desktop view: Fixed grid layout that avoids overlapping */}
             <div className="hidden md:block relative">
-              {/* Curved connecting lines */}
-              <div className="absolute inset-0 z-0 pointer-events-none">
-                <svg className="w-full h-full" viewBox="0 0 1200 600" preserveAspectRatio="none">
+              {/* Background decorative elements */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-gradient-to-br from-brand-teal/5 to-brand-teal/2 blur-3xl -z-10"></div>
+              
+              {/* Improved grid system */}
+              <div className="grid grid-cols-3 gap-6">
+                {healthMonitoringDevices.map((product, index) => (
+                  <div key={index} className="transform transition-all duration-500 hover:-translate-y-2">
+                    <DeviceCard product={product} />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Decorative connecting lines */}
+              <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <svg className="w-full h-full opacity-30" viewBox="0 0 1200 600" preserveAspectRatio="none">
+                  {/* Horizontal connection lines */}
                   <path 
-                    d="M100,200 C400,100 800,300 1100,200" 
+                    d="M100,150 H1100" 
                     fill="none" 
-                    stroke="url(#gradient-path)" 
-                    strokeWidth="2" 
+                    stroke="url(#gradient-path-h)" 
+                    strokeWidth="1.5" 
                     strokeDasharray="6,4"
                     className="opacity-60"
-                  >
-                    <animate 
-                      attributeName="stroke-dashoffset" 
-                      from="100" 
-                      to="0" 
-                      dur="15s" 
-                      repeatCount="indefinite"
-                    />
-                  </path>
+                  />
                   <path 
-                    d="M150,400 C450,500 750,300 1050,400" 
+                    d="M100,350 H1100" 
                     fill="none" 
-                    stroke="url(#gradient-path)" 
-                    strokeWidth="2" 
+                    stroke="url(#gradient-path-h)" 
+                    strokeWidth="1.5" 
                     strokeDasharray="6,4"
                     className="opacity-60"
-                  >
-                    <animate 
-                      attributeName="stroke-dashoffset" 
-                      from="100" 
-                      to="0" 
-                      dur="12s" 
-                      repeatCount="indefinite"
-                    />
-                  </path>
+                  />
+                  
+                  {/* Vertical connection lines */}
+                  <path 
+                    d="M400,50 V550" 
+                    fill="none" 
+                    stroke="url(#gradient-path-v)" 
+                    strokeWidth="1.5" 
+                    strokeDasharray="6,4"
+                    className="opacity-60"
+                  />
+                  <path 
+                    d="M800,50 V550" 
+                    fill="none" 
+                    stroke="url(#gradient-path-v)" 
+                    strokeWidth="1.5" 
+                    strokeDasharray="6,4"
+                    className="opacity-60"
+                  />
+                  
                   <defs>
-                    <linearGradient id="gradient-path" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#008B8B" stopOpacity="0.3" />
-                      <stop offset="50%" stopColor="#FF6F42" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#008B8B" stopOpacity="0.3" />
+                    <linearGradient id="gradient-path-h" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#008B8B" stopOpacity="0.1" />
+                      <stop offset="50%" stopColor="#008B8B" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#008B8B" stopOpacity="0.1" />
                       <animate 
                         attributeName="x1" 
+                        values="0%;100%;0%" 
+                        dur="20s" 
+                        repeatCount="indefinite" 
+                      />
+                    </linearGradient>
+                    <linearGradient id="gradient-path-v" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#008B8B" stopOpacity="0.1" />
+                      <stop offset="50%" stopColor="#008B8B" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#008B8B" stopOpacity="0.1" />
+                      <animate 
+                        attributeName="y1" 
                         values="0%;100%;0%" 
                         dur="15s" 
                         repeatCount="indefinite" 
@@ -487,65 +513,47 @@ const ProductShowcase: React.FC = () => {
                   </defs>
                 </svg>
               </div>
-            
-              {/* Flowing device layout */}
-              <div className="grid grid-cols-12 gap-4 relative">
-                {healthMonitoringDevices.map((product, index) => {
-                  // Assign different positions for each card to create a flowing layout
-                  const positions = [
-                    "col-span-4 col-start-1", // First item - left
-                    "col-span-4 col-start-5", // Second item - center
-                    "col-span-4 col-start-9", // Third item - right
-                    "col-span-4 col-start-3 mt-[-50px]", // Fourth item - between left and center, slightly elevated
-                    "col-span-4 col-start-7 mt-[-50px]", // Fifth item - between center and right, slightly elevated
-                  ];
-                  
-                  return (
-                    <div key={index} className={`${positions[index % positions.length]} transform transition-all duration-700 hover:-translate-y-2`}>
-                      <DeviceCard product={product} />
-                    </div>
-                  );
-                })}
-              </div>
-              
-              {/* Background element */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-teal/3 blur-3xl -z-10"></div>
             </div>
             
-            {/* Health metrics visualization */}
-            <div className="mt-16 px-4 py-6 bg-gradient-to-r from-brand-teal/5 to-brand-teal/10 rounded-3xl border border-brand-teal/10">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="text-left">
-                  <h4 className="text-xl font-bold text-brand-teal mb-2">Complete Health Visualization</h4>
-                  <p className="text-gray-600">All devices connect to provide a comprehensive view of your health metrics</p>
+            {/* Health metrics visualization - made more professional */}
+            <div className="mt-16 px-6 py-8 bg-gradient-to-r from-brand-teal/10 to-brand-teal/5 rounded-2xl border border-brand-teal/10 shadow-sm">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="text-left md:max-w-xs">
+                  <h4 className="text-xl font-bold text-brand-teal mb-3">Complete Health Dashboard</h4>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    All devices seamlessly connect to provide a comprehensive view of your health metrics in one place.
+                  </p>
+                  <Button variant="ghost" className="mt-4 bg-white hover:bg-white/90 text-brand-teal group px-4 py-2 h-auto shadow-sm">
+                    View All Metrics
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </div>
                 
-                {/* Metrics visualization */}
+                {/* Enhanced metrics visualization with animation */}
                 <div className="flex-1 flex items-center justify-center">
-                  <div className="flex flex-wrap gap-3 justify-center">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-3xl">
                     {[
-                      { name: "Heart Rate", icon: <Heart className="h-4 w-4" />, value: "72 bpm" },
-                      { name: "Temperature", icon: <Thermometer className="h-4 w-4" />, value: "98.6°F" },
-                      { name: "Activity", icon: <Activity className="h-4 w-4" />, value: "5,280 steps" },
-                      { name: "Sleep", icon: <Activity className="h-4 w-4" />, value: "7.5 hours" },
+                      { name: "Heart Rate", icon: <Heart className="h-4 w-4" />, value: "72 bpm", color: "rose" },
+                      { name: "Temperature", icon: <Thermometer className="h-4 w-4" />, value: "98.6°F", color: "amber" },
+                      { name: "Steps", icon: <Activity className="h-4 w-4" />, value: "5,280 steps", color: "emerald" },
+                      { name: "Sleep", icon: <Activity className="h-4 w-4" />, value: "7.5 hours", color: "indigo" },
                     ].map((metric, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-white py-2 px-4 rounded-full shadow-sm">
-                        <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center">
+                      <div 
+                        key={i} 
+                        className={`flex flex-col items-center gap-2 bg-white py-4 px-3 rounded-xl shadow-sm border border-${metric.color}-100 hover:shadow-md transition-all duration-300`}
+                        style={{animation: `float ${2 + i * 0.2}s ease-in-out infinite alternate`}}
+                      >
+                        <div className={`w-10 h-10 rounded-full bg-${metric.color}-50 flex items-center justify-center border border-${metric.color}-100`}>
                           {metric.icon}
                         </div>
-                        <div>
+                        <div className="text-center">
                           <div className="text-xs text-gray-500">{metric.name}</div>
-                          <div className="font-medium text-brand-teal">{metric.value}</div>
+                          <div className="font-medium text-brand-teal text-lg">{metric.value}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                
-                <Button variant="ghost" className="bg-white hover:bg-white/90 text-brand-teal group">
-                  View All Metrics
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
               </div>
             </div>
             
@@ -647,84 +655,4 @@ const ProductShowcase: React.FC = () => {
                         {/* Professional Icon/Image Section */}
                         <div className="relative flex-shrink-0">
                           {/* Background Circle */}
-                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-md mb-4 mx-auto md:mx-0 group-hover:shadow-lg transition-all duration-300">
-                            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                              {professional.icon}
-                            </div>
-                          </div>
-                          
-                          {/* Animated Pulse */}
-                          <div className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping"></div>
-                          </div>
-                        </div>
-                        
-                        {/* Content Section */}
-                        <div className="flex-1">
-                          <div className="flex items-center mb-3">
-                            <h4 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-                              {professional.name}
-                            </h4>
-                            <Badge className="ml-3 bg-blue-100 text-blue-600 border-blue-200 px-2 py-0.5">
-                              Available 24/7
-                            </Badge>
-                          </div>
-                          
-                          <p className="text-gray-600 mb-6">{professional.description}</p>
-                          
-                          {/* Benefits section with improved styling */}
-                          <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mb-6">
-                            <h5 className="text-sm font-semibold text-blue-700 mb-3">Service Benefits</h5>
-                            <div className="grid grid-cols-1 gap-3">
-                              {professional.benefits?.map((benefit, i) => (
-                                <div key={i} className="flex items-start group">
-                                  <div className="rounded-full bg-blue-100 p-1 mr-3 flex-shrink-0 group-hover:bg-blue-200 transition-colors duration-300">
-                                    <Check className="h-3 w-3 text-blue-700" />
-                                  </div>
-                                  <span className="text-gray-700">{benefit}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          {/* Action buttons */}
-                          <div className="flex flex-wrap gap-3">
-                            <Button className="bg-blue-500 hover:bg-blue-600 group">
-                              <span>Connect Now</span>
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                            </Button>
-                            <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
-                              View Qualifications
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Bottom decorative elements */}
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-blue-400"></div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-            
-            {/* Call to action for healthcare section */}
-            <div className="mt-10 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
-              <div className="flex flex-col md:flex-row items-center justify-between">
-                <div className="mb-4 md:mb-0 text-center md:text-left">
-                  <h4 className="text-xl font-bold text-blue-700 mb-2">Need Medical Advice?</h4>
-                  <p className="text-blue-600/80">Our healthcare professionals are ready to assist you anytime.</p>
-                </div>
-                <Button className="bg-white text-blue-600 hover:bg-blue-50 border border-blue-200 shadow-sm">
-                  Schedule a Consultation
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default ProductShowcase;
+                          <div className="w-24 h-24
