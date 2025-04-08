@@ -10,7 +10,7 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   width?: number;
   height?: number;
   priority?: boolean;
-  preload?: boolean; // Add preload option
+  preload?: boolean;
 }
 
 export const OptimizedImage = ({
@@ -29,13 +29,21 @@ export const OptimizedImage = ({
   const imageRef = useRef<HTMLImageElement>(null);
   const observer = useRef<IntersectionObserver | null>(null);
 
+  useEffect(() => {
+    // Force reset load state when src changes
+    setIsLoaded(false);
+    setError(false);
+  }, [src]);
+
   // Handle image onload event
   const handleLoad = () => {
+    console.log(`Image loaded successfully: ${src}`);
     setIsLoaded(true);
   };
 
   // Handle image error
   const handleError = () => {
+    console.error(`Failed to load image: ${src}`);
     setError(true);
     setIsLoaded(true);
   };
@@ -95,6 +103,13 @@ export const OptimizedImage = ({
   // Determine if we should use the placeholder image
   const imageSrc = error ? '/placeholder.svg' : src;
 
+  // For debugging
+  useEffect(() => {
+    if (priority || preload) {
+      console.log(`Preloading prioritized image: ${src}`);
+    }
+  }, [priority, preload, src]);
+
   return (
     <div
       className={cn(
@@ -109,8 +124,8 @@ export const OptimizedImage = ({
     >
       <img
         ref={imageRef}
-        src={priority || preload ? imageSrc : (isLoaded ? imageSrc : '')} // Only set src for priority images initially
-        data-src={!priority && !preload ? imageSrc : undefined} // Store the real src for lazy loading
+        src={priority || preload ? imageSrc : (isLoaded ? imageSrc : '')} 
+        data-src={!priority && !preload ? imageSrc : undefined}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         onLoad={handleLoad}
@@ -122,6 +137,13 @@ export const OptimizedImage = ({
         )}
         {...props}
       />
+
+      {/* Add a debug overlay for development */}
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-100/50">
+          Loading: {src.split('/').pop()}
+        </div>
+      )}
     </div>
   );
 };

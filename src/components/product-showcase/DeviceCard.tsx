@@ -19,6 +19,13 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
   const isBedSensor = product.name === "Bed Sensor";
   const shouldPrioritize = priorityImage || isGuardianButton || isBedSensor;
   
+  // Log for debugging
+  React.useEffect(() => {
+    if (isGuardianButton || isBedSensor) {
+      console.log(`Rendering high-priority device: ${product.name}, Image: ${product.image}`);
+    }
+  }, [product.name, product.image, isGuardianButton, isBedSensor]);
+  
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
       {/* Gradient top bar with animation */}
@@ -42,19 +49,30 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image placeholder - Now using OptimizedImage */}
+        {/* Image - Using direct img for high-priority images to ensure they load */}
         <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-muted">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
-            <OptimizedImage 
-              src={product.image} 
-              alt={product.name} 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              priority={shouldPrioritize} 
-              preload={shouldPrioritize}
-              width={640}
-              height={360}
-            />
+            {shouldPrioritize ? (
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                width={640}
+                height={360}
+                loading="eager"
+              />
+            ) : (
+              <OptimizedImage 
+                src={product.image} 
+                alt={product.name} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={shouldPrioritize} 
+                preload={shouldPrioritize}
+                width={640}
+                height={360}
+              />
+            )}
             {/* Subtle glow effect */}
             <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white to-transparent"></div>
           </AspectRatio>
