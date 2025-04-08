@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -36,7 +37,7 @@ const ProductShowcase: React.FC = () => {
   const products: Product[] = [
     {
       name: "iHealth Dashboard Tablet",
-      image: "/placeholder.svg",
+      image: "/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png", // Updated image path
       description: "Simple, large-format tablet pre-configured for easy health tracking.",
       category: "featured",
       type: "Featured Device",
