@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +21,7 @@ import {
   CarouselPrevious
 } from "@/components/ui/carousel";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface Product {
   name: string;
@@ -240,17 +240,21 @@ const ProductShowcase: React.FC = () => {
                   <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-brand-orange/10 to-transparent rounded-tr-full z-0"></div>
                   
                   <div className="flex flex-col md:flex-row relative z-10">
-                    {/* Left side */}
+                    {/* Left side - Enhanced Image Display */}
                     <div className="md:w-2/5 relative overflow-hidden">
-                      <div className="relative h-56 md:h-full">
+                      <div className="relative h-72 md:h-full">
                         <div className="absolute inset-0 bg-gradient-to-br from-orange-100/80 to-orange-200/50 z-0"></div>
-                        <div className="flex items-center justify-center h-full p-8 relative z-10">
-                          <div className="w-40 h-40 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-lg transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                            <img 
-                              src={featuredDevice.image} 
-                              alt={featuredDevice.name} 
-                              className="h-28 w-28 object-contain"
-                            />
+                        <div className="flex items-center justify-center h-full p-6 relative z-10">
+                          <div className="w-full h-full flex items-center justify-center">
+                            <div className="relative w-56 h-56 md:w-80 md:h-80 transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1">
+                              <div className="absolute inset-0 bg-white/80 rounded-2xl shadow-lg backdrop-blur-sm"></div>
+                              <img 
+                                src={featuredDevice.image} 
+                                alt={featuredDevice.name} 
+                                className="absolute inset-0 w-full h-full object-contain p-4"
+                              />
+                              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-transparent via-brand-orange/30 to-transparent blur-sm"></div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -264,9 +268,9 @@ const ProductShowcase: React.FC = () => {
                       </div>
                     </div>
                     
-                    {/* Right side content */}
+                    {/* Right side content - Enhanced with better spacing and typography */}
                     <div className="md:w-3/5 p-8 flex flex-col justify-center">
-                      <div className="mb-1">
+                      <div className="mb-2">
                         <div className="flex items-center gap-1">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -275,32 +279,40 @@ const ProductShowcase: React.FC = () => {
                         </div>
                       </div>
                       
-                      <h4 className="text-2xl md:text-3xl text-brand-orange font-bold mb-3">{featuredDevice.name}</h4>
-                      <p className="text-lg text-gray-600 mb-6">{featuredDevice.description}</p>
+                      <h4 className="text-2xl md:text-3xl text-brand-orange font-bold mb-3">
+                        {featuredDevice.name}
+                        <Badge variant="outline" className="ml-3 bg-brand-orange/10 text-brand-orange border-brand-orange/30 px-2 py-0.5 text-xs font-semibold">
+                          NEW
+                        </Badge>
+                      </h4>
+                      <p className="text-lg text-gray-600 mb-8 leading-relaxed">{featuredDevice.description}</p>
                       
-                      <ul className="space-y-3 mb-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-brand-orange/5 p-4 rounded-lg border border-brand-orange/10">
+                        <div className="col-span-1 sm:col-span-2 mb-2">
+                          <h5 className="font-semibold text-brand-orange/90">Key Benefits</h5>
+                        </div>
                         {featuredDevice.benefits?.map((benefit, index) => (
-                          <li key={index} className="flex items-start text-gray-700">
-                            <div className="mt-1 mr-3">
-                              <div className="w-5 h-5 rounded-full bg-brand-orange/10 flex items-center justify-center">
+                          <div key={index} className="flex items-start text-gray-700 group">
+                            <div className="mt-1 mr-3 flex-shrink-0">
+                              <div className="w-5 h-5 rounded-full bg-brand-orange/10 flex items-center justify-center group-hover:bg-brand-orange/20 transition-colors">
                                 <Check className="h-3 w-3 text-brand-orange" />
                               </div>
                             </div>
-                            <span>{benefit}</span>
-                          </li>
+                            <span className="text-sm sm:text-base">{benefit}</span>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                       
                       <div className="flex flex-wrap gap-3 mt-auto">
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center transition-colors hover:bg-brand-teal/20 cursor-pointer">
-                                <Heart className="h-4 w-4 text-brand-teal" />
+                              <div className="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center transition-colors hover:bg-brand-teal/20 cursor-pointer">
+                                <Heart className="h-5 w-5 text-brand-teal" />
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Track your heart rate</p>
+                              <p>Health monitoring features</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -308,8 +320,8 @@ const ProductShowcase: React.FC = () => {
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <div className="w-8 h-8 rounded-full bg-brand-orange/10 flex items-center justify-center transition-colors hover:bg-brand-orange/20 cursor-pointer">
-                                <Shield className="h-4 w-4 text-brand-orange" />
+                              <div className="w-10 h-10 rounded-full bg-brand-orange/10 flex items-center justify-center transition-colors hover:bg-brand-orange/20 cursor-pointer">
+                                <Shield className="h-5 w-5 text-brand-orange" />
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -318,14 +330,18 @@ const ProductShowcase: React.FC = () => {
                           </Tooltip>
                         </TooltipProvider>
                         
-                        <Button className="ml-auto bg-gradient-to-r from-brand-orange to-brand-orange/90 hover:from-brand-orange/90 hover:to-brand-orange shadow-md group">
-                          <span>Learn More</span>
+                        <Button className="ml-auto bg-gradient-to-r from-brand-orange to-brand-orange/90 hover:from-brand-orange/90 hover:to-brand-orange shadow-md group px-6 py-2 rounded-full">
+                          <span>View Details</span>
                           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                       </div>
                     </div>
                   </div>
                 </Card>
+                
+                {/* Add decorative elements around the featured product */}
+                <div className="absolute -top-6 -right-6 w-12 h-12 rounded-full bg-brand-orange/10 blur-xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-20 h-20 rounded-full bg-brand-teal/10 blur-xl"></div>
               </div>
             </div>
           )}
