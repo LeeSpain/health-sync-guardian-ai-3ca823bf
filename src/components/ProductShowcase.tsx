@@ -185,8 +185,9 @@ const ProductShowcase: React.FC = () => {
   const healthMonitoringDevices = products.filter(product => product.category === "device");
   const professionalServices = products.filter(product => product.category === "service");
 
+  
   return (
-    <section id="products" className="py-28 relative overflow-hidden">
+    <section id="products" className="py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-white to-brand-grey/20 z-0"></div>
       <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent z-0"></div>
@@ -204,7 +205,7 @@ const ProductShowcase: React.FC = () => {
       </svg>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <Badge className="mb-4 px-4 py-1.5 text-sm font-medium bg-gradient-to-r from-brand-teal/10 to-brand-teal/20 text-brand-teal border-none">
             Our Products
           </Badge>
@@ -217,132 +218,114 @@ const ProductShowcase: React.FC = () => {
         </div>
 
         {/* All Products in One View */}
-        <div className="space-y-24">
-          {/* Featured Product Section */}
+        <div className="space-y-16">
+          {/* Featured Product Section - Redesigned to be more compact and professional */}
           {featuredDevice && (
             <div>
-              <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+              <div className="flex flex-col md:flex-row items-center justify-between mb-6">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-orange to-brand-orange/70 flex items-center justify-center mr-4 shadow-md">
-                    <Tablet className="h-6 w-6 text-white" />
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-orange to-brand-orange/70 flex items-center justify-center mr-3 shadow-md">
+                    <Tablet className="h-5 w-5 text-white" />
                   </div>
-                  <h3 className="text-2xl text-brand-orange font-bold">Featured Device</h3>
+                  <h3 className="text-xl text-brand-orange font-bold">Featured Device</h3>
                 </div>
-                <Badge variant="outline" className="mt-4 md:mt-0 bg-brand-orange/10 text-brand-orange border-brand-orange/30 px-4 py-1.5 font-semibold shadow-sm">
+                <Badge variant="outline" className="mt-3 md:mt-0 bg-brand-orange/10 text-brand-orange border-brand-orange/30 px-3 py-1 font-semibold shadow-sm">
                   Flagship Product
                 </Badge>
               </div>
               
-              <div className="relative">
-                {/* Featured product card with premium design */}
-                <Card className="group relative z-10 max-w-4xl mx-auto overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-white to-orange-50">
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-brand-orange/20 to-brand-orange/5 rounded-bl-full z-0"></div>
-                  <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-brand-orange/10 to-transparent rounded-tr-full z-0"></div>
-                  
-                  <div className="flex flex-col md:flex-row relative z-10">
-                    {/* Left side - Enhanced Image Display */}
-                    <div className="md:w-2/5 relative overflow-hidden">
-                      <div className="relative h-72 md:h-full">
-                        <div className="absolute inset-0 bg-gradient-to-br from-orange-100/80 to-orange-200/50 z-0"></div>
-                        <div className="flex items-center justify-center h-full p-6 relative z-10">
-                          <div className="w-full h-full flex items-center justify-center">
-                            <div className="relative w-56 h-56 md:w-80 md:h-80 transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1">
-                              <div className="absolute inset-0 bg-white/80 rounded-2xl shadow-lg backdrop-blur-sm"></div>
-                              <img 
-                                src={featuredDevice.image} 
-                                alt={featuredDevice.name} 
-                                className="absolute inset-0 w-full h-full object-contain p-4"
-                              />
-                              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-transparent via-brand-orange/30 to-transparent blur-sm"></div>
-                            </div>
-                          </div>
+              <Card className="overflow-hidden border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
+                <div className="flex flex-col md:flex-row">
+                  {/* Left side - Product Image with cleaner presentation */}
+                  <div className="md:w-2/5 bg-gradient-to-br from-orange-50 to-orange-100/30">
+                    <div className="flex items-center justify-center h-full p-6">
+                      <div className="relative w-full max-w-xs mx-auto">
+                        <div className="relative aspect-square flex items-center justify-center">
+                          <div className="absolute inset-0 bg-white/60 rounded-xl shadow-sm"></div>
+                          <img 
+                            src={featuredDevice.image} 
+                            alt={featuredDevice.name} 
+                            className="relative w-[85%] h-[85%] object-contain mx-auto"
+                          />
+                          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-brand-orange/30 to-transparent blur-sm"></div>
                         </div>
-                      </div>
-                      
-                      {/* Accent corner */}
-                      <div className="absolute top-0 right-0 w-24 h-24 overflow-hidden md:block hidden">
-                        <div className="absolute top-0 right-0 w-12 h-12 bg-brand-orange rounded-bl-xl transform rotate-0 origin-top-right group-hover:rotate-90 transition-transform duration-500"></div>
-                        <div className="absolute top-2 right-2 text-white z-10 drop-shadow-md">
-                          {featuredDevice.icon}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Right side content - Enhanced with better spacing and typography */}
-                    <div className="md:w-3/5 p-8 flex flex-col justify-center">
-                      <div className="mb-2">
-                        <div className="flex items-center gap-1">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          ))}
-                          <span className="text-sm text-gray-500 ml-2">Top Rated</span>
-                        </div>
-                      </div>
-                      
-                      <h4 className="text-2xl md:text-3xl text-brand-orange font-bold mb-3">
-                        {featuredDevice.name}
-                        <Badge variant="outline" className="ml-3 bg-brand-orange/10 text-brand-orange border-brand-orange/30 px-2 py-0.5 text-xs font-semibold">
-                          NEW
-                        </Badge>
-                      </h4>
-                      <p className="text-lg text-gray-600 mb-8 leading-relaxed">{featuredDevice.description}</p>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-brand-orange/5 p-4 rounded-lg border border-brand-orange/10">
-                        <div className="col-span-1 sm:col-span-2 mb-2">
-                          <h5 className="font-semibold text-brand-orange/90">Key Benefits</h5>
-                        </div>
-                        {featuredDevice.benefits?.map((benefit, index) => (
-                          <div key={index} className="flex items-start text-gray-700 group">
-                            <div className="mt-1 mr-3 flex-shrink-0">
-                              <div className="w-5 h-5 rounded-full bg-brand-orange/10 flex items-center justify-center group-hover:bg-brand-orange/20 transition-colors">
-                                <Check className="h-3 w-3 text-brand-orange" />
-                              </div>
-                            </div>
-                            <span className="text-sm sm:text-base">{benefit}</span>
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-3 mt-auto">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center transition-colors hover:bg-brand-teal/20 cursor-pointer">
-                                <Heart className="h-5 w-5 text-brand-teal" />
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Health monitoring features</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="w-10 h-10 rounded-full bg-brand-orange/10 flex items-center justify-center transition-colors hover:bg-brand-orange/20 cursor-pointer">
-                                <Shield className="h-5 w-5 text-brand-orange" />
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Medical-grade security</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <Button className="ml-auto bg-gradient-to-r from-brand-orange to-brand-orange/90 hover:from-brand-orange/90 hover:to-brand-orange shadow-md group px-6 py-2 rounded-full">
-                          <span>View Details</span>
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Button>
                       </div>
                     </div>
                   </div>
-                </Card>
-                
-                {/* Add decorative elements around the featured product */}
-                <div className="absolute -top-6 -right-6 w-12 h-12 rounded-full bg-brand-orange/10 blur-xl"></div>
-                <div className="absolute -bottom-10 -left-10 w-20 h-20 rounded-full bg-brand-teal/10 blur-xl"></div>
-              </div>
+                  
+                  {/* Right side content - More compact and focused */}
+                  <div className="md:w-3/5 p-6 flex flex-col">
+                    <div className="mb-2">
+                      <div className="flex items-center">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        ))}
+                        <span className="text-xs text-gray-500 ml-2">Top Rated</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 mb-3">
+                      <h4 className="text-xl md:text-2xl text-brand-orange font-bold">
+                        {featuredDevice.name}
+                      </h4>
+                      <Badge className="bg-brand-orange/10 text-brand-orange border-brand-orange/30 px-2 py-0.5 text-xs font-semibold">
+                        NEW
+                      </Badge>
+                    </div>
+                    
+                    <p className="text-gray-600 mb-4 text-sm">{featuredDevice.description}</p>
+                    
+                    <div className="bg-brand-orange/5 p-3 rounded-lg border border-brand-orange/10 mb-4">
+                      <h5 className="font-semibold text-sm text-brand-orange/90 mb-2">Key Benefits</h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {featuredDevice.benefits?.map((benefit, index) => (
+                          <div key={index} className="flex items-start text-gray-700 group">
+                            <div className="mt-0.5 mr-2 flex-shrink-0">
+                              <div className="w-4 h-4 rounded-full bg-brand-orange/10 flex items-center justify-center">
+                                <Check className="h-2.5 w-2.5 text-brand-orange" />
+                              </div>
+                            </div>
+                            <span className="text-xs sm:text-sm">{benefit}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center mt-auto">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center transition-colors hover:bg-brand-teal/20 cursor-pointer">
+                              <Heart className="h-4 w-4 text-brand-teal" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">Health monitoring features</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="w-8 h-8 rounded-full bg-brand-orange/10 flex items-center justify-center transition-colors hover:bg-brand-orange/20 cursor-pointer ml-2">
+                              <Shield className="h-4 w-4 text-brand-orange" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">Medical-grade security</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      
+                      <Button className="ml-auto bg-gradient-to-r from-brand-orange to-brand-orange/90 hover:from-brand-orange/90 hover:to-brand-orange shadow-sm group rounded-full px-4 py-2 text-sm">
+                        <span>View Details</span>
+                        <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
             </div>
           )}
 
