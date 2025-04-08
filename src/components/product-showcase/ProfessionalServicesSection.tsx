@@ -35,22 +35,24 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
         {products.map((product, index) => (
           <Card key={index} className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex flex-col md:flex-row bg-white h-full">
-              {/* Image container - Direct image without container */}
-              <div className="md:w-2/5 p-6 flex items-center justify-center">
+              {/* Image container - takes full height of parent */}
+              <div className="md:w-2/5 flex items-center justify-center p-4 h-full">
                 {product.image.includes('placeholder') ? (
-                  <div className="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <div className="w-full h-full min-h-[160px] bg-gray-100 rounded-lg flex items-center justify-center">
                     {product.icon}
                   </div>
                 ) : (
-                  <OptimizedImage
-                    src={product.image}
-                    alt={product.name}
-                    className="w-36 h-36 object-contain professional-service-image"
-                    width={144}
-                    height={144}
-                    priority={true}
-                    data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
-                  />
+                  <div className="w-full h-full min-h-[160px] flex items-center justify-center">
+                    <OptimizedImage
+                      src={product.image}
+                      alt={product.name}
+                      className="professional-service-image"
+                      width={200}
+                      height={200}
+                      priority={true}
+                      data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
+                    />
+                  </div>
                 )}
               </div>
               

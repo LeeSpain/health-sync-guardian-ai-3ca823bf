@@ -122,17 +122,17 @@
 
 /* Professional service image styling */
 .professional-service-image {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
   transition: all 0.3s ease;
-  display: inline-block !important;
+  display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
 .professional-service-image:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
 }
 

@@ -57,7 +57,6 @@ export const OptimizedImage = ({
     // If priority is true or already loaded, no need for observer
     if (priority || preload || isLoaded) {
       console.log(`[${uniqueId.current}] Image is priority or already loaded: ${src}`);
-      setIsLoaded(true);
       return;
     }
 
@@ -127,11 +126,15 @@ export const OptimizedImage = ({
     `);
   }, [isLoaded, error, priority, preload, src]);
 
+  // Set display to true immediately for service images
+  const isProfessionalServiceImage = className?.includes('professional-service-image') || false;
+  
   return (
     <div
       className={cn(
         "overflow-hidden relative",
-        !isLoaded && loadingClassName,
+        !isLoaded && !isProfessionalServiceImage && loadingClassName,
+        className?.includes('professional-service-image') ? "w-full h-full" : "",
         className
       )}
       style={{
@@ -142,22 +145,22 @@ export const OptimizedImage = ({
     >
       <img
         ref={imageRef}
-        src={priority || preload ? imageSrc : (isLoaded ? imageSrc : '')} 
-        data-src={!priority && !preload ? imageSrc : undefined}
+        src={priority || preload || isProfessionalServiceImage ? imageSrc : (isLoaded ? imageSrc : '')} 
+        data-src={!priority && !preload && !isProfessionalServiceImage ? imageSrc : undefined}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         onLoad={handleLoad}
         onError={handleError}
         className={cn(
-          "w-full h-full object-cover transition-opacity duration-300",
-          isLoaded ? "opacity-100" : "opacity-0",
+          "w-full h-full object-contain transition-opacity duration-300",
+          (isLoaded || isProfessionalServiceImage) ? "opacity-100" : "opacity-0",
           className
         )}
         {...props}
       />
 
-      {/* Loading state indicator */}
-      {!isLoaded && (
+      {/* Loading state indicator - hide for professional service images */}
+      {!isLoaded && !isProfessionalServiceImage && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-100/50">
           <div className="text-center">
             <div className="animate-spin h-5 w-5 border-2 border-brand-teal/30 border-t-brand-teal rounded-full mx-auto mb-1"></div>
