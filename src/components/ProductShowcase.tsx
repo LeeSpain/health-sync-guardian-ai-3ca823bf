@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +11,9 @@ import {
   Bell, 
   Tablet, 
   Check, 
-  Star
+  Star,
+  Stethoscope,
+  UserRound
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -27,7 +30,7 @@ interface Product {
   name: string;
   image: string;
   description: string;
-  category: 'featured' | 'device' | 'service';
+  category: 'featured' | 'device' | 'service' | 'healthcare';
   type: string;
   icon: React.ReactNode;
   benefits?: string[];
@@ -156,9 +159,9 @@ const ProductShowcase: React.FC = () => {
       name: "Nurse-Sync",
       image: "/placeholder.svg",
       description: "Direct connection to qualified nurses for health advice and consultation.",
-      category: "service",
-      type: "Professional Services",
-      icon: <Activity className="h-6 w-6" />,
+      category: "healthcare",
+      type: "Healthcare Professionals",
+      icon: <UserRound className="h-6 w-6" />,
       benefits: [
         "On-demand nurse consultations",
         "Medication review services",
@@ -169,9 +172,9 @@ const ProductShowcase: React.FC = () => {
       name: "Medic-Sync",
       image: "/placeholder.svg",
       description: "24/7 access to medical professionals for urgent health concerns.",
-      category: "service",
-      type: "Professional Services",
-      icon: <Activity className="h-6 w-6" />,
+      category: "healthcare",
+      type: "Healthcare Professionals",
+      icon: <Stethoscope className="h-6 w-6" />,
       benefits: [
         "Virtual doctor appointments",
         "Prescription management",
@@ -184,6 +187,7 @@ const ProductShowcase: React.FC = () => {
   const featuredDevice = products.find(product => product.category === "featured");
   const healthMonitoringDevices = products.filter(product => product.category === "device");
   const professionalServices = products.filter(product => product.category === "service");
+  const healthcareProfessionals = products.filter(product => product.category === "healthcare");
 
   
   return (
@@ -219,7 +223,7 @@ const ProductShowcase: React.FC = () => {
 
         {/* All Products in One View */}
         <div className="space-y-16">
-          {/* Featured Product Section - Redesigned to be more compact and professional */}
+          {/* Featured Product Section */}
           {featuredDevice && (
             <div>
               <div className="flex flex-col md:flex-row items-center justify-between mb-6">
@@ -456,6 +460,108 @@ const ProductShowcase: React.FC = () => {
                   </div>
                 </Card>
               ))}
+            </div>
+          </div>
+
+          {/* Healthcare Professionals Section - New Section */}
+          <div>
+            <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+              <div className="flex items-center">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600/70 flex items-center justify-center mr-4 shadow-md">
+                  <Stethoscope className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl text-blue-500 font-bold">Healthcare Professionals</h3>
+              </div>
+              <Badge variant="outline" className="mt-4 md:mt-0 bg-blue-500/10 text-blue-500 border-blue-500/30 px-4 py-1.5 font-semibold shadow-sm">
+                Expert Medical Team
+              </Badge>
+            </div>
+            
+            {/* Different layout for healthcare professionals */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {healthcareProfessionals.map((professional, index) => (
+                <Card key={index} className="overflow-hidden border-0 shadow-xl bg-white group">
+                  <div className="relative pb-1">
+                    {/* Top decorative bar */}
+                    <div className="h-2 w-full bg-gradient-to-r from-blue-400 to-blue-600"></div>
+                    
+                    <div className="p-8">
+                      <div className="flex flex-col md:flex-row items-start gap-6">
+                        {/* Professional Icon/Image Section */}
+                        <div className="relative flex-shrink-0">
+                          {/* Background Circle */}
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-md mb-4 mx-auto md:mx-0 group-hover:shadow-lg transition-all duration-300">
+                            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                              {professional.icon}
+                            </div>
+                          </div>
+                          
+                          {/* Animated Pulse */}
+                          <div className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping"></div>
+                          </div>
+                        </div>
+                        
+                        {/* Content Section */}
+                        <div className="flex-1">
+                          <div className="flex items-center mb-3">
+                            <h4 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                              {professional.name}
+                            </h4>
+                            <Badge className="ml-3 bg-blue-100 text-blue-600 border-blue-200 px-2 py-0.5">
+                              Available 24/7
+                            </Badge>
+                          </div>
+                          
+                          <p className="text-gray-600 mb-6">{professional.description}</p>
+                          
+                          {/* Benefits section with improved styling */}
+                          <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mb-6">
+                            <h5 className="text-sm font-semibold text-blue-700 mb-3">Service Benefits</h5>
+                            <div className="grid grid-cols-1 gap-3">
+                              {professional.benefits?.map((benefit, i) => (
+                                <div key={i} className="flex items-start group">
+                                  <div className="rounded-full bg-blue-100 p-1 mr-3 flex-shrink-0 group-hover:bg-blue-200 transition-colors duration-300">
+                                    <Check className="h-3 w-3 text-blue-700" />
+                                  </div>
+                                  <span className="text-gray-700">{benefit}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Action buttons */}
+                          <div className="flex flex-wrap gap-3">
+                            <Button className="bg-blue-500 hover:bg-blue-600 group">
+                              <span>Connect Now</span>
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                            <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
+                              View Qualifications
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Bottom decorative elements */}
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-blue-400"></div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+            
+            {/* Call to action for healthcare section */}
+            <div className="mt-10 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+              <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="mb-4 md:mb-0 text-center md:text-left">
+                  <h4 className="text-xl font-bold text-blue-700 mb-2">Need Medical Advice?</h4>
+                  <p className="text-blue-600/80">Our healthcare professionals are ready to assist you anytime.</p>
+                </div>
+                <Button className="bg-white text-blue-600 hover:bg-blue-50 border border-blue-200 shadow-sm">
+                  Schedule a Consultation
+                </Button>
+              </div>
             </div>
           </div>
         </div>
