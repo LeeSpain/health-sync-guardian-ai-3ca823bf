@@ -261,7 +261,7 @@ const ProductShowcase: React.FC = () => {
 
   
   return (
-    <section id="products" className="py-20 relative overflow-hidden">
+    <div id="products" className="py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-white to-brand-grey/20 z-0"></div>
       <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent z-0"></div>
@@ -630,6 +630,7 @@ const ProductShowcase: React.FC = () => {
 
           {/* Healthcare Professionals Section - Updated with Nurse Sync colors */}
           <div>
+            {/* Section header */}
             <div className="flex flex-col md:flex-row items-center justify-between mb-12">
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#9b87f5] to-[#E5DEFF] flex items-center justify-center mr-4 shadow-md">
@@ -642,17 +643,16 @@ const ProductShowcase: React.FC = () => {
               </Badge>
             </div>
             
-            {/* Different layout for healthcare professionals */}
+            {/* Grid for Healthcare Professionals */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {healthcareProfessionals.map((professional, index) => (
                 <Card key={index} className="overflow-hidden border-0 shadow-xl bg-white group">
                   <div className="relative pb-1">
-                    {/* Top decorative bar */}
                     <div className="h-2 w-full bg-gradient-to-r from-[#9b87f5] to-[#E5DEFF]"></div>
                     
                     <div className="p-8">
                       <div className="flex flex-col md:flex-row items-start gap-6">
-                        {/* Professional Icon/Image Section */}
+                        {/* Professional Details */}
                         <div className="relative flex-shrink-0">
-                          {/* Background Circle */}
-                          <div className="w
+                          {/* Professional Icon/Image */}
+                          <div className="w-24
