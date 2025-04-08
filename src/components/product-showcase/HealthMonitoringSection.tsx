@@ -12,6 +12,9 @@ interface HealthMonitoringSectionProps {
 }
 
 export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionProps) => {
+  // Determine which product is the Bed Sensor for prioritized loading
+  const isBedSensor = (product: Product) => product.name === "Bed Sensor";
+  
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between mb-12">
@@ -52,7 +55,10 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
         <div className="grid grid-cols-3 gap-6">
           {products.map((product, index) => (
             <div key={index} className="transform transition-all duration-500 hover:-translate-y-2">
-              <DeviceCard product={product} />
+              <DeviceCard 
+                product={product} 
+                priorityImage={isBedSensor(product)} 
+              />
             </div>
           ))}
         </div>

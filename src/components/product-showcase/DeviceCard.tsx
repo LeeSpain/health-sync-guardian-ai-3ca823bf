@@ -10,11 +10,14 @@ import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
+  priorityImage?: boolean;
 }
 
-export const DeviceCard = ({ product }: DeviceCardProps) => {
-  // Determine if this is the Guardian Button to set priority
+export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) => {
+  // Determine if this is the Guardian Button or Bed Sensor to set priority
   const isGuardianButton = product.name === "Guardian Button";
+  const isBedSensor = product.name === "Bed Sensor";
+  const shouldPrioritize = priorityImage || isGuardianButton || isBedSensor;
   
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
@@ -47,8 +50,8 @@ export const DeviceCard = ({ product }: DeviceCardProps) => {
               src={product.image} 
               alt={product.name} 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              priority={isGuardianButton} // Set priority for Guardian Button
-              preload={isGuardianButton} // Preload the Guardian Button image
+              priority={shouldPrioritize} 
+              preload={shouldPrioritize}
               width={640}
               height={360}
             />

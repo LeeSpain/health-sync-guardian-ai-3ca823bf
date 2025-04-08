@@ -28,7 +28,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Guardian Button",
-    image: "/lovable-uploads/a660c44d-8542-4391-91d0-94af264456a4.png", // Updated image path
+    image: "/lovable-uploads/a660c44d-8542-4391-91d0-94af264456a4.png", 
     description: "One-press emergency button that works anywhere in your home, no phone needed.",
     category: "device",
     type: "Health Monitoring",
@@ -80,7 +80,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Bed Sensor",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/bc5cfcc2-3468-4e5f-a99f-111609b5d011.png",
     description: "Monitor sleep patterns, bed exits, and nighttime activity without wearables.",
     category: "device",
     type: "Health Monitoring",
