@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -655,4 +656,57 @@ const ProductShowcase: React.FC = () => {
                         {/* Professional Details */}
                         <div className="relative flex-shrink-0">
                           {/* Professional Icon/Image */}
-                          <div className="w-24
+                          <div className="w-24 h-24 rounded-full bg-[#E5DEFF]/50 flex items-center justify-center border border-[#9b87f5]/20 shadow-md group-hover:scale-105 transition-transform duration-300">
+                            {professional.icon}
+                          </div>
+                          
+                          <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-r from-[#9b87f5] to-[#E5DEFF] flex items-center justify-center text-white shadow-md">
+                            <BadgePlus className="h-4 w-4" />
+                          </div>
+                        </div>
+                        
+                        <div className="flex-1">
+                          <h4 className="text-xl font-bold text-[#9b87f5] mb-2">{professional.name}</h4>
+                          <Badge className="bg-[#E5DEFF]/30 text-[#9b87f5] border-none mb-3 px-2.5 py-0.5 text-xs">
+                            {professional.type}
+                          </Badge>
+                          <p className="text-gray-600 text-sm mb-4">{professional.description}</p>
+                          
+                          {professional.benefits && (
+                            <div className="space-y-2 mb-5">
+                              {professional.benefits.map((benefit, i) => (
+                                <div key={i} className="flex items-start text-gray-600 text-sm group/item">
+                                  <div className="rounded-full bg-[#E5DEFF]/50 p-1 mr-2 flex-shrink-0 group-hover/item:bg-[#E5DEFF]/80 transition-colors">
+                                    <Check className="h-3 w-3 text-[#9b87f5]" />
+                                  </div>
+                                  <span>{benefit}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          
+                          <div className="flex items-center justify-end gap-3 mt-4">
+                            <Button variant="outline" className="text-[#9b87f5] border-[#9b87f5]/30 hover:bg-[#E5DEFF]/20 hover:text-[#9b87f5] group">
+                              <Smartphone className="h-4 w-4 mr-1" />
+                              <span>Connect</span>
+                            </Button>
+                            <Button className="bg-gradient-to-r from-[#9b87f5] to-[#9b87f5]/90 hover:from-[#9b87f5]/90 hover:to-[#9b87f5] text-white shadow-md group">
+                              <span>View Profile</span>
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductShowcase;
