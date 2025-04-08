@@ -20,13 +20,17 @@
     <!-- Performance optimizations - Preload critical assets -->
     <link rel="preload" href="/src/index.css" as="style" />
     
-    <!-- Force preload for key images - higher importance -->
+    <!-- Force preload for key images with highest importance -->
+    <link rel="preload" href="/lovable-uploads/c38f7f2c-ac88-45a4-be0e-6ca22e7498f1.png" as="image" fetchpriority="high" />
+    <link rel="preload" href="/lovable-uploads/ec15308f-f7c7-4558-8c68-3a3c04deac25.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png" as="image" fetchpriority="high" />
-    <link rel="preload" href="/lovable-uploads/a660c44d-8542-4391-91d0-94af264456a4.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/bc5cfcc2-3468-4e5f-a99f-111609b5d011.png" as="image" fetchpriority="high" />
-
+    
     <!-- Add support for instant navigation -->
     <link rel="prefetch" href="/pricing" />
+    
+    <!-- Ensure immediate loading with DNS prefetching -->
+    <link rel="dns-prefetch" href="/lovable-uploads/" />
     
     <!-- Avoid render blocking resources -->
     <style>

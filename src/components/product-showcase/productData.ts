@@ -28,7 +28,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Guardian Button",
-    image: "/lovable-uploads/a660c44d-8542-4391-91d0-94af264456a4.png", 
+    image: "/lovable-uploads/c38f7f2c-ac88-45a4-be0e-6ca22e7498f1.png", 
     description: "One-press emergency button that works anywhere in your home, no phone needed.",
     category: "device",
     type: "Health Monitoring",
@@ -67,7 +67,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Thermometer",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/ec15308f-f7c7-4558-8c68-3a3c04deac25.png",
     description: "Contactless temperature readings with fever detection and history.",
     category: "device",
     type: "Health Monitoring",

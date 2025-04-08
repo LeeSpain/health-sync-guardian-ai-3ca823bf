@@ -28,22 +28,26 @@ export const OptimizedImage = ({
   const [error, setError] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const observer = useRef<IntersectionObserver | null>(null);
+  const uniqueId = useRef(`img-${Math.random().toString(36).substring(2, 9)}`);
 
   useEffect(() => {
     // Force reset load state when src changes
     setIsLoaded(false);
     setError(false);
-  }, [src]);
+    
+    // Debug logging for each image load attempt
+    console.log(`[${uniqueId.current}] Setting up image: ${src} (Priority: ${priority ? 'YES' : 'no'})`);
+  }, [src, priority]);
 
   // Handle image onload event
   const handleLoad = () => {
-    console.log(`Image loaded successfully: ${src}`);
+    console.log(`[${uniqueId.current}] Image loaded successfully: ${src}`);
     setIsLoaded(true);
   };
 
   // Handle image error
   const handleError = () => {
-    console.error(`Failed to load image: ${src}`);
+    console.error(`[${uniqueId.current}] Failed to load image: ${src}`);
     setError(true);
     setIsLoaded(true);
   };
@@ -51,24 +55,31 @@ export const OptimizedImage = ({
   // Set up intersection observer for non-priority images
   useEffect(() => {
     // If priority is true or already loaded, no need for observer
-    if (priority || isLoaded) {
+    if (priority || preload || isLoaded) {
+      console.log(`[${uniqueId.current}] Image is priority or already loaded: ${src}`);
       setIsLoaded(true);
       return;
     }
 
     // Use Intersection Observer for lazy loading
     if (!observer.current && imageRef.current && !priority) {
+      console.log(`[${uniqueId.current}] Setting up observer for: ${src}`);
+      
       observer.current = new IntersectionObserver((entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
           // When image enters viewport, set the real src
           if (imageRef.current) {
+            console.log(`[${uniqueId.current}] Image entering viewport, loading: ${src}`);
+            
             if ('loading' in HTMLImageElement.prototype) {
               // Browser supports loading="lazy"
               imageRef.current.loading = "lazy";
             }
+            
             // Force the browser to load the image
             imageRef.current.src = src;
+            
             // Once visible, no need to observe anymore
             observer.current?.disconnect();
             observer.current = null;
@@ -84,15 +95,17 @@ export const OptimizedImage = ({
 
     return () => {
       if (observer.current) {
+        console.log(`[${uniqueId.current}] Cleaning up observer for: ${src}`);
         observer.current.disconnect();
         observer.current = null;
       }
     };
-  }, [src, priority, isLoaded]);
+  }, [src, priority, preload, isLoaded]);
 
   // Preload high priority images
   useEffect(() => {
     if ((priority || preload) && src) {
+      console.log(`[${uniqueId.current}] Preloading prioritized image: ${src}`);
       const img = new Image();
       img.src = src;
       img.onload = handleLoad;
@@ -102,13 +115,17 @@ export const OptimizedImage = ({
 
   // Determine if we should use the placeholder image
   const imageSrc = error ? '/placeholder.svg' : src;
-
-  // For debugging
+  
+  // For debugging all image loading states
   useEffect(() => {
-    if (priority || preload) {
-      console.log(`Preloading prioritized image: ${src}`);
-    }
-  }, [priority, preload, src]);
+    console.log(`[${uniqueId.current}] Image state update: 
+      Src: ${src}
+      Loaded: ${isLoaded ? 'YES' : 'no'}
+      Error: ${error ? 'YES' : 'no'}
+      Priority: ${priority ? 'YES' : 'no'}
+      Preload: ${preload ? 'YES' : 'no'}
+    `);
+  }, [isLoaded, error, priority, preload, src]);
 
   return (
     <div
@@ -121,6 +138,7 @@ export const OptimizedImage = ({
         width: width ? `${width}px` : '100%',
         height: height ? `${height}px` : 'auto',
       }}
+      data-image-id={uniqueId.current}
     >
       <img
         ref={imageRef}
@@ -138,10 +156,13 @@ export const OptimizedImage = ({
         {...props}
       />
 
-      {/* Add a debug overlay for development */}
+      {/* Loading state indicator */}
       {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-100/50">
-          Loading: {src.split('/').pop()}
+          <div className="text-center">
+            <div className="animate-spin h-5 w-5 border-2 border-brand-teal/30 border-t-brand-teal rounded-full mx-auto mb-1"></div>
+            <div className="text-xs">Loading image</div>
+          </div>
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
@@ -14,17 +14,18 @@ interface DeviceCardProps {
 }
 
 export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) => {
-  // Determine if this is the Guardian Button or Bed Sensor to set priority
+  // Determine if this is a high-priority product that needs immediate loading
   const isGuardianButton = product.name === "Guardian Button";
   const isBedSensor = product.name === "Bed Sensor";
-  const shouldPrioritize = priorityImage || isGuardianButton || isBedSensor;
+  const isThermometer = product.name === "Thermometer";
+  const shouldPrioritize = priorityImage || isGuardianButton || isBedSensor || isThermometer;
   
-  // Log for debugging
-  React.useEffect(() => {
-    if (isGuardianButton || isBedSensor) {
+  // Log for debugging - helps track which images are being prioritized
+  useEffect(() => {
+    if (shouldPrioritize) {
       console.log(`Rendering high-priority device: ${product.name}, Image: ${product.image}`);
     }
-  }, [product.name, product.image, isGuardianButton, isBedSensor]);
+  }, [product.name, product.image, shouldPrioritize]);
   
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
@@ -49,10 +50,12 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image - Using direct img for high-priority images to ensure they load */}
+        {/* Image handling - Using different strategies based on priority */}
         <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-muted">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
+            
+            {/* For high-priority images, use direct img tag with eager loading */}
             {shouldPrioritize ? (
               <img 
                 src={product.image} 
@@ -61,18 +64,20 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
                 width={640}
                 height={360}
                 loading="eager"
+                onLoad={() => console.log(`Direct image loaded: ${product.name}`)}
+                onError={(e) => console.error(`Error loading direct image for ${product.name}:`, e)}
               />
             ) : (
               <OptimizedImage 
                 src={product.image} 
                 alt={product.name} 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                priority={shouldPrioritize} 
-                preload={shouldPrioritize}
+                priority={false}
                 width={640}
                 height={360}
               />
             )}
+            
             {/* Subtle glow effect */}
             <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white to-transparent"></div>
           </AspectRatio>

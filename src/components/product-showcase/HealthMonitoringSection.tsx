@@ -12,8 +12,17 @@ interface HealthMonitoringSectionProps {
 }
 
 export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionProps) => {
-  // Determine which product is the Bed Sensor for prioritized loading
-  const isBedSensor = (product: Product) => product.name === "Bed Sensor";
+  // Determine which products are high priority for image loading
+  const isHighPriority = (product: Product) => {
+    return ["Bed Sensor", "Guardian Button", "Thermometer"].includes(product.name);
+  };
+  
+  // Log the priority products for debugging
+  React.useEffect(() => {
+    const priorityProducts = products.filter(isHighPriority);
+    console.log('High priority products in HealthMonitoringSection:', 
+      priorityProducts.map(p => `${p.name}: ${p.image}`));
+  }, [products]);
   
   return (
     <div>
@@ -35,7 +44,10 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
           <CarouselContent>
             {products.map((product, index) => (
               <CarouselItem key={index}>
-                <DeviceCard product={product} />
+                <DeviceCard 
+                  product={product}
+                  priorityImage={isHighPriority(product)}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -57,7 +69,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             <div key={index} className="transform transition-all duration-500 hover:-translate-y-2">
               <DeviceCard 
                 product={product} 
-                priorityImage={isBedSensor(product)} 
+                priorityImage={isHighPriority(product)} 
               />
             </div>
           ))}
