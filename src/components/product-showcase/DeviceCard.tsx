@@ -75,13 +75,13 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
               </div>
             )}
             
-            {/* Directly use img tag with native loading attributes for better control */}
+            {/* Fixed: Changed fetchpriority to fetchPriority to match React's TypeScript definitions */}
             <img 
               src={product.image}
               alt={product.name}
               className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading={isPriorityProduct ? "eager" : "lazy"}
-              fetchpriority={isPriorityProduct ? "high" : "auto"}
+              fetchPriority={isPriorityProduct ? "high" : "auto"}
               width={640}
               height={360}
               onLoad={handleImageLoaded}
