@@ -108,6 +108,18 @@
   }
 }
 
+/* Product image styling */
+.product-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
+}
+
 /* Custom ecg line for logo */
 .ecg-line {
   stroke-dasharray: 1000;

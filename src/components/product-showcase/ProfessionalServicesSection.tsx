@@ -5,7 +5,6 @@ import { ArrowRight, Check, Shield, PhoneCall } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface ProfessionalServicesSectionProps {
   products: Product[];
@@ -35,31 +34,25 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
         {products.map((product, index) => (
           <Card key={index} className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex flex-col md:flex-row bg-white h-full">
-              {/* Left side visual */}
-              <div className="md:w-2/5 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100/70 z-0"></div>
-                <div className="h-48 md:h-full w-full flex items-center justify-center relative z-10 p-6">
-                  <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    {/* Direct img tag approach for all images to ensure they load properly */}
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="h-12 w-12 object-contain" 
-                      width={48}
-                      height={48}
-                      loading="eager"
-                      onLoad={() => console.log(`Image loaded successfully: ${product.name} - ${product.image}`)}
-                      onError={(e) => console.error(`Image failed to load: ${product.name} - ${product.image}`, e)}
-                      data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
-                    />
-                  </div>
+              {/* Image container (left side) */}
+              <div className="md:w-2/5 p-6 flex items-center justify-center">
+                <div className="w-24 h-24 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                  {/* Direct img tag with improved size */}
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="h-20 w-20 object-contain" 
+                    width={80}
+                    height={80}
+                    loading="eager"
+                    onLoad={() => console.log(`Image loaded successfully: ${product.name} - ${product.image}`)}
+                    onError={(e) => console.error(`Image failed to load: ${product.name} - ${product.image}`, e)}
+                    data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
+                  />
                 </div>
-                
-                {/* Decorative element */}
-                <div className="absolute bottom-0 right-0 w-16 h-16 bg-brand-orange/20 rounded-tl-2xl md:rounded-tr-none transform translate-y-8 md:translate-y-0 md:-translate-x-8 group-hover:translate-y-0 md:group-hover:translate-x-0 transition-transform duration-500"></div>
               </div>
               
-              {/* Right side content */}
+              {/* Content container (right side) */}
               <div className="md:w-3/5 p-6 md:p-8 flex flex-col">
                 <h4 className="text-xl text-brand-orange font-bold mb-3">{product.name}</h4>
                 <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
