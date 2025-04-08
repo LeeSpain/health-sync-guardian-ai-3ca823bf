@@ -94,7 +94,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "SOS Call Centre",
-    image: "/lovable-uploads/b2787b08-7a7b-4046-bcd7-4c29b1b7b8e1.png", 
+    image: "/lovable-uploads/3bc60e76-02c6-4226-972b-87293e92d1cf.png", 
     description: "Professional emergency response team available 24/7 at the touch of a button.",
     category: "service",
     type: "Professional Services",
@@ -107,7 +107,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Medication Dispenser",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/aec16bb7-f544-4fb2-a359-9daa3038709b.png",
     description: "Automated medication management with reminders and verification.",
     category: "service",
     type: "Professional Services",
@@ -158,3 +158,4 @@ export const getProductsData = (): Product[] => [
     ]
   }
 ];
+
