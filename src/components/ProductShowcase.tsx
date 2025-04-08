@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -655,4 +656,84 @@ const ProductShowcase: React.FC = () => {
                         {/* Professional Icon/Image Section */}
                         <div className="relative flex-shrink-0">
                           {/* Background Circle */}
-                          <div className="w-24 h-24
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-md mb-4 mx-auto md:mx-0 group-hover:shadow-lg transition-all duration-300">
+                            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                              {professional.icon}
+                            </div>
+                          </div>
+                          
+                          {/* Animated Pulse */}
+                          <div className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping"></div>
+                          </div>
+                        </div>
+                        
+                        {/* Content Section */}
+                        <div className="flex-1">
+                          <div className="flex items-center mb-3">
+                            <h4 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                              {professional.name}
+                            </h4>
+                            <Badge className="ml-3 bg-blue-100 text-blue-600 border-blue-200 px-2 py-0.5">
+                              Available 24/7
+                            </Badge>
+                          </div>
+                          
+                          <p className="text-gray-600 mb-6">{professional.description}</p>
+                          
+                          {/* Benefits section with improved styling */}
+                          <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mb-6">
+                            <h5 className="text-sm font-semibold text-blue-700 mb-3">Service Benefits</h5>
+                            <div className="grid grid-cols-1 gap-3">
+                              {professional.benefits?.map((benefit, i) => (
+                                <div key={i} className="flex items-start group">
+                                  <div className="rounded-full bg-blue-100 p-1 mr-3 flex-shrink-0 group-hover:bg-blue-200 transition-colors duration-300">
+                                    <Check className="h-3 w-3 text-blue-700" />
+                                  </div>
+                                  <span className="text-gray-700">{benefit}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Action buttons */}
+                          <div className="flex flex-wrap gap-3">
+                            <Button className="bg-blue-500 hover:bg-blue-600 group">
+                              <span>Connect Now</span>
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Button>
+                            <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
+                              View Qualifications
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Bottom decorative elements */}
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-blue-400"></div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+            
+            {/* Call to action for healthcare section */}
+            <div className="mt-10 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+              <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="mb-4 md:mb-0 text-center md:text-left">
+                  <h4 className="text-xl font-bold text-blue-700 mb-2">Need Medical Advice?</h4>
+                  <p className="text-blue-600/80">Our healthcare professionals are ready to assist you anytime.</p>
+                </div>
+                <Button className="bg-white text-blue-600 hover:bg-blue-50 border border-blue-200 shadow-sm">
+                  Schedule a Consultation
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProductShowcase;
