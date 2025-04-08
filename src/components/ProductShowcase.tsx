@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +12,10 @@ import {
   Check, 
   Star,
   Stethoscope,
-  UserRound
+  UserRound,
+  Wand2,
+  BadgePlus,
+  Smartphone
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -333,7 +335,7 @@ const ProductShowcase: React.FC = () => {
             </div>
           )}
 
-          {/* Health Monitoring Devices Section */}
+          {/* Health Monitoring Devices Section - REDESIGNED */}
           <div>
             <div className="flex flex-col md:flex-row items-center justify-between mb-12">
               <div className="flex items-center">
@@ -347,57 +349,143 @@ const ProductShowcase: React.FC = () => {
               </Badge>
             </div>
             
-            {/* Grid display for devices instead of carousel */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {healthMonitoringDevices.map((product, index) => (
-                <Card key={index} className="group h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden bg-white">
-                  <CardHeader className="p-0">
-                    <div className="relative aspect-video overflow-hidden rounded-t-lg">
-                      <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/10 to-brand-teal/20 z-0"></div>
-                      <div className="h-full w-full flex items-center justify-center p-6 relative z-10">
-                        <div className="w-24 h-24 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                          <img 
-                            src={product.image} 
-                            alt={product.name} 
-                            className="h-16 w-16 object-contain"
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Accent corner */}
-                      <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
-                        <div className="absolute top-0 right-0 w-10 h-10 bg-brand-teal rounded-bl-xl transform rotate-0 origin-top-right group-hover:rotate-90 transition-transform duration-300"></div>
-                        <div className="absolute top-2 right-2 text-white z-10">
-                          {product.icon}
-                        </div>
-                      </div>
+            {/* Mobile view: Enhanced carousel */}
+            <div className="md:hidden">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {healthMonitoringDevices.map((product, index) => (
+                    <CarouselItem key={index}>
+                      <DeviceCard product={product} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center mt-6">
+                  <CarouselPrevious className="static translate-y-0 mx-2 bg-white border border-gray-200 hover:bg-gray-50" />
+                  <CarouselNext className="static translate-y-0 mx-2 bg-white border border-gray-200 hover:bg-gray-50" />
+                </div>
+              </Carousel>
+            </div>
+            
+            {/* Desktop view: Curved flowing layout */}
+            <div className="hidden md:block relative">
+              {/* Curved connecting lines */}
+              <div className="absolute inset-0 z-0 pointer-events-none">
+                <svg className="w-full h-full" viewBox="0 0 1200 600" preserveAspectRatio="none">
+                  <path 
+                    d="M100,200 C400,100 800,300 1100,200" 
+                    fill="none" 
+                    stroke="url(#gradient-path)" 
+                    strokeWidth="2" 
+                    strokeDasharray="6,4"
+                    className="opacity-60"
+                  >
+                    <animate 
+                      attributeName="stroke-dashoffset" 
+                      from="100" 
+                      to="0" 
+                      dur="15s" 
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                  <path 
+                    d="M150,400 C450,500 750,300 1050,400" 
+                    fill="none" 
+                    stroke="url(#gradient-path)" 
+                    strokeWidth="2" 
+                    strokeDasharray="6,4"
+                    className="opacity-60"
+                  >
+                    <animate 
+                      attributeName="stroke-dashoffset" 
+                      from="100" 
+                      to="0" 
+                      dur="12s" 
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                  <defs>
+                    <linearGradient id="gradient-path" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#008B8B" stopOpacity="0.3" />
+                      <stop offset="50%" stopColor="#FF6F42" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#008B8B" stopOpacity="0.3" />
+                      <animate 
+                        attributeName="x1" 
+                        values="0%;100%;0%" 
+                        dur="15s" 
+                        repeatCount="indefinite" 
+                      />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            
+              {/* Flowing device layout */}
+              <div className="grid grid-cols-12 gap-4 relative">
+                {healthMonitoringDevices.map((product, index) => {
+                  // Assign different positions for each card to create a flowing layout
+                  const positions = [
+                    "col-span-4 col-start-1", // First item - left
+                    "col-span-4 col-start-5", // Second item - center
+                    "col-span-4 col-start-9", // Third item - right
+                    "col-span-4 col-start-3 mt-[-50px]", // Fourth item - between left and center, slightly elevated
+                    "col-span-4 col-start-7 mt-[-50px]", // Fifth item - between center and right, slightly elevated
+                  ];
+                  
+                  return (
+                    <div key={index} className={`${positions[index % positions.length]} transform transition-all duration-700 hover:-translate-y-2`}>
+                      <DeviceCard product={product} />
                     </div>
-                  </CardHeader>
-                  
-                  <CardContent className="p-6">
-                    <h4 className="text-xl text-brand-teal font-bold mb-2">{product.name}</h4>
-                    <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
-                    
-                    {product.benefits && (
-                      <ul className="mt-3 space-y-2">
-                        {product.benefits.map((benefit, i) => (
-                          <li key={i} className="flex items-start text-gray-600 text-sm">
-                            <Check className="h-3 w-3 text-brand-teal mt-1 mr-2 flex-shrink-0" />
-                            <span>{benefit}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </CardContent>
-                  
-                  <CardFooter className="pt-0 px-6 pb-6">
-                    <Button className="w-full bg-brand-accent-teal hover:bg-brand-accent-teal/90 group shadow">
-                      <span>Learn More</span>
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
+                  );
+                })}
+              </div>
+              
+              {/* Background element */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-teal/3 blur-3xl -z-10"></div>
+            </div>
+            
+            {/* Health metrics visualization */}
+            <div className="mt-16 px-4 py-6 bg-gradient-to-r from-brand-teal/5 to-brand-teal/10 rounded-3xl border border-brand-teal/10">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="text-left">
+                  <h4 className="text-xl font-bold text-brand-teal mb-2">Complete Health Visualization</h4>
+                  <p className="text-gray-600">All devices connect to provide a comprehensive view of your health metrics</p>
+                </div>
+                
+                {/* Metrics visualization */}
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    {[
+                      { name: "Heart Rate", icon: <Heart className="h-4 w-4" />, value: "72 bpm" },
+                      { name: "Temperature", icon: <Thermometer className="h-4 w-4" />, value: "98.6°F" },
+                      { name: "Activity", icon: <Activity className="h-4 w-4" />, value: "5,280 steps" },
+                      { name: "Sleep", icon: <Activity className="h-4 w-4" />, value: "7.5 hours" },
+                    ].map((metric, i) => (
+                      <div key={i} className="flex items-center gap-2 bg-white py-2 px-4 rounded-full shadow-sm">
+                        <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center">
+                          {metric.icon}
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">{metric.name}</div>
+                          <div className="font-medium text-brand-teal">{metric.value}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <Button variant="ghost" className="bg-white hover:bg-white/90 text-brand-teal group">
+                  View All Metrics
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </div>
+            
+            {/* Call to action */}
+            <div className="mt-10 text-center">
+              <Button size="lg" className="bg-brand-teal hover:bg-brand-teal/90 group">
+                Explore All Devices
+                <Wand2 className="ml-2 h-4 w-4 group-hover:rotate-12 transition-transform" />
+              </Button>
             </div>
           </div>
 
@@ -570,4 +658,10 @@ const ProductShowcase: React.FC = () => {
   );
 };
 
-export default ProductShowcase;
+// New component: Enhanced device card with much more visual appeal
+const DeviceCard = ({ product }: { product: Product }) => {
+  return (
+    <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
+      {/* Gradient top bar with animation */}
+      <div className="h-2 w-full bg-gradient-to-r from-brand-teal/70 to-brand-teal relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg
