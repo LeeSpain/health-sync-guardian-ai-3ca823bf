@@ -134,27 +134,29 @@ export const getProductsData = (): Product[] => [
   {
     name: "Nurse-Sync",
     image: "/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png",
-    description: "Direct connection to qualified nurses for health advice and consultation.",
+    description: "Connect with certified nursing professionals for remote health consultations and care coordination.",
     category: "healthcare",
     type: "Healthcare Professionals",
     icon: React.createElement(UserRound, { className: "h-6 w-6" }),
     benefits: [
-      "On-demand nurse consultations",
-      "Medication review services",
-      "Regular health check-ins"
+      "24/7 access to nursing professionals",
+      "Medication management assistance",
+      "Personalized care plans",
+      "Regular health assessments"
     ]
   },
   {
     name: "Medic-Sync",
     image: "/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png",
-    description: "24/7 access to medical professionals for urgent health concerns.",
+    description: "On-demand consultations with licensed physicians for medical advice, prescriptions, and care recommendations.",
     category: "healthcare",
     type: "Healthcare Professionals",
     icon: React.createElement(Stethoscope, { className: "h-6 w-6" }),
     benefits: [
       "Virtual doctor appointments",
       "Prescription management",
-      "Medical history access"
+      "Specialist referrals",
+      "Secure medical records access"
     ]
   }
 ];
