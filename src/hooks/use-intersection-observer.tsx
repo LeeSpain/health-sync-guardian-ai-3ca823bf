@@ -7,6 +7,7 @@ interface UseIntersectionObserverProps {
   threshold?: number | number[];
   enabled?: boolean;
   delay?: number;
+  triggerOnce?: boolean;
 }
 
 export function useIntersectionObserver({
@@ -14,7 +15,8 @@ export function useIntersectionObserver({
   rootMargin = '0px',
   threshold = 0,
   enabled = true,
-  delay = 100, // Use a small default delay for regular elements to smooth out the scrolling
+  delay = 100,
+  triggerOnce = false,
 }: UseIntersectionObserverProps = {}) {
   return useGenericIntersectionObserver<HTMLDivElement>({
     root,
@@ -22,5 +24,6 @@ export function useIntersectionObserver({
     threshold,
     enabled,
     delay,
+    triggerOnce,
   });
 }

@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -23,21 +24,22 @@ const ComponentLoader = () => (
   </div>
 );
 
-// Improved lazy loaded component with intersection observer
+// Improved lazy loaded component with optimized intersection observer
 const LazyComponent = ({ 
   component: Component, 
   placeholder = <ComponentLoader />,
   threshold = 0.1,
-  rootMargin = "200px 0px", // Load earlier (200px before component enters viewport)
-  delay = 150, // Small delay to batch state updates
+  rootMargin = "300px 0px", // Load earlier (300px before component enters viewport)
+  delay = 100, // Small delay to batch state updates
 }) => {
   const { ref, inView } = useIntersectionObserver({ 
     threshold, 
     rootMargin,
     delay,
+    triggerOnce: true, // Only trigger once to prevent unnecessary re-renders
   });
   
-  // Keep a static element size to prevent layout shift
+  // Use a minimum height to prevent layout shift
   return (
     <div ref={ref} className="min-h-[300px]">
       {inView ? (
@@ -52,14 +54,16 @@ const LazyComponent = ({
 };
 
 const Index: React.FC = () => {
-  // Add CSS class to prevent multiple scrollbars and improve scrolling
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Navbar />
       <main className="flex-grow space-y-12 relative">
         <Hero />
         <LazyComponent component={Features} />
-        <LazyComponent component={ProductShowcase} />
+        <LazyComponent 
+          component={ProductShowcase} 
+          rootMargin="400px 0px" // Load product showcase even earlier due to its complexity
+        />
         <LazyComponent component={AIGuardianSection} />
         <LazyComponent component={UserRoles} />
       </main>

@@ -15,7 +15,11 @@ const ScrollArea = React.forwardRef<
   >
     <ScrollAreaPrimitive.Viewport 
       className="h-full w-full rounded-[inherit]"
-      style={{ scrollBehavior: 'smooth' }} // Add smooth scrolling behavior
+      style={{ 
+        scrollBehavior: 'smooth',
+        overscrollBehavior: 'contain', // Prevent scroll chaining
+        WebkitOverflowScrolling: 'touch' // Improve scroll on iOS
+      }}
     >
       {children}
     </ScrollAreaPrimitive.Viewport>
