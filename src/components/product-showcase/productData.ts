@@ -120,7 +120,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Glucose Monitor",
-    image: "/lovable-uploads/fec34a1b-a55f-4500-958f-4fcceb5cb518.png",
+    image: "/lovable-uploads/db9b76be-b145-473e-a52d-4e6dd3a111e4.png",
     description: "Continuous glucose tracking with alerts and trend analysis.",
     category: "service",
     type: "Professional Services",
