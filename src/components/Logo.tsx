@@ -10,7 +10,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ className, animated = true }) => {
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div className={`text-brand-teal relative ${animated ? 'animate-heart-beat' : ''}`}>
+      <div className={`text-brand-orange relative ${animated ? 'animate-heart-beat' : ''}`}>
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M20 32.5C20 32.5 7.5 25 7.5 15C7.5 12.5 8.75 10 11.25 10C15 10 16.25 12.5 20 12.5C23.75 12.5 25 10 28.75 10C31.25 10 32.5 12.5 32.5 15C32.5 25 20 32.5 20 32.5Z"
