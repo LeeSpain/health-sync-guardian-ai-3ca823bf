@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -24,16 +23,23 @@ const ComponentLoader = () => (
   </div>
 );
 
-// Lazy loaded component with intersection observer
+// Improved lazy loaded component with intersection observer
 const LazyComponent = ({ 
   component: Component, 
   placeholder = <ComponentLoader />,
-  threshold = 0.1
+  threshold = 0.1,
+  rootMargin = "200px 0px", // Load earlier (200px before component enters viewport)
+  delay = 150, // Small delay to batch state updates
 }) => {
-  const { ref, inView } = useIntersectionObserver({ threshold });
+  const { ref, inView } = useIntersectionObserver({ 
+    threshold, 
+    rootMargin,
+    delay,
+  });
   
+  // Keep a static element size to prevent layout shift
   return (
-    <div ref={ref}>
+    <div ref={ref} className="min-h-[300px]">
       {inView ? (
         <Suspense fallback={placeholder}>
           <Component />
@@ -46,10 +52,11 @@ const LazyComponent = ({
 };
 
 const Index: React.FC = () => {
+  // Add CSS class to prevent multiple scrollbars and improve scrolling
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Navbar />
-      <main className="flex-grow overflow-hidden space-y-12">
+      <main className="flex-grow space-y-12 relative">
         <Hero />
         <LazyComponent component={Features} />
         <LazyComponent component={ProductShowcase} />

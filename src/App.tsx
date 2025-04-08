@@ -1,5 +1,5 @@
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -25,6 +25,20 @@ const PageLoader = () => (
 );
 
 function App() {
+  // Apply smooth scrolling globally
+  useEffect(() => {
+    // Prevent scroll jank by using passive scrolling where possible
+    document.addEventListener('scroll', () => {}, { passive: true });
+    
+    // Apply scroll behavior to html element
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Cleanup on unmount
+    return () => {
+      document.removeEventListener('scroll', () => {});
+    };
+  }, []);
+
   return (
     <Router>
       <Suspense fallback={<PageLoader />}>

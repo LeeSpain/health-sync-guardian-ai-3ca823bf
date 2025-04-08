@@ -1,11 +1,12 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useGenericIntersectionObserver } from './use-generic-intersection-observer';
 
 interface UseIntersectionObserverProps {
   root?: null | Element;
   rootMargin?: string;
   threshold?: number | number[];
   enabled?: boolean;
+  delay?: number;
 }
 
 export function useIntersectionObserver({
@@ -13,56 +14,13 @@ export function useIntersectionObserver({
   rootMargin = '0px',
   threshold = 0,
   enabled = true,
+  delay = 100, // Use a small default delay for regular elements to smooth out the scrolling
 }: UseIntersectionObserverProps = {}) {
-  const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
-  // Change the ref type to HTMLDivElement
-  const elementRef = useRef<HTMLDivElement | null>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
-    setEntry(entry);
-  };
-
-  useEffect(() => {
-    if (!enabled) {
-      setEntry(null);
-      return;
-    }
-
-    // Disconnect current observer
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
-
-    const hasIOSupport = !!window.IntersectionObserver;
-
-    if (!hasIOSupport) {
-      // Fall back to always showing the element if IntersectionObserver is not supported
-      setEntry({
-        isIntersecting: true,
-      } as IntersectionObserverEntry);
-      return;
-    }
-
-    observerRef.current = new IntersectionObserver(
-      updateEntry,
-      { root, rootMargin, threshold }
-    );
-
-    const observer = observerRef.current;
-    const currentElement = elementRef.current;
-
-    if (currentElement) {
-      observer.observe(currentElement);
-    }
-
-    return () => {
-      if (observer && currentElement) {
-        observer.unobserve(currentElement);
-        observer.disconnect();
-      }
-    };
-  }, [enabled, root, rootMargin, threshold]);
-
-  return { ref: elementRef, inView: entry?.isIntersecting || false, entry };
+  return useGenericIntersectionObserver<HTMLDivElement>({
+    root,
+    rootMargin,
+    threshold,
+    enabled,
+    delay,
+  });
 }
