@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check, Shield } from 'lucide-react';
+import { ArrowRight, Check, Shield, PhoneCall } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
@@ -39,20 +39,26 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
               <div className="md:w-2/5 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100/70 z-0"></div>
                 <div className="h-48 md:h-full w-full flex items-center justify-center relative z-10 p-6">
-                  {/* Prioritize image loading for SOS Call Centre */}
+                  {/* Special handling for SOS Call Centre */}
                   {product.name === "SOS Call Centre" ? (
                     <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="h-12 w-12 object-contain"
-                        width={48}
-                        height={48}
-                        loading="eager"
-                        fetchPriority="high"
-                        onLoad={() => console.log(`Image loaded: ${product.name}`)}
-                        onError={() => console.error(`Failed to load image: ${product.name}`)}
-                      />
+                      {/* Use a direct img tag with proper attributes for SOS Call Centre */}
+                      {product.image ? (
+                        <img 
+                          src={product.image} 
+                          alt={product.name}
+                          className="h-12 w-12 object-contain" 
+                          width={48}
+                          height={48}
+                          loading="eager"
+                          fetchPriority="high"
+                          onLoad={() => console.log(`SOS Image loaded successfully: ${product.image}`)}
+                          onError={() => console.error(`SOS Image failed to load: ${product.image}`)}
+                          data-testid="sos-image"
+                        />
+                      ) : (
+                        <PhoneCall className="h-10 w-10 text-brand-orange" />
+                      )}
                     </div>
                   ) : (
                     <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
@@ -63,7 +69,7 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
                         width={48}
                         height={48}
                         loadingClassName="bg-transparent"
-                        preload={product.name === "SOS Call Centre"}
+                        priority={product.name === "SOS Call Centre"}
                       />
                     </div>
                   )}
@@ -101,4 +107,3 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
     </div>
   );
 };
-

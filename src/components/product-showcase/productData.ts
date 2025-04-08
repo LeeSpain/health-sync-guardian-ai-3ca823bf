@@ -7,7 +7,8 @@ import {
   Bell, 
   Tablet, 
   Stethoscope,
-  UserRound
+  UserRound,
+  PhoneCall
 } from 'lucide-react';
 import { Product } from './types';
 import React from 'react';
@@ -97,7 +98,7 @@ export const getProductsData = (): Product[] => [
     description: "Professional emergency response team available 24/7 at the touch of a button.",
     category: "service",
     type: "Professional Services",
-    icon: React.createElement(Bell, { className: "h-6 w-6" }),
+    icon: React.createElement(PhoneCall, { className: "h-6 w-6 text-brand-orange" }),
     benefits: [
       "24/7 professional monitoring",
       "Rapid emergency response",
@@ -157,4 +158,3 @@ export const getProductsData = (): Product[] => [
     ]
   }
 ];
-
