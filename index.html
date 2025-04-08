@@ -17,33 +17,36 @@
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-    <!-- Performance optimizations - Preload critical assets -->
+    <!-- Critical CSS inlined to prevent render-blocking -->
+    <style>
+      /* Critical CSS for immediate rendering */
+      body {margin: 0; font-family: system-ui, -apple-system, sans-serif;}
+      .image-placeholder {background-color: #f5f5f5; animation: pulse 1.5s infinite;}
+      @keyframes pulse {0%, 100% {opacity: 0.6;} 50% {opacity: 0.8;}}
+      
+      /* Prevent content shift while loading */
+      img {opacity: 0; transition: opacity 0.3s;}
+      img.loaded {opacity: 1;}
+      
+      /* Prevent layout shift with aspect ratios */
+      .aspect-container {position: relative; height: 0; overflow: hidden;}
+      .aspect-16-9 {padding-top: 56.25%;}
+      .aspect-content {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+    </style>
+    
+    <!-- Preload critical CSS -->
     <link rel="preload" href="/src/index.css" as="style" />
     
-    <!-- Force preload for key images with highest importance -->
+    <!-- Preconnect to critical domains -->
+    <link rel="preconnect" href="/" crossorigin>
+    
+    <!-- HIGH PRIORITY IMAGES - Force immediate loading for visible images -->
     <link rel="preload" href="/lovable-uploads/c38f7f2c-ac88-45a4-be0e-6ca22e7498f1.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/ec15308f-f7c7-4558-8c68-3a3c04deac25.png" as="image" fetchpriority="high" />
-    <link rel="preload" href="/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/bc5cfcc2-3468-4e5f-a99f-111609b5d011.png" as="image" fetchpriority="high" />
-    
-    <!-- Add support for instant navigation -->
-    <link rel="prefetch" href="/pricing" />
-    
-    <!-- Ensure immediate loading with DNS prefetching -->
-    <link rel="dns-prefetch" href="/lovable-uploads/" />
-    
-    <!-- Avoid render blocking resources -->
-    <style>
-      /* Ensure images show while loading */
-      .image-placeholder {
-        background-color: #f5f5f5;
-        animation: pulse 1.5s infinite;
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 0.8; }
-      }
-    </style>
+    <link rel="preload" href="/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png" as="image" fetchpriority="high" />
+    <link rel="preload" href="/lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png" as="image" fetchpriority="high" />
+    <link rel="preload" href="/lovable-uploads/8d6cc63b-a2fa-4688-9ba8-2a6c0e3a327a.png" as="image" fetchpriority="high" />
   </head>
 
   <body>
@@ -51,5 +54,20 @@
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Optimize image loading -->
+    <script>
+      // Mark images as loaded when they complete loading
+      document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+          if (img.complete) {
+            img.classList.add('loaded');
+          } else {
+            img.addEventListener('load', () => img.classList.add('loaded'));
+          }
+        });
+      });
+    </script>
   </body>
 </html>

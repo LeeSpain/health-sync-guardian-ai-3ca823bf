@@ -12,16 +12,13 @@ interface HealthMonitoringSectionProps {
 }
 
 export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionProps) => {
-  // Determine which products are high priority for image loading
-  const isHighPriority = (product: Product) => {
-    return ["Bed Sensor", "Guardian Button", "Thermometer"].includes(product.name);
-  };
+  // All health monitoring products are high priority for this section
+  const isPriorityProduct = (product: Product) => true;
   
-  // Log the priority products for debugging
   React.useEffect(() => {
-    const priorityProducts = products.filter(isHighPriority);
-    console.log('High priority products in HealthMonitoringSection:', 
-      priorityProducts.map(p => `${p.name}: ${p.image}`));
+    // Log all product images for debugging
+    console.log('Health Monitoring products:', 
+      products.map(p => `${p.name}: ${p.image}`).join(', '));
   }, [products]);
   
   return (
@@ -46,7 +43,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
               <CarouselItem key={index}>
                 <DeviceCard 
                   product={product}
-                  priorityImage={isHighPriority(product)}
+                  priorityImage={isPriorityProduct(product)}
                 />
               </CarouselItem>
             ))}
@@ -69,7 +66,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             <div key={index} className="transform transition-all duration-500 hover:-translate-y-2">
               <DeviceCard 
                 product={product} 
-                priorityImage={isHighPriority(product)} 
+                priorityImage={isPriorityProduct(product)} 
               />
             </div>
           ))}
@@ -142,7 +139,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
         </div>
       </div>
       
-      {/* Health metrics visualization - made more professional */}
+      {/* Health metrics visualization - simplified for better performance */}
       <div className="mt-16 px-6 py-8 bg-gradient-to-r from-brand-teal/10 to-brand-teal/5 rounded-2xl border border-brand-teal/10 shadow-sm">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-left md:max-w-xs">
@@ -156,7 +153,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             </Button>
           </div>
           
-          {/* Enhanced metrics visualization with animation */}
+          {/* Simplified metrics visualization for better performance */}
           <div className="flex-1 flex items-center justify-center">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-3xl">
               {[
@@ -167,10 +164,9 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
               ].map((metric, i) => (
                 <div 
                   key={i} 
-                  className={`flex flex-col items-center gap-2 bg-white py-4 px-3 rounded-xl shadow-sm border border-${metric.color}-100 hover:shadow-md transition-all duration-300`}
-                  style={{animation: `float ${2 + i * 0.2}s ease-in-out infinite alternate`}}
+                  className="flex flex-col items-center gap-2 bg-white py-4 px-3 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300"
                 >
-                  <div className={`w-10 h-10 rounded-full bg-${metric.color}-50 flex items-center justify-center border border-${metric.color}-100`}>
+                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center border border-gray-200">
                     {metric.icon}
                   </div>
                   <div className="text-center">

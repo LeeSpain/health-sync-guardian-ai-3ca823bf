@@ -1,12 +1,11 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
@@ -14,18 +13,30 @@ interface DeviceCardProps {
 }
 
 export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) => {
-  // Determine if this is a high-priority product that needs immediate loading
-  const isGuardianButton = product.name === "Guardian Button";
-  const isBedSensor = product.name === "Bed Sensor";
-  const isThermometer = product.name === "Thermometer";
-  const shouldPrioritize = priorityImage || isGuardianButton || isBedSensor || isThermometer;
+  // Determine if this is a high-priority product
+  const isPriorityProduct = 
+    priorityImage || 
+    product.name === "Guardian Button" || 
+    product.name === "Bed Sensor" || 
+    product.name === "Thermometer" ||
+    product.name === "Heart Rate Monitor" ||
+    product.name === "Smart Scales" ||
+    product.name === "iHealth Dashboard Tablet";
   
-  // Log for debugging - helps track which images are being prioritized
-  useEffect(() => {
-    if (shouldPrioritize) {
-      console.log(`Rendering high-priority device: ${product.name}, Image: ${product.image}`);
-    }
-  }, [product.name, product.image, shouldPrioritize]);
+  // Track when image is loaded
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+  
+  // Handle image loaded event
+  const handleImageLoaded = () => {
+    setImageLoaded(true);
+    console.log(`Image loaded: ${product.name}`);
+  };
+  
+  // Handle image error
+  const handleImageError = () => {
+    console.error(`Failed to load image for ${product.name}:`, product.image);
+    setImageLoaded(true); // Still mark as "loaded" to remove loading state
+  };
   
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
@@ -50,33 +61,33 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image handling - Using different strategies based on priority */}
+        {/* Image with optimized loading strategy */}
         <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-muted">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
             
-            {/* For high-priority images, use direct img tag with eager loading */}
-            {shouldPrioritize ? (
-              <img 
-                src={product.image} 
-                alt={product.name} 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                width={640}
-                height={360}
-                loading="eager"
-                onLoad={() => console.log(`Direct image loaded: ${product.name}`)}
-                onError={(e) => console.error(`Error loading direct image for ${product.name}:`, e)}
-              />
-            ) : (
-              <OptimizedImage 
-                src={product.image} 
-                alt={product.name} 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                priority={false}
-                width={640}
-                height={360}
-              />
+            {/* Show loading state until image is loaded */}
+            {!imageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                <div className="animate-pulse rounded-full h-12 w-12 bg-brand-teal/20 flex items-center justify-center">
+                  <div className="animate-spin h-6 w-6 border-2 border-brand-teal/30 border-t-brand-teal rounded-full"></div>
+                </div>
+              </div>
             )}
+            
+            {/* Directly use img tag with native loading attributes for better control */}
+            <img 
+              src={product.image}
+              alt={product.name}
+              className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              loading={isPriorityProduct ? "eager" : "lazy"}
+              fetchpriority={isPriorityProduct ? "high" : "auto"}
+              width={640}
+              height={360}
+              onLoad={handleImageLoaded}
+              onError={handleImageError}
+              data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
+            />
             
             {/* Subtle glow effect */}
             <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white to-transparent"></div>
