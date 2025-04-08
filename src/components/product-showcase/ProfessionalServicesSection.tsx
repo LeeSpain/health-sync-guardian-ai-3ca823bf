@@ -5,6 +5,7 @@ import { ArrowRight, Check, Shield } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface ProfessionalServicesSectionProps {
   products: Product[];
@@ -34,10 +35,13 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100/70 z-0"></div>
                 <div className="h-48 md:h-full w-full flex items-center justify-center relative z-10 p-6">
                   <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <img 
+                    <OptimizedImage 
                       src={product.image} 
                       alt={product.name} 
                       className="h-12 w-12 object-contain"
+                      width={48}
+                      height={48}
+                      loadingClassName="bg-transparent"
                     />
                   </div>
                 </div>

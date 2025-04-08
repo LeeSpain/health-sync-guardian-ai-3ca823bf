@@ -4,23 +4,21 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Heart, Shield, Star } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Product } from './types';
-import { Tablet } from 'lucide-react';
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface FeaturedProductProps {
   product: Product;
 }
 
 export const FeaturedProduct = ({ product }: FeaturedProductProps) => {
-  if (!product) return null;
-  
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between mb-6">
         <div className="flex items-center">
           <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-orange to-brand-orange/70 flex items-center justify-center mr-3 shadow-md">
-            <Tablet className="h-5 w-5 text-white" />
+            {product.icon}
           </div>
           <h3 className="text-xl text-brand-orange font-bold">Featured Device</h3>
         </div>
@@ -37,10 +35,14 @@ export const FeaturedProduct = ({ product }: FeaturedProductProps) => {
               <div className="relative w-full max-w-xs mx-auto">
                 <div className="relative aspect-square flex items-center justify-center">
                   <div className="absolute inset-0 bg-white/60 rounded-xl shadow-sm"></div>
-                  <img 
+                  <OptimizedImage 
                     src={product.image} 
                     alt={product.name} 
                     className="relative w-[85%] h-[85%] object-contain mx-auto"
+                    priority={true} // Featured product should have priority loading
+                    preload={true}
+                    width={400}
+                    height={400}
                   />
                   <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-brand-orange/30 to-transparent blur-sm"></div>
                 </div>

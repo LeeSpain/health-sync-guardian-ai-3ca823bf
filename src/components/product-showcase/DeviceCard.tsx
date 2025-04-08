@@ -6,12 +6,16 @@ import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
 }
 
 export const DeviceCard = ({ product }: DeviceCardProps) => {
+  // Determine if this is the Guardian Button to set priority
+  const isGuardianButton = product.name === "Guardian Button";
+  
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
       {/* Gradient top bar with animation */}
@@ -35,14 +39,18 @@ export const DeviceCard = ({ product }: DeviceCardProps) => {
           </div>
         </div>
         
-        {/* Image placeholder */}
+        {/* Image placeholder - Now using OptimizedImage */}
         <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-muted">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
-            <img 
+            <OptimizedImage 
               src={product.image} 
               alt={product.name} 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              priority={isGuardianButton} // Set priority for Guardian Button
+              preload={isGuardianButton} // Preload the Guardian Button image
+              width={640}
+              height={360}
             />
             {/* Subtle glow effect */}
             <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white to-transparent"></div>

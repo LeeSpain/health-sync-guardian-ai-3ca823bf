@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Activity, Heart, Wand2 } from 'lucide-react';
+import { ArrowRight, Activity, Heart, Thermometer, Wand2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Product } from './types';
 import { DeviceCard } from './DeviceCard';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 interface HealthMonitoringSectionProps {
   products: Product[];
@@ -143,7 +143,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-3xl">
               {[
                 { name: "Heart Rate", icon: <Heart className="h-4 w-4" />, value: "72 bpm", color: "rose" },
-                { name: "Temperature", icon: <Activity className="h-4 w-4" />, value: "98.6°F", color: "amber" },
+                { name: "Temperature", icon: <Thermometer className="h-4 w-4" />, value: "98.6°F", color: "amber" },
                 { name: "Steps", icon: <Activity className="h-4 w-4" />, value: "5,280 steps", color: "emerald" },
                 { name: "Sleep", icon: <Activity className="h-4 w-4" />, value: "7.5 hours", color: "indigo" },
               ].map((metric, i) => (
