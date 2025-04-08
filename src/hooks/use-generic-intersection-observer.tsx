@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 
 interface UseIntersectionObserverProps {
   root?: null | Element;
@@ -8,15 +8,15 @@ interface UseIntersectionObserverProps {
   enabled?: boolean;
 }
 
-export function useIntersectionObserver({
+// Generic type parameter for any HTML element
+export function useGenericIntersectionObserver<T extends Element>({
   root = null,
   rootMargin = '0px',
   threshold = 0,
   enabled = true,
 }: UseIntersectionObserverProps = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
-  // Change the ref type to HTMLDivElement
-  const elementRef = useRef<HTMLDivElement | null>(null);
+  const elementRef = useRef<T | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
@@ -29,7 +29,6 @@ export function useIntersectionObserver({
       return;
     }
 
-    // Disconnect current observer
     if (observerRef.current) {
       observerRef.current.disconnect();
     }
@@ -37,7 +36,6 @@ export function useIntersectionObserver({
     const hasIOSupport = !!window.IntersectionObserver;
 
     if (!hasIOSupport) {
-      // Fall back to always showing the element if IntersectionObserver is not supported
       setEntry({
         isIntersecting: true,
       } as IntersectionObserverEntry);
