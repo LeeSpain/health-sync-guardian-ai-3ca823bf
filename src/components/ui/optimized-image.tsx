@@ -61,7 +61,9 @@ export const OptimizedImage = ({
         src={imageSrc}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
+        // Use the proper HTML attribute for browser support
+        // This will be lowercase in the rendered HTML which is correct
+        {...(priority ? { fetchpriority: "high" } : {})}
         onError={handleError}
         onLoad={handleLoad}
         className={cn(
