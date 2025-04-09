@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 export interface CartItemProps {
   id: string;
@@ -18,7 +17,6 @@ export interface CartItemProps {
 const CartItem: React.FC<CartItemProps> = ({ 
   name, 
   price, 
-  type, 
   isSubscription, 
   image, 
   onRemove, 
@@ -34,23 +32,13 @@ const CartItem: React.FC<CartItemProps> = ({
         )}
         <div>
           <p className="font-medium text-sm line-clamp-2">{name}</p>
-          <div className="flex items-center gap-2 mt-1">
-            <Badge variant="outline" className={`text-xs ${
-              type === 'essential' 
-                ? 'border-blue-500 text-blue-700 bg-blue-50' 
-                : type === 'ai-device'
-                  ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
-                  : type === 'subscription'
-                    ? 'border-brand-orange text-brand-orange bg-brand-orange/10'
-                    : 'border-purple-500 text-purple-700 bg-purple-50'
-            }`}>
-              {isSubscription ? 'Monthly' : 'One-time'}
-            </Badge>
-          </div>
+          <p className="text-xs text-gray-500">
+            {isSubscription ? 'Monthly Service' : 'One-time Purchase'}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <div className="font-mono font-medium text-gray-800">
+        <div className="font-sans font-medium text-gray-800">
           €{price.toFixed(2)}
         </div>
         <Button 
