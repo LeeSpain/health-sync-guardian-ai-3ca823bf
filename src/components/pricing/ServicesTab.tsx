@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Check, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface ProfessionalService {
   id: string;
@@ -77,12 +78,15 @@ const ServicesTab: React.FC = () => {
               key={service.id}
               className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
             >
-              <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center">
-                <img
-                  src={service.image}
-                  alt={service.name}
-                  className="h-36 w-36 object-contain"
-                />
+              <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 p-4 flex items-center justify-center">
+                <div className="h-40 w-40 flex items-center justify-center">
+                  <OptimizedImage
+                    src={service.image}
+                    alt={service.name}
+                    objectFit="contain"
+                    className="max-w-full max-h-full"
+                  />
+                </div>
               </div>
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl text-brand-orange">{service.name}</CardTitle>

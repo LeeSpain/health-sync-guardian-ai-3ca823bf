@@ -78,26 +78,21 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="flex flex-col md:flex-row bg-white h-full">
-        {/* Image container - takes full height of parent */}
-        <div className="md:w-2/5 p-6 h-full">
-          {product.image.includes('placeholder') ? (
-            <div className="w-full h-full min-h-[160px] bg-gray-100 rounded-lg flex items-center justify-center">
-              {product.icon}
-            </div>
-          ) : (
-            <div className="w-full h-full min-h-[160px]">
-              <OptimizedImage
-                src={product.image}
-                alt={product.name}
-                className="h-full w-full"
-                priority={false}
-              />
-            </div>
-          )}
+        {/* Image container - fixed height and width for consistency */}
+        <div className="md:w-2/5 p-4 flex items-center justify-center bg-gray-50 min-h-[180px]">
+          <div className="w-full h-[160px] relative flex items-center justify-center">
+            <OptimizedImage
+              src={product.image}
+              alt={product.name}
+              priority={false}
+              objectFit="contain"
+              className="max-w-full max-h-full"
+            />
+          </div>
         </div>
         
         {/* Content container (right side) */}
-        <div className="md:w-3/5 p-6 md:p-8 flex flex-col">
+        <div className="md:w-3/5 p-6 md:p-6 flex flex-col">
           <h4 className="text-xl text-brand-orange font-bold mb-3">{product.name}</h4>
           <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
           
