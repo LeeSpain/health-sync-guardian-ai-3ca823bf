@@ -31,8 +31,7 @@ export const OptimizedImage = ({
   const imageRef = useRef<HTMLImageElement>(null);
   const observer = useRef<IntersectionObserver | null>(null);
   const uniqueId = useRef(`img-${Math.random().toString(36).substring(2, 9)}`);
-  const isProfessionalServiceImage = className?.includes('professional-service-image') || false;
-
+  
   // Force reset load state when src changes
   useEffect(() => {
     setIsLoaded(false);
@@ -54,7 +53,7 @@ export const OptimizedImage = ({
   // Set up intersection observer for non-priority images
   useEffect(() => {
     // If priority is true or already loaded, no need for observer
-    if (priority || preload || isLoaded || isProfessionalServiceImage) {
+    if (priority || preload || isLoaded) {
       return;
     }
 
@@ -92,7 +91,7 @@ export const OptimizedImage = ({
         observer.current = null;
       }
     };
-  }, [src, priority, preload, isLoaded, isProfessionalServiceImage, lazyBoundary]);
+  }, [src, priority, preload, isLoaded, lazyBoundary]);
 
   // Preload high priority images
   useEffect(() => {
@@ -111,8 +110,7 @@ export const OptimizedImage = ({
     <div
       className={cn(
         "overflow-hidden relative",
-        !isLoaded && !isProfessionalServiceImage && loadingClassName,
-        className?.includes('professional-service-image') ? "w-full h-full" : "",
+        !isLoaded && loadingClassName,
         className
       )}
       style={{
@@ -123,24 +121,23 @@ export const OptimizedImage = ({
     >
       <img
         ref={imageRef}
-        src={priority || preload || isProfessionalServiceImage ? imageSrc : (isLoaded ? imageSrc : '')} 
-        data-src={!priority && !preload && !isProfessionalServiceImage ? imageSrc : undefined}
+        src={priority || preload ? imageSrc : (isLoaded ? imageSrc : '')} 
+        data-src={!priority && !preload ? imageSrc : undefined}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
         decoding={priority ? "sync" : "async"}
         onLoad={handleLoad}
         onError={handleError}
         className={cn(
           "w-full h-full object-contain transition-opacity duration-300",
-          (isLoaded || isProfessionalServiceImage) ? "opacity-100" : "opacity-0",
+          isLoaded ? "opacity-100" : "opacity-0",
           className
         )}
         {...props}
       />
 
-      {/* Loading state indicator - hide for professional service images */}
-      {!isLoaded && !isProfessionalServiceImage && (
+      {/* Loading state indicator */}
+      {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-100/50">
           <div className="text-center">
             <div className="animate-spin h-5 w-5 border-2 border-brand-teal/30 border-t-brand-teal rounded-full mx-auto mb-1"></div>

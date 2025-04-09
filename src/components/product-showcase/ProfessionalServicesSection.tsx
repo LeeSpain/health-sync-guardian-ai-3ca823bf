@@ -81,7 +81,7 @@ const ServiceCard = ({ product }: { product: Product }) => (
   <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
     <div className="flex flex-col md:flex-row bg-white h-full">
       {/* Image container - takes full height of parent */}
-      <div className="md:w-2/5 flex items-center justify-center p-4 h-full">
+      <div className="md:w-2/5 flex items-center justify-center p-6 h-full">
         {product.image.includes('placeholder') ? (
           <div className="w-full h-full min-h-[160px] bg-gray-100 rounded-lg flex items-center justify-center">
             {product.icon}
@@ -91,7 +91,7 @@ const ServiceCard = ({ product }: { product: Product }) => (
             <OptimizedImage
               src={product.image}
               alt={product.name}
-              className="professional-service-image"
+              className="w-full h-full object-contain"
               width={200}
               height={200}
               priority={true}

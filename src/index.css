@@ -120,20 +120,22 @@
   transform: scale(1.05);
 }
 
-/* Professional service image styling */
+/* Professional service image styling - updated to ensure full visibility */
 .professional-service-image {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
-  transition: all 0.3s ease;
+  padding: 1rem !important;
+  max-height: 200px !important;
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
+/* Remove any hover effects that might distort the image */
 .professional-service-image:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  transform: none;
+  filter: none;
 }
 
 /* Custom ecg line for logo */
