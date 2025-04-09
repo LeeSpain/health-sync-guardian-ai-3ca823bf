@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -20,11 +20,11 @@ export const OptimizedImage = ({
   priority = false,
   ...props
 }: OptimizedImageProps) => {
-  const [loaded, setLoaded] = React.useState(false);
-  const [error, setError] = React.useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
 
   // Reset states when src changes
-  React.useEffect(() => {
+  useEffect(() => {
     setLoaded(false);
     setError(false);
   }, [src]);
@@ -68,7 +68,6 @@ export const OptimizedImage = ({
           !loaded && "opacity-0",
           loaded && "opacity-100"
         )}
-        fetchPriority={priority ? "high" : "auto"}
         data-image-loaded={loaded}
         data-image-error={error}
         data-source-path={src}
