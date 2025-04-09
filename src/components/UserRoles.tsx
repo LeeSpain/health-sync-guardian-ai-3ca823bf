@@ -3,7 +3,6 @@ import React from 'react';
 import { User, Users, Stethoscope, Building, Shield, HeartPulse, Clock, Bell } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const UserRoles: React.FC = () => {
   const roles = [
@@ -131,14 +130,13 @@ const UserRoles: React.FC = () => {
                 <p className="text-gray-600 mb-3 text-sm">{role.description}</p>
                 
                 {/* More compact image container with reduced height */}
-                <div className="relative w-full h-24 mb-3 rounded-lg overflow-hidden">
+                <div className="relative w-full h-24 mb-3 rounded-lg overflow-hidden flex items-center justify-center">
                   <div className={`absolute inset-0 bg-gradient-to-br ${role.gradient} rounded-lg z-0`}></div>
-                  <OptimizedImage
+                  <img
                     src={role.image}
                     alt={`${role.title} illustration`}
-                    className="w-full h-full object-contain p-2 relative z-10"
-                    priority={index === 0}
-                    preload={index < 2}
+                    className="w-auto h-auto max-h-full max-w-full object-contain p-2 relative z-10"
+                    loading={index < 2 ? "eager" : "lazy"}
                   />
                 </div>
                 

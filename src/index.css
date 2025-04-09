@@ -112,6 +112,8 @@
 .product-image {
   max-width: 100%;
   max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -175,4 +177,19 @@
   100% {
     left: 100%;
   }
+}
+
+/* Fix for image display issues */
+img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Override any transform styles that might be causing image display issues */
+img[src^="/lovable-uploads/"] {
+  transform: none !important;
+  transition: none !important;
 }

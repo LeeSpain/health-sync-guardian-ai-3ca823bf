@@ -33,7 +33,12 @@ const ProductItem: React.FC<ProductItemProps> = ({
       <TableCell>
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center">
-            <img src={image} alt={name} className="max-h-10 max-w-10 object-contain" />
+            <img 
+              src={image} 
+              alt={name} 
+              className="h-auto w-auto max-h-10 max-w-10 object-contain" 
+              loading="lazy"
+            />
           </div>
           <span className="font-medium">{name}</span>
         </div>

@@ -37,11 +37,12 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ product }) => 
           </Button>
         </div>
         
-        <div className="relative bg-white rounded-lg overflow-hidden flex items-center justify-center h-80 p-6">
+        <div className="relative bg-white rounded-lg flex items-center justify-center h-80 p-6">
           <img 
             src={product.image} 
             alt={product.name}
-            className="max-h-full max-w-full object-contain"
+            className="h-auto w-auto max-h-full max-w-full object-contain"
+            loading="eager"
           />
         </div>
       </Card>

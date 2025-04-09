@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Shield, PhoneCall } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 import { Product } from './types';
 
 interface ProfessionalServicesSectionProps {
@@ -88,13 +87,11 @@ const ServiceCard = ({ product }: { product: Product }) => (
           </div>
         ) : (
           <div className="w-full h-full min-h-[160px] flex items-center justify-center">
-            <OptimizedImage
+            <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-contain"
-              width={200}
-              height={200}
-              priority={true}
+              className="w-auto h-auto max-w-full max-h-full object-contain"
+              loading="lazy"
               data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
             />
           </div>

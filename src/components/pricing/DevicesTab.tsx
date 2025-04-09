@@ -106,7 +106,8 @@ const DevicesTab: React.FC = () => {
                     <img
                       src={device.image}
                       alt={device.name}
-                      className="max-h-full max-w-full object-contain"
+                      className="h-auto w-auto max-h-full max-w-full object-contain"
+                      loading={index < 3 ? "eager" : "lazy"}
                     />
                   </div>
                   <CardHeader className="pb-2">

@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
@@ -47,12 +46,13 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image with improved containment - fixed to show full image */}
+        {/* Image with improved containment */}
         <div className="mb-5 relative bg-white rounded-lg overflow-hidden flex items-center justify-center h-48">
           <img
             src={product.image}
             alt={product.name}
             className="max-h-full max-w-full object-contain"
+            loading={isPriorityProduct ? "eager" : "lazy"}
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
           />
         </div>

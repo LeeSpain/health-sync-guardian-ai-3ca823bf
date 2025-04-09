@@ -5,7 +5,6 @@ import { ArrowRight, Check, Stethoscope, BadgePlus, UserRound, Calendar, Message
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface HealthcareProfessionalsSectionProps {
   products: Product[];
@@ -34,12 +33,12 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
               
               <div className="p-8">
                 <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#4169E1]/20 flex-shrink-0 bg-[#4169E1]/5">
-                    <OptimizedImage
+                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#4169E1]/20 flex-shrink-0 bg-[#4169E1]/5 flex items-center justify-center">
+                    <img
                       src={professional.image}
                       alt={professional.name}
-                      className="w-full h-full object-cover professional-service-image"
-                      priority={true}
+                      className="w-auto h-auto max-width-full max-height-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                   
