@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
@@ -47,24 +46,19 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image with optimized loading strategy - FIXED: Changed to object-contain to show full image */}
+        {/* Image with FULL visibility */}
         <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-muted">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
-            
             <OptimizedImage
               src={product.image}
               alt={product.name}
               priority={isPriorityProduct}
               width={640}
               height={360}
-              className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-contain p-4 bg-white transition-transform duration-500 group-hover:scale-105"
               loadingClassName="bg-gray-100"
               data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
             />
-            
-            {/* Subtle glow effect */}
-            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white to-transparent"></div>
           </AspectRatio>
         </div>
         
