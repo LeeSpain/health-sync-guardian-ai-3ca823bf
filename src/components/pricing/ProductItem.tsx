@@ -32,8 +32,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
     <TableRow className={alternateRowColor ? "bg-gray-50" : "bg-white"}>
       <TableCell>
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
-            <img src={image} alt={name} className="w-full h-full object-contain" />
+          <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center">
+            <img src={image} alt={name} className="max-h-10 max-w-10 object-contain" />
           </div>
           <span className="font-medium">{name}</span>
         </div>

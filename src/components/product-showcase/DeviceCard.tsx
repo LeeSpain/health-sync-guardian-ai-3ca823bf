@@ -47,20 +47,14 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image with improved containment - key changes here */}
-        <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
-          <AspectRatio ratio={16/9} className="bg-white">
-            <OptimizedImage
-              src={product.image}
-              alt={product.name}
-              priority={isPriorityProduct}
-              width={640}
-              height={360}
-              className="w-full h-full object-contain p-6 bg-white transition-transform duration-500"
-              loadingClassName="bg-gray-100"
-              data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-            />
-          </AspectRatio>
+        {/* Image with improved containment - fixed to show full image */}
+        <div className="mb-5 relative bg-white rounded-lg overflow-hidden flex items-center justify-center h-48">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="max-h-full max-w-full object-contain"
+            data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
+          />
         </div>
         
         {/* Description */}

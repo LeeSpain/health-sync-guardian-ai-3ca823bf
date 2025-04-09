@@ -111,7 +111,7 @@
 /* Product image styling */
 .product-image {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -120,19 +120,19 @@
   transform: scale(1.05);
 }
 
-/* Professional service image styling - updated to ensure full visibility */
+/* Professional service image styling - ensuring full visibility */
 .professional-service-image {
-  width: 100% !important;
-  height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
   object-fit: contain !important;
-  padding: 1rem !important;
-  max-height: 200px !important;
+  padding: 0.5rem !important;
   display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  margin: 0 auto !important;
 }
 
-/* Remove any hover effects that might distort the image */
+/* Remove hover effects that might distort the image */
 .professional-service-image:hover {
   transform: none;
   filter: none;

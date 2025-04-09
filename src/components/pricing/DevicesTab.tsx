@@ -102,11 +102,11 @@ const DevicesTab: React.FC = () => {
                   key={index}
                   className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex items-center justify-center">
+                  <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 p-4 flex items-center justify-center">
                     <img
                       src={device.image}
                       alt={device.name}
-                      className="h-36 w-36 object-contain"
+                      className="max-h-full max-w-full object-contain"
                     />
                   </div>
                   <CardHeader className="pb-2">
