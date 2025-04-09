@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { TruckIcon, CalendarCheck, Euro } from 'lucide-react';
+import { TruckIcon, CalendarCheck } from 'lucide-react';
 
 const PricingHeader: React.FC = () => {
   return (
@@ -10,22 +10,6 @@ const PricingHeader: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-brand-teal mb-4">iHealth-Sync Complete Product Catalog</h1>
           <p className="text-xl text-gray-600 mb-6">Customize your health monitoring system with our innovative products and services</p>
-          
-          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg mb-8 shadow-sm">
-            <div className="flex items-center justify-center gap-2 mb-2 text-brand-teal">
-              <Euro className="w-5 h-5" />
-              <span className="font-medium">Pricing Information</span>
-            </div>
-            <p className="text-sm text-gray-600 mb-2">
-              AI-Powered Devices: <span className="font-semibold">€4.99</span>/month subscription
-            </p>
-            <p className="text-sm text-gray-600">
-              Professional Care Services: <span className="font-semibold">€24.99</span>/month subscription
-            </p>
-            <p className="text-xs text-gray-500 mt-2 italic">
-              Taxes (10% for subscriptions, 21% for one-time purchases) will be calculated in cart
-            </p>
-          </div>
           
           <div className="flex flex-wrap justify-center gap-4 mt-8">
             <Badge variant="outline" className="px-4 py-2 text-brand-teal border-brand-teal bg-white/80 backdrop-blur-sm">
