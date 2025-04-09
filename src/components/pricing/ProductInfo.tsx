@@ -20,14 +20,14 @@ const ProductInfo: React.FC = () => {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-brand-teal mb-2">Product Information</h3>
-            <div className="space-y-2 text-sm text-gray-600">
+            <div className="space-y-2 text-xs text-gray-600">
               <p className="flex items-start">
                 <TagIcon className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
                 All prices shown exclude applicable taxes. Taxes will be calculated at checkout.
               </p>
               <p className="flex items-start">
                 <Clock className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                Service contracts require minimum 12-month commitment. Early termination fees may apply.
+                Flexible service options. Cancel or modify your subscription at any time.
               </p>
               <p className="flex items-start">
                 <Shield className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
@@ -56,3 +56,4 @@ const ProductInfo: React.FC = () => {
 };
 
 export default ProductInfo;
+
