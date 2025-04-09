@@ -1,5 +1,5 @@
 
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
@@ -8,10 +8,18 @@ import { Skeleton } from '@/components/ui/skeleton';
 import ScrollToTop from '@/components/ScrollToTop';
 
 // Lazy loaded components with optimized chunk names
-const Features = lazy(() => import(/* webpackChunkName: "features" */ '@/components/Features'));
-const ProductShowcase = lazy(() => import(/* webpackChunkName: "product-showcase" */ '@/components/product-showcase'));
-const AIGuardianSection = lazy(() => import(/* webpackChunkName: "ai-guardian" */ '@/components/AIGuardian'));
-const UserRoles = lazy(() => import(/* webpackChunkName: "user-roles" */ '@/components/UserRoles'));
+const Features = lazy(() => 
+  import(/* webpackChunkName: "features" */ '@/components/Features')
+);
+const ProductShowcase = lazy(() => 
+  import(/* webpackChunkName: "product-showcase" */ '@/components/product-showcase')
+);
+const AIGuardianSection = lazy(() => 
+  import(/* webpackChunkName: "ai-guardian" */ '@/components/AIGuardian')
+);
+const UserRoles = lazy(() => 
+  import(/* webpackChunkName: "user-roles" */ '@/components/UserRoles')
+);
 
 // Component loader with better visual appearance
 const ComponentLoader = () => (
@@ -44,7 +52,7 @@ const LazyComponent = ({
   component: Component, 
   placeholder = <ComponentLoader />,
   threshold = 0.05, // Lower threshold to start loading earlier
-  rootMargin = "500px 0px", // Load much earlier (500px before component enters viewport)
+  rootMargin = "800px 0px", // Load much earlier (800px before component enters viewport)
   id = "", // For debugging
 }) => {
   const { ref, inView } = useIntersectionObserver({ 
@@ -53,16 +61,19 @@ const LazyComponent = ({
     triggerOnce: true, // Only trigger once to prevent unnecessary re-renders
   });
   
-  // Log when components are loaded
+  // Track if component has been loaded
+  const [hasLoaded, setHasLoaded] = useState(false);
+  
   useEffect(() => {
-    if (inView) {
+    if (inView && !hasLoaded) {
       console.log(`Loading component: ${id || Component.name}`);
+      setHasLoaded(true);
     }
-  }, [inView, id, Component.name]);
+  }, [inView, hasLoaded, id, Component.name]);
   
   return (
     <div ref={ref} className="min-h-[200px]">
-      {inView ? (
+      {(inView || hasLoaded) ? (
         <Suspense fallback={placeholder}>
           <Component />
         </Suspense>
@@ -74,19 +85,55 @@ const LazyComponent = ({
 };
 
 const Index: React.FC = () => {
-  // Manually preload the ProductShowcase component as soon as possible
+  // Preload components based on network conditions
   useEffect(() => {
+    // Check if we should preload based on connection type
+    const shouldPreload = () => {
+      if (!('connection' in navigator)) return true;
+      
+      // @ts-ignore - connection may not be recognized in TypeScript
+      const connection = navigator.connection;
+      if (!connection) return true;
+      
+      // Don't preload if user has save-data enabled or on slow connections
+      if (connection.saveData) return false;
+      if (connection.effectiveType === 'slow-2g' || 
+          connection.effectiveType === '2g') return false;
+      
+      return true;
+    };
+    
     // Preload product showcase component immediately, but with lower priority
     const preloadProductShowcase = () => {
-      const preload = import(/* webpackChunkName: "product-showcase" */ '@/components/product-showcase');
-      console.log('Preloading ProductShowcase component');
-      return preload;
+      if (shouldPreload()) {
+        const preload = import(/* webpackChunkName: "product-showcase" */ '@/components/product-showcase');
+        console.log('Preloading ProductShowcase component');
+        return preload;
+      }
     };
     
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(preloadProductShowcase);
+      requestIdleCallback(preloadProductShowcase, { timeout: 2000 });
     } else {
       setTimeout(preloadProductShowcase, 1000);
+    }
+    
+    // Preload other sections when the page is idle
+    const preloadOtherSections = () => {
+      if (shouldPreload()) {
+        // Preload other important sections
+        import(/* webpackChunkName: "features" */ '@/components/Features');
+        import(/* webpackChunkName: "ai-guardian" */ '@/components/AIGuardian');
+      }
+    };
+    
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        // Wait a bit longer to preload other sections
+        setTimeout(preloadOtherSections, 3000);
+      }, { timeout: 4000 });
+    } else {
+      setTimeout(preloadOtherSections, 3000);
     }
   }, []);
   
@@ -96,15 +143,15 @@ const Index: React.FC = () => {
       <Navbar />
       <main className="flex-grow space-y-12 relative">
         <Hero />
-        <LazyComponent component={Features} id="Features" />
+        <LazyComponent component={Features} id="Features" rootMargin="600px 0px" />
         <LazyComponent 
           component={ProductShowcase} 
           placeholder={<ProductShowcaseLoader />}
-          rootMargin="800px 0px" // Load product showcase much earlier
+          rootMargin="1000px 0px" // Load product showcase much earlier
           id="ProductShowcase"
         />
-        <LazyComponent component={AIGuardianSection} id="AIGuardian" />
-        <LazyComponent component={UserRoles} id="UserRoles" />
+        <LazyComponent component={AIGuardianSection} id="AIGuardian" rootMargin="600px 0px" />
+        <LazyComponent component={UserRoles} id="UserRoles" rootMargin="500px 0px" />
       </main>
       <Footer />
     </div>

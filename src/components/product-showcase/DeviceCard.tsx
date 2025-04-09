@@ -3,9 +3,9 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
@@ -48,11 +48,14 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
         
         {/* Image with improved containment */}
         <div className="mb-5 relative bg-white rounded-lg overflow-hidden flex items-center justify-center h-48">
-          <img
+          <OptimizedImage
             src={product.image}
             alt={product.name}
             className="max-h-full max-w-full object-contain"
-            loading={isPriorityProduct ? "eager" : "lazy"}
+            width={300}
+            height={200}
+            priority={isPriorityProduct}
+            preload={isPriorityProduct}
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
           />
         </div>

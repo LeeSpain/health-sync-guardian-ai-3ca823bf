@@ -32,6 +32,24 @@
       .aspect-container {position: relative; height: 0; overflow: hidden;}
       .aspect-16-9 {padding-top: 56.25%;}
       .aspect-content {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+      
+      /* Base image display settings */
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+      
+      /* Ensure product images display properly */
+      .product-image, [data-testid^="device-image"] {
+        object-fit: contain !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+      }
     </style>
     
     <!-- Preload critical CSS -->
@@ -49,6 +67,14 @@
     <link rel="preload" href="/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/8d6cc63b-a2fa-4688-9ba8-2a6c0e3a327a.png" as="image" fetchpriority="high" />
+    
+    <!-- Font preloading -->
+    <link rel="preload" as="font" href="/fonts/inter-var.woff2" type="font/woff2" crossorigin="anonymous">
+    
+    <!-- Add preloads for critical JavaScript files -->
+    <link rel="modulepreload" href="/src/main.tsx">
+    <link rel="modulepreload" href="/src/App.tsx">
+    <link rel="modulepreload" href="/src/pages/Index.tsx">
   </head>
 
   <body>
@@ -67,6 +93,14 @@
             img.classList.add('loaded');
           } else {
             img.addEventListener('load', () => img.classList.add('loaded'));
+            img.addEventListener('error', () => {
+              // Set fallback for failed images
+              if (img.src !== '/placeholder.svg') {
+                console.warn(`Image failed to load: ${img.src}`);
+                img.src = '/placeholder.svg';
+                img.classList.add('loaded');
+              }
+            });
           }
         });
 
@@ -79,7 +113,29 @@
             }
           });
         }
+        
+        // Set fetchpriority on important above-the-fold images
+        const visibleImages = document.querySelectorAll('img:not([fetchpriority])');
+        let index = 0;
+        visibleImages.forEach(img => {
+          // Only set high priority on the first few visible images to avoid overloading
+          if (index < 3 && isElementInViewport(img)) {
+            img.setAttribute('fetchpriority', 'high');
+            index++;
+          }
+        });
       });
+      
+      // Helper function to check if element is in viewport
+      function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
 
       // Remove unused event listeners to improve memory usage
       window.addEventListener('load', () => {
@@ -90,6 +146,17 @@
             unusedElements.forEach(el => {
               el.classList.remove('image-placeholder');
             });
+            
+            // Prefetch other likely routes for faster navigation
+            if ('connection' in navigator && 
+                navigator.connection && 
+                (navigator.connection.saveData === false || 
+                 navigator.connection.effectiveType === '4g')) {
+              const prefetcher = document.createElement('link');
+              prefetcher.rel = 'prefetch';
+              prefetcher.href = '/pricing';
+              document.head.appendChild(prefetcher);
+            }
           });
         }
       });

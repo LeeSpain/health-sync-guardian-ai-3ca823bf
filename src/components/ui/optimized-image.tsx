@@ -26,17 +26,21 @@ export const OptimizedImage = ({
   lazyBoundary = "200px",
   ...props
 }: OptimizedImageProps) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(priority || preload);
   const [error, setError] = useState(false);
+  const [imageSrc, setImageSrc] = useState(src);
   const imageRef = useRef<HTMLImageElement>(null);
   const observer = useRef<IntersectionObserver | null>(null);
   const uniqueId = useRef(`img-${Math.random().toString(36).substring(2, 9)}`);
   
   // Force reset load state when src changes
   useEffect(() => {
-    setIsLoaded(false);
-    setError(false);
-  }, [src]);
+    if (src !== imageSrc) {
+      setIsLoaded(priority || preload);
+      setError(false);
+      setImageSrc(src);
+    }
+  }, [src, priority, preload, imageSrc]);
 
   // Handle image onload event
   const handleLoad = () => {
@@ -48,6 +52,7 @@ export const OptimizedImage = ({
     console.error(`Failed to load image: ${src}`);
     setError(true);
     setIsLoaded(true); // Still mark as "loaded" to remove loading state
+    setImageSrc('/placeholder.svg'); // Set fallback image
   };
 
   // Set up intersection observer for non-priority images
@@ -57,20 +62,28 @@ export const OptimizedImage = ({
       return;
     }
 
+    // Clean up previous observer if it exists
+    if (observer.current) {
+      observer.current.disconnect();
+      observer.current = null;
+    }
+
     // Use Intersection Observer for lazy loading
-    if (!observer.current && imageRef.current && !priority) {
+    if (imageRef.current && !priority) {
       observer.current = new IntersectionObserver((entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
-          // When image enters viewport, set the real src
-          if (imageRef.current) {
+          // When image enters viewport, update src to trigger loading
+          if (imageRef.current && !isLoaded) {
             if ('loading' in HTMLImageElement.prototype) {
               // Browser supports loading="lazy"
               imageRef.current.loading = "lazy";
             }
             
-            // Force the browser to load the image
-            imageRef.current.src = src;
+            // Force loading of the image
+            if (imageRef.current.src !== src) {
+              imageRef.current.src = src;
+            }
             
             // Once visible, no need to observe anymore
             observer.current?.disconnect();
@@ -103,9 +116,6 @@ export const OptimizedImage = ({
     }
   }, [priority, preload, src]);
 
-  // Determine if we should use the placeholder image
-  const imageSrc = error ? '/placeholder.svg' : src;
-  
   return (
     <div
       className={cn(
@@ -121,8 +131,8 @@ export const OptimizedImage = ({
     >
       <img
         ref={imageRef}
-        src={priority || preload ? imageSrc : (isLoaded ? imageSrc : '')} 
-        data-src={!priority && !preload ? imageSrc : undefined}
+        src={error ? '/placeholder.svg' : (priority || preload || isLoaded ? src : '')} 
+        data-src={!priority && !preload ? src : undefined}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         decoding={priority ? "sync" : "async"}
@@ -136,7 +146,7 @@ export const OptimizedImage = ({
         {...props}
       />
 
-      {/* Loading state indicator */}
+      {/* Loading state indicator (only show for non-loaded images) */}
       {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-100/50">
           <div className="text-center">
