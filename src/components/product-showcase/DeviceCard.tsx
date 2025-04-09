@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
@@ -55,7 +56,7 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
               priority={isPriorityProduct}
               width={640}
               height={360}
-              className="w-full h-full object-contain p-4 bg-white transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-contain p-4 bg-white transition-transform duration-500"
               loadingClassName="bg-gray-100"
               data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
             />
@@ -90,3 +91,4 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
     </Card>
   );
 };
+
