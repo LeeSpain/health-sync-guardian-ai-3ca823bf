@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Hospital, Stethoscope, ExternalLink, Users, ClipboardList, Calendar } from 'lucide-react';
+import { Hospital, Stethoscope, ExternalLink, Users, ClipboardList, Calendar, Globe } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const DashboardServices: React.FC = () => {
@@ -125,18 +125,25 @@ const DashboardServices: React.FC = () => {
         </Card>
       </div>
       
-      <div className="mt-10 p-6 bg-gray-50 rounded-xl border border-gray-200 shadow-sm">
+      <div className="mt-10 p-6 bg-gradient-to-r from-gray-50 to-brand-teal/5 rounded-xl border border-gray-200 shadow-sm">
         <div className="flex items-start">
-          <div className="mr-4 p-2 rounded-full bg-brand-teal/10">
-            <ClipboardList className="h-6 w-6 text-brand-teal" />
+          <div className="mr-4 p-2 rounded-full bg-gradient-to-br from-brand-teal/20 to-brand-orange/10">
+            <Globe className="h-6 w-6 text-brand-teal" />
           </div>
           <div>
-            <h4 className="text-lg font-semibold text-brand-teal">Dashboard Integration</h4>
+            <h4 className="text-lg font-semibold text-brand-teal">Global Health Sync Integration</h4>
             <p className="text-gray-600 mt-2">
-              Both Nurse-Sync and Medic-Sync services are seamlessly integrated into your Global Health Sync dashboard. 
-              Access your health records, schedule appointments, and communicate with healthcare professionals—all from a single, 
-              secure interface. These professional healthcare monitoring services become available immediately after joining our service.
+              As the core platform of our healthcare ecosystem, Global Health Sync seamlessly connects with iHealth-Sync, 
+              Nurse-Sync, and Medic-Sync services. This integrated approach ensures all your health data, professional 
+              consultations, and monitoring services work together cohesively. Your secure dashboard provides unified access 
+              to all these services with real-time data exchange between platforms, creating a comprehensive healthcare 
+              experience without gaps in communication or care.
             </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <div className="px-3 py-1 bg-brand-teal/10 text-brand-teal text-sm rounded-full">End-to-end integration</div>
+              <div className="px-3 py-1 bg-brand-orange/10 text-brand-orange text-sm rounded-full">Unified access</div>
+              <div className="px-3 py-1 bg-brand-teal/10 text-brand-teal text-sm rounded-full">Real-time synchronization</div>
+            </div>
           </div>
         </div>
       </div>
@@ -145,3 +152,4 @@ const DashboardServices: React.FC = () => {
 };
 
 export default DashboardServices;
+

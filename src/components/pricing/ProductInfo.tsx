@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Info, TagIcon, Clock, Shield, ArrowRight, Euro } from 'lucide-react';
+import { Info, TagIcon, Clock, Shield, ArrowRight, Euro, Globe } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import DashboardServices from './DashboardServices';
 
@@ -15,7 +15,7 @@ const ProductInfo: React.FC = () => {
       
       <div className="p-6 bg-brand-grey/10 rounded-lg border border-gray-200 shadow-sm">
         <div className="flex flex-col md:flex-row items-start gap-4">
-          <div className="rounded-full bg-white p-3 flex items-center justify-center shadow-sm">
+          <div className="rounded-full bg-gradient-to-br from-brand-teal/20 to-brand-orange/10 p-3 flex items-center justify-center shadow-sm">
             <Info className="h-6 w-6 text-brand-teal" />
           </div>
           <div>
@@ -37,6 +37,10 @@ const ProductInfo: React.FC = () => {
                 <Euro className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
                 AI-Powered Devices: €4.99/mo + 10% tax. Professional Care: €24.99/mo + 10% tax.
               </p>
+              <p className="flex items-start">
+                <Globe className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
+                All services are part of the Global Health Sync ecosystem, ensuring seamless integration.
+              </p>
             </div>
             <Button 
               variant="link" 
@@ -56,3 +60,4 @@ const ProductInfo: React.FC = () => {
 };
 
 export default ProductInfo;
+
