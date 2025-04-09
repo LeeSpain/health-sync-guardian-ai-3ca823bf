@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -270,13 +271,13 @@ const PricingPage: React.FC = () => {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-brand-teal/10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-brand-teal/5 rounded-bl-full -z-10"></div>
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-orange/5 rounded-tr-full -z-10"></div>
+            <div className="bg-gradient-to-br from-brand-teal/10 via-brand-orange/5 to-brand-teal/10 rounded-xl p-6 shadow-lg border border-brand-teal/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-brand-orange/10 rounded-bl-full -z-10"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-teal/5 rounded-tr-full -z-10"></div>
               
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-brand-teal/10 rounded-xl flex items-center justify-center">
-                  <LayoutDashboard className="w-10 h-10 text-brand-teal" />
+                <div className="w-20 h-20 bg-gradient-to-br from-brand-orange/20 to-brand-teal/10 rounded-xl flex items-center justify-center">
+                  <LayoutDashboard className="w-10 h-10 text-brand-orange" />
                 </div>
               </div>
               
@@ -290,7 +291,7 @@ const PricingPage: React.FC = () => {
                   devices and services, delivering:
                 </p>
                 
-                <Separator className="my-6" />
+                <Separator className="my-6 border-brand-orange/30" />
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -311,7 +312,7 @@ const PricingPage: React.FC = () => {
                       description: "Track trends and progress with detailed health history"
                     }
                   ].map((feature, index) => (
-                    <Card key={index} className="border border-brand-teal/20 bg-brand-teal/5">
+                    <Card key={index} className="border border-brand-orange/20 bg-brand-orange/5 hover:bg-brand-orange/10 transition-colors">
                       <CardContent className="p-4">
                         <h5 className="font-medium text-brand-teal">{feature.title}</h5>
                         <p className="text-sm text-gray-600">{feature.description}</p>
@@ -346,7 +347,7 @@ const PricingPage: React.FC = () => {
                   }
                 ].map((item, index) => (
                   <div key={index} className="flex gap-4 items-start">
-                    <div className="w-12 h-12 rounded-lg bg-brand-teal flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-orange to-brand-teal flex items-center justify-center flex-shrink-0">
                       {item.icon}
                     </div>
                     <div>
@@ -357,7 +358,7 @@ const PricingPage: React.FC = () => {
                 ))}
               </div>
               
-              <div className="bg-gradient-to-r from-brand-orange/10 to-brand-teal/10 p-5 rounded-lg border border-brand-teal/20">
+              <div className="bg-gradient-to-r from-brand-orange/10 to-brand-teal/10 p-5 rounded-lg border border-brand-orange/20">
                 <p className="text-brand-teal font-medium">Your dashboard subscription is automatically included with every plan and becomes more powerful as you add devices and services.</p>
               </div>
             </div>
