@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -11,7 +11,6 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   height?: number;
   priority?: boolean;
   preload?: boolean;
-  lazyBoundary?: string;
 }
 
 export const OptimizedImage = ({
@@ -23,17 +22,13 @@ export const OptimizedImage = ({
   height,
   priority = false,
   preload = false,
-  lazyBoundary = "200px",
   ...props
 }: OptimizedImageProps) => {
-  const [isLoaded, setIsLoaded] = useState(priority || preload);
-  const [error, setError] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const observer = useRef<IntersectionObserver | null>(null);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [error, setError] = React.useState(false);
   
   // Handle image onload event
   const handleLoad = () => {
-    console.log(`Image loaded: ${src}`);
     setIsLoaded(true);
   };
 
@@ -43,57 +38,6 @@ export const OptimizedImage = ({
     setError(true);
     setIsLoaded(true); // Still mark as "loaded" to remove loading state
   };
-
-  // Immediately load priority images
-  useEffect(() => {
-    if (priority || preload) {
-      const img = new Image();
-      img.src = src;
-      img.onload = handleLoad;
-      img.onerror = handleError;
-    }
-  }, [priority, preload, src]);
-
-  // Set up intersection observer for non-priority images
-  useEffect(() => {
-    // If priority is true or already loaded, no need for observer
-    if (priority || preload || isLoaded) {
-      return;
-    }
-
-    // Clean up previous observer if it exists
-    if (observer.current) {
-      observer.current.disconnect();
-      observer.current = null;
-    }
-
-    // Use Intersection Observer for lazy loading
-    if (imageRef.current && !priority) {
-      observer.current = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          // Just set isLoaded to true - this will trigger the image to load
-          setIsLoaded(true);
-          
-          // Once visible, no need to observe anymore
-          observer.current?.disconnect();
-          observer.current = null;
-        }
-      }, {
-        rootMargin: lazyBoundary, // Start loading before it comes into view
-        threshold: 0.01 // Trigger as soon as even 1% is visible
-      });
-
-      observer.current.observe(imageRef.current);
-    }
-
-    return () => {
-      if (observer.current) {
-        observer.current.disconnect();
-        observer.current = null;
-      }
-    };
-  }, [src, priority, preload, isLoaded, lazyBoundary]);
 
   return (
     <div
@@ -108,14 +52,13 @@ export const OptimizedImage = ({
       }}
     >
       <img
-        ref={imageRef}
-        src={(isLoaded || priority || preload) ? (error ? '/placeholder.svg' : src) : ''}
+        src={error ? '/placeholder.svg' : src}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         onLoad={handleLoad}
         onError={handleError}
         className={cn(
-          "w-auto h-auto max-w-full max-h-full object-contain transition-opacity duration-300",
+          "max-w-full max-h-full object-contain transition-opacity duration-300",
           isLoaded ? "opacity-100" : "opacity-0",
           className
         )}
@@ -124,9 +67,9 @@ export const OptimizedImage = ({
 
       {/* Loading state indicator (only show for non-loaded images) */}
       {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-gray-100/50">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50">
           <div className="text-center">
-            <div className="animate-spin h-5 w-5 border-2 border-brand-teal/30 border-t-brand-teal rounded-full mx-auto mb-1"></div>
+            <div className="animate-spin h-5 w-5 border-2 border-brand-teal/30 border-t-brand-teal rounded-full mx-auto"></div>
           </div>
         </div>
       )}

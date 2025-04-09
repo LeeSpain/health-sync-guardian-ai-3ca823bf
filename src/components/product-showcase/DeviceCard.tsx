@@ -5,7 +5,6 @@ import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
@@ -48,9 +47,13 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           <img
             src={product.image}
             alt={product.name}
-            className="w-auto h-auto max-h-full max-w-full object-contain"
+            className="max-h-full max-w-full object-contain"
             loading={isPriorityProduct ? "eager" : "lazy"}
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
+            onError={(e) => {
+              console.error(`Failed to load image: ${product.image}`);
+              e.currentTarget.src = '/placeholder.svg';
+            }}
           />
         </div>
         

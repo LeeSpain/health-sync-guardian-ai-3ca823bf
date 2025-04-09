@@ -41,8 +41,12 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ product }) => 
           <img 
             src={product.image} 
             alt={product.name}
-            className="h-auto w-auto max-h-full max-w-full object-contain"
+            className="max-h-full max-w-full object-contain"
             loading="eager"
+            onError={(e) => {
+              console.error(`Failed to load image: ${product.image}`);
+              e.currentTarget.src = '/placeholder.svg';
+            }}
           />
         </div>
       </Card>

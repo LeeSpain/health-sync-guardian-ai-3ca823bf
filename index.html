@@ -24,35 +24,28 @@
       .image-placeholder {background-color: #f5f5f5; animation: pulse 1.5s infinite;}
       @keyframes pulse {0%, 100% {opacity: 0.6;} 50% {opacity: 0.8;}}
       
-      /* Prevent content shift while loading */
-      img {opacity: 0; transition: opacity 0.3s;}
-      img.loaded {opacity: 1;}
-      
-      /* Base image display settings - FIXED for proper rendering */
+      /* CRITICAL FIX: Base image styles to prevent layout shift */
       img {
         max-width: 100% !important;
         max-height: 100% !important;
         width: auto !important;
         height: auto !important;
         object-fit: contain !important;
+        display: block;
       }
       
-      /* Ensure product images display properly */
-      .product-image, [data-testid^="device-image"] {
-        object-fit: contain !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
-        width: auto !important;
-        height: auto !important;
+      /* Container styles for images */
+      div:has(> img) {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
-
-      /* Fix for lovable uploads */
-      img[src^="/lovable-uploads/"] {
-        object-fit: contain !important;
+      
+      /* Fix for image containers */
+      [class*="flex"] img, .card img, .bg-white img {
         max-width: 100% !important;
         max-height: 100% !important;
-        width: auto !important;
-        height: auto !important;
+        object-fit: contain !important;
       }
     </style>
     
@@ -71,6 +64,7 @@
     <link rel="preload" href="/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/8d6cc63b-a2fa-4688-9ba8-2a6c0e3a327a.png" as="image" fetchpriority="high" />
+    <link rel="preload" href="/lovable-uploads/9efe10d8-856e-4d64-a958-5461e748258f.png" as="image" fetchpriority="high" />
   </head>
 
   <body>
@@ -81,46 +75,37 @@
     
     <!-- Optimize image loading -->
     <script>
-      // Mark images as loaded when they complete loading
+      // Ensure all images load properly
       document.addEventListener('DOMContentLoaded', () => {
-        const images = document.querySelectorAll('img');
-        // First pass - directly set src attributes for lovable uploads that might be missing
-        images.forEach(img => {
-          // Ensure lovable uploads are loaded directly
-          if (img.getAttribute('data-src') && img.getAttribute('data-src').includes('/lovable-uploads/')) {
-            img.src = img.getAttribute('data-src');
-          }
+        // First pass - force set all image sources directly
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          img.src = img.getAttribute('data-src');
         });
         
-        // Second pass - handle loading events
-        images.forEach(img => {
-          if (img.complete) {
-            img.classList.add('loaded');
-          } else {
-            img.addEventListener('load', () => img.classList.add('loaded'));
+        // Second pass - add error handlers to all images
+        document.querySelectorAll('img').forEach(img => {
+          if (!img.complete) {
             img.addEventListener('error', () => {
-              // Set fallback for failed images
-              console.warn(`Image failed to load: ${img.src}`);
+              console.error(`Image failed to load: ${img.src}`);
               if (img.src !== '/placeholder.svg') {
                 img.src = '/placeholder.svg';
-                img.classList.add('loaded');
               }
             });
           }
         });
-
-        // For OptimizedImage component, make sure images are visible
+        
+        // Force load any images from lovable-uploads that might not be loading
         setTimeout(() => {
-          document.querySelectorAll('[data-image-id]').forEach(container => {
-            const img = container.querySelector('img');
-            if (img && !img.src) {
-              const dataSrc = img.getAttribute('data-src');
-              if (dataSrc) {
-                img.src = dataSrc;
-              }
+          document.querySelectorAll('img').forEach(img => {
+            // If image is still not loaded and isn't a placeholder
+            if (!img.complete && !img.src.includes('placeholder.svg')) {
+              console.log(`Reloading image: ${img.src}`);
+              const originalSrc = img.src;
+              img.src = '/placeholder.svg';  // Reset to clear any pending loads
+              setTimeout(() => { img.src = originalSrc; }, 50);
             }
           });
-        }, 100);
+        }, 500);
       });
     </script>
   </body>

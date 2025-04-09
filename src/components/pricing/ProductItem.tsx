@@ -36,8 +36,12 @@ const ProductItem: React.FC<ProductItemProps> = ({
             <img 
               src={image} 
               alt={name} 
-              className="h-auto w-auto max-h-10 max-w-10 object-contain" 
+              className="max-h-10 max-w-10 object-contain" 
               loading="lazy"
+              onError={(e) => {
+                console.error(`Failed to load image: ${image}`);
+                e.currentTarget.src = '/placeholder.svg';
+              }}
             />
           </div>
           <span className="font-medium">{name}</span>

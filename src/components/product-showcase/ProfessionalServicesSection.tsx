@@ -84,8 +84,12 @@ const ServiceCard = ({ product }: { product: Product }) => (
             <img
               src={product.image}
               alt={product.name}
-              className="w-auto h-auto max-w-full max-h-full object-contain"
+              className="max-h-full max-w-full object-contain"
               loading="lazy"
+              onError={(e) => {
+                console.error(`Failed to load image: ${product.image}`);
+                e.currentTarget.src = '/placeholder.svg';
+              }}
             />
           </div>
         )}
