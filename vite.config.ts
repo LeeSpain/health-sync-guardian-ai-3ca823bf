@@ -1,5 +1,5 @@
 
-import { defineConfig, splitVendorChunkPlugin } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
@@ -18,8 +18,6 @@ export default defineConfig(({ mode }) => ({
       jsxImportSource: undefined,
       tsDecorators: false,
     }),
-    // Split chunks for better caching
-    splitVendorChunkPlugin(),
     // Only use component tagger in development
     mode === 'development' && componentTagger(),
     // Only generate visualizer in build mode
@@ -38,16 +36,34 @@ export default defineConfig(({ mode }) => ({
     // Split chunks for better caching
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-components': [
-            '@/components/ui/button',
-            '@/components/ui/card',
-            '@/components/ui/badge',
-            '@/components/ui/aspect-ratio',
-          ],
-          'charts': ['recharts'],
-          'utils': ['@/lib/utils'],
+        manualChunks: (id) => {
+          // Group React core modules together
+          if (id.includes('node_modules/react') || 
+              id.includes('node_modules/react-dom') || 
+              id.includes('node_modules/react-router-dom')) {
+            return 'react-vendor';
+          }
+          
+          // Group UI components together
+          if (id.includes('@/components/ui/button') || 
+              id.includes('@/components/ui/card') || 
+              id.includes('@/components/ui/badge') || 
+              id.includes('@/components/ui/aspect-ratio')) {
+            return 'ui-components';
+          }
+          
+          // Group charts modules together
+          if (id.includes('node_modules/recharts')) {
+            return 'charts';
+          }
+          
+          // Group utilities together
+          if (id.includes('@/lib/utils')) {
+            return 'utils';
+          }
+          
+          // Let Vite handle other dependencies automatically
+          return null;
         },
       },
     },
