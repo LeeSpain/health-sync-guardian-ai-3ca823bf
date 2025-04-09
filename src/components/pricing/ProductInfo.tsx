@@ -13,44 +13,36 @@ const ProductInfo: React.FC = () => {
       {/* Dashboard Services Section */}
       <DashboardServices />
       
-      <div className="p-6 bg-brand-grey/10 rounded-lg border border-gray-200 shadow-sm">
-        <div className="flex flex-col md:flex-row items-start gap-4">
-          <div className="rounded-full bg-gradient-to-br from-brand-teal/20 to-brand-orange/10 p-3 flex items-center justify-center shadow-sm">
-            <Info className="h-6 w-6 text-brand-teal" />
+      <div className="p-4 bg-brand-grey/10 rounded-lg border border-gray-200 shadow-sm">
+        <div className="flex items-start gap-3">
+          <div className="rounded-full bg-gradient-to-br from-brand-teal/20 to-brand-orange/10 p-2 flex items-center justify-center shadow-sm">
+            <Info className="h-5 w-5 text-brand-teal" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-brand-teal mb-2">Product Information</h3>
-            <div className="space-y-2 text-xs text-gray-600">
-              <p className="flex items-start">
-                <TagIcon className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                All prices shown exclude applicable taxes. Taxes will be calculated at checkout.
-              </p>
-              <p className="flex items-start">
-                <Clock className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                No long-term contracts. You can cancel or modify your subscription at any time with no penalties.
-              </p>
-              <p className="flex items-start">
-                <Shield className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                All devices come with a standard 2-year manufacturer warranty.
-              </p>
-              <p className="flex items-start">
-                <Euro className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                AI-Powered Devices: €4.99/mo + 10% tax. Professional Care: €24.99/mo + 10% tax.
-              </p>
-              <p className="flex items-start">
-                <Globe className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                All services are part of the Global Health Sync ecosystem, ensuring seamless integration.
-              </p>
+            <h3 className="text-base font-semibold text-brand-teal mb-2">Product Details</h3>
+            <div className="space-y-1.5 text-xs text-gray-600">
+              {[
+                { Icon: TagIcon, text: "Prices exclude taxes. Taxes calculated at checkout." },
+                { Icon: Clock, text: "No long-term contracts. Cancel or modify subscription anytime." },
+                { Icon: Shield, text: "2-year manufacturer warranty on all devices." },
+                { Icon: Euro, text: "AI Devices: €4.99/mo + tax. Professional Care: €24.99/mo + tax." },
+                { Icon: Globe, text: "Seamless integration within Global Health Sync ecosystem." }
+              ].map(({ Icon, text }, index) => (
+                <p key={index} className="flex items-start">
+                  <Icon className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
+                  {text}
+                </p>
+              ))}
             </div>
             <Button 
               variant="link" 
-              className="text-brand-teal p-0 h-auto mt-2"
+              className="text-brand-teal p-0 h-auto mt-2 text-xs"
               onClick={() => toast({
                 title: "Documentation",
                 description: "Product documentation would open in a new window."
               })}
             >
-              View Complete Documentation <ArrowRight className="ml-1 h-3 w-3" />
+              View Documentation <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
           </div>
         </div>
@@ -60,4 +52,3 @@ const ProductInfo: React.FC = () => {
 };
 
 export default ProductInfo;
-
