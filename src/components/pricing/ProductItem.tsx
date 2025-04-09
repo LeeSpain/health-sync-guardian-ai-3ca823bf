@@ -10,7 +10,7 @@ export interface ProductItemProps {
   name: string;
   oneTimePrice: number | null;
   monthlyPrice: number | null;
-  type: 'essential' | 'ai-device' | 'professional';
+  type: 'essential' | 'ai-device' | 'professional' | 'subscription';
   image: string;
   isInCart: (id: string, isSubscription: boolean) => boolean;
   onAddToCart: (item: any, isSubscription: boolean) => void;

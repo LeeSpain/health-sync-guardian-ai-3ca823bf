@@ -8,7 +8,7 @@ export interface CartItemProps {
   id: string;
   name: string;
   price: number;
-  type: 'essential' | 'ai-device' | 'professional';
+  type: 'essential' | 'ai-device' | 'professional' | 'subscription';
   isSubscription: boolean;
   image?: string;
   monthlyPrice?: number;
@@ -41,7 +41,9 @@ const CartItem: React.FC<CartItemProps> = ({
                 ? 'border-blue-500 text-blue-700 bg-blue-50' 
                 : type === 'ai-device'
                   ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
-                  : 'border-purple-500 text-purple-700 bg-purple-50'
+                  : type === 'subscription'
+                    ? 'border-brand-orange text-brand-orange bg-brand-orange/10'
+                    : 'border-purple-500 text-purple-700 bg-purple-50'
             }`}>
               {isSubscription ? 'Monthly' : 'One-time'}
             </Badge>

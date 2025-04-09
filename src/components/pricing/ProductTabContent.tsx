@@ -8,7 +8,7 @@ export interface ProductData {
   name: string;
   oneTimePrice: number | null;
   monthlyPrice: number | null;
-  type: 'essential' | 'ai-device' | 'professional';
+  type: 'essential' | 'ai-device' | 'professional' | 'subscription';
   image: string;
 }
 
