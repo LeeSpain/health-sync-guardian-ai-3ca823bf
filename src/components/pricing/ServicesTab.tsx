@@ -30,30 +30,26 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
   >
     <div className="flex flex-col h-full">
-      {/* Modified image container to fill the complete area */}
-      <div className="h-[220px] relative overflow-hidden">
-        {/* Full background image */}
-        <div className="absolute inset-0 w-full h-full">
-          <OptimizedImage
-            src={service.image}
-            alt={service.name}
-            objectFit="cover"
-            className="w-full h-full"
-            priority={true}
-          />
+      {/* Full-size image with no background */}
+      <div className="relative h-[300px] overflow-hidden">
+        <OptimizedImage
+          src={service.image}
+          alt={service.name}
+          objectFit="cover"
+          className="w-full h-full object-center"
+          priority={true}
+        />
+        
+        {/* Subtle overlay for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent"></div>
+        
+        {/* Service name overlay at bottom of image */}
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h4 className="text-xl font-bold text-white drop-shadow-md">{service.name}</h4>
         </div>
-        
-        {/* Overlay gradient for better text visibility if needed */}
-        <div className="absolute inset-0 bg-gradient-to-t from-orange-100/30 to-transparent"></div>
-        
-        {/* Decorative elements on top of the image */}
-        <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
-        <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
       </div>
+      
       <CardHeader className="pb-2 flex-grow-0 pt-5">
-        <CardTitle className="text-xl font-bold text-brand-orange flex items-center">
-          {service.name}
-        </CardTitle>
         <div className="mt-3 flex items-baseline">
           <span className="text-2xl font-bold">{service.price}</span>
           <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
