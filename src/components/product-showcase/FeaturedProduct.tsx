@@ -15,17 +15,17 @@ export const FeaturedProduct = ({ product }: FeaturedProductProps) => {
   return (
     <Card className="overflow-hidden border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300 mb-8">
       <div className="flex flex-col md:flex-row">
-        {/* Left side - Product Image with cleaner presentation */}
-        <div className="md:w-1/3 bg-gradient-to-br from-orange-50 to-orange-100/30 p-6 flex items-center justify-center">
-          <div className="relative w-full max-w-[200px] mx-auto">
+        {/* Left side - Product Image with enhanced presentation */}
+        <div className="md:w-1/2 bg-gradient-to-br from-orange-50 to-orange-100/30 p-8 flex items-center justify-center">
+          <div className="relative w-full max-w-[400px] mx-auto">
             <OptimizedImage 
               src={product.image} 
               alt={product.name} 
               className="relative w-full h-auto object-contain mx-auto"
               priority={true}
               preload={true}
-              width={200}
-              height={200}
+              width={400}
+              height={400}
             />
           </div>
         </div>
