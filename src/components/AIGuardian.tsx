@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Shield, MessageSquare, Activity, Globe } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const AIGuardianSection: React.FC = () => {
   const conversations = [
@@ -20,107 +21,105 @@ const AIGuardianSection: React.FC = () => {
 
   const features = [
     {
-      icon: <MessageSquare size={20} />,
+      icon: <MessageSquare size={18} />,
       title: "Conversational Interface",
       description: "Friendly, conversational tone designed for all users"
     },
     {
-      icon: <Globe size={20} />,
+      icon: <Globe size={18} />,
       title: "Multilingual",
       description: "Multilingual support in English and Spanish"
     },
     {
-      icon: <Shield size={20} />,
+      icon: <Shield size={18} />,
       title: "Emergency Protocols",
       description: "Transparent emergency escalation protocols"
     },
     {
-      icon: <Activity size={20} />,
+      icon: <Activity size={18} />,
       title: "Health Insights",
       description: "Clear, jargon-free health explanations"
     }
   ];
 
   return (
-    <section className="py-28 bg-white relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute left-0 right-0 top-0 h-24 bg-gradient-to-b from-gray-50 to-white opacity-70"></div>
-      <div className="absolute -left-16 top-1/4 w-32 h-32 rounded-full bg-brand-teal/10 filter blur-3xl"></div>
-      <div className="absolute right-0 bottom-0 w-1/3 h-1/3 bg-gradient-to-tl from-brand-orange/10 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    <section className="py-16 bg-white relative overflow-hidden">
+      {/* Background decorative elements - simplified */}
+      <div className="absolute -left-16 top-1/4 w-24 h-24 rounded-full bg-brand-teal/10 filter blur-2xl"></div>
+      <div className="absolute right-0 bottom-0 w-1/4 h-1/4 bg-gradient-to-tl from-brand-orange/10 to-transparent"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row items-stretch gap-16 lg:gap-24">
+        <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12">
           {/* Left Side - AI Guardian Information */}
           <div className="lg:w-1/2 flex flex-col justify-center">
-            <div className="inline-block px-4 py-1 rounded-full bg-brand-teal/10 text-brand-teal text-sm font-medium mb-4 self-start">
+            <Badge className="mb-2 px-3 py-1 text-sm font-medium bg-brand-teal/10 text-brand-teal border-none self-start">
               AI Assistant
-            </div>
-            <h2 className="text-brand-teal mb-6">Meet Your AI Guardian</h2>
-            <p className="text-gray-600 mb-10 text-lg">
+            </Badge>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Meet Your AI Guardian</h2>
+            <p className="text-gray-600 mb-6 text-sm">
               AI Guardian provides personalized support, monitors your health data, and connects you with family and professionals when needed.
             </p>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4">
               {features.map((feature, index) => (
                 <div 
                   key={index} 
-                  className="bg-gradient-to-br from-white to-gray-50 border border-gray-100 p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-gray-50 border border-gray-100 p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="flex items-center justify-center p-2 rounded-md bg-brand-teal/10 text-brand-teal">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <div className="flex items-center justify-center p-1.5 rounded-md bg-brand-teal/10 text-brand-teal">
                       {feature.icon}
                     </div>
-                    <h3 className="font-semibold text-gray-800">{feature.title}</h3>
+                    <h3 className="font-semibold text-gray-800 text-sm">{feature.title}</h3>
                   </div>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <p className="text-gray-600 text-xs">{feature.description}</p>
                 </div>
               ))}
             </div>
           </div>
           
-          {/* Right Side - Conversation Showcase */}
+          {/* Right Side - Conversation Showcase - more compact */}
           <div className="lg:w-1/2 flex items-center">
-            <div className="w-full max-w-md mx-auto bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-lg overflow-hidden border border-gray-200">
-              {/* AI Assistant Header */}
-              <div className="bg-gradient-to-r from-brand-teal to-brand-accent-teal p-6 text-white">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <Shield className="w-8 h-8 text-white" />
+            <div className="w-full max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+              {/* AI Assistant Header - more compact */}
+              <div className="bg-gradient-to-r from-brand-teal to-brand-accent-teal p-4 text-white">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold">AI Guardian</h3>
-                    <p className="opacity-90">Your personal health assistant</p>
+                    <h3 className="text-lg font-bold">AI Guardian</h3>
+                    <p className="opacity-90 text-xs">Your personal health assistant</p>
                   </div>
                 </div>
               </div>
               
-              {/* Conversation Display */}
-              <div className="p-6 bg-gray-50/50 backdrop-blur-md space-y-6">
+              {/* Conversation Display - more compact */}
+              <div className="p-4 bg-gray-50/50 space-y-3 max-h-64 overflow-y-auto">
                 {conversations.map((convo, index) => (
-                  <div key={index} className="space-y-4">
+                  <div key={index} className="space-y-2">
                     <div className="flex justify-end">
-                      <div className="bg-gray-200 rounded-2xl rounded-tr-sm px-4 py-3 max-w-xs">
-                        <p className="text-gray-800">{convo.user}</p>
+                      <div className="bg-gray-200 rounded-lg rounded-tr-none px-3 py-2 max-w-xs">
+                        <p className="text-gray-800 text-xs">{convo.user}</p>
                       </div>
                     </div>
                     
                     <div className="flex">
-                      <div className="bg-brand-teal/10 border border-brand-teal/20 rounded-2xl rounded-tl-sm px-4 py-3 max-w-xs">
-                        <p className="text-gray-800">{convo.ai}</p>
+                      <div className="bg-brand-teal/10 border border-brand-teal/20 rounded-lg rounded-tl-none px-3 py-2 max-w-xs">
+                        <p className="text-gray-800 text-xs">{convo.ai}</p>
                       </div>
                     </div>
                   </div>
                 ))}
                 
-                {/* Typing indicator */}
-                <div className="flex items-center gap-2 text-gray-400 pl-2">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 rounded-full bg-brand-teal animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 rounded-full bg-brand-teal animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                    <div className="w-2 h-2 rounded-full bg-brand-teal animate-bounce" style={{ animationDelay: '600ms' }}></div>
+                {/* Typing indicator - smaller */}
+                <div className="flex items-center gap-1.5 text-gray-400 pl-1.5">
+                  <div className="flex space-x-0.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-teal animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-teal animate-bounce" style={{ animationDelay: '200ms' }}></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-teal animate-bounce" style={{ animationDelay: '400ms' }}></div>
                   </div>
-                  <span className="text-sm">AI Guardian is typing...</span>
+                  <span className="text-xs">AI Guardian is typing...</span>
                 </div>
               </div>
             </div>
