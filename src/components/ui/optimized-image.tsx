@@ -61,6 +61,7 @@ export const OptimizedImage = ({
         src={imageSrc}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         onError={handleError}
         onLoad={handleLoad}
         className={cn(
