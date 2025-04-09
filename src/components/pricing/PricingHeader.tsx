@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { TruckIcon, CalendarCheck } from 'lucide-react';
 
 const PricingHeader: React.FC = () => {
   return (
@@ -13,10 +12,10 @@ const PricingHeader: React.FC = () => {
           
           <div className="flex flex-wrap justify-center gap-4 mt-8">
             <Badge variant="outline" className="px-4 py-2 text-brand-teal border-brand-teal bg-white/80 backdrop-blur-sm">
-              <TruckIcon className="w-4 h-4 mr-2" /> Free shipping on orders over €200
+              Free shipping on orders over €200
             </Badge>
             <Badge variant="outline" className="px-4 py-2 text-brand-orange border-brand-orange bg-white/80 backdrop-blur-sm">
-              <CalendarCheck className="w-4 h-4 mr-2" /> 30-day money-back guarantee
+              30-day money-back guarantee
             </Badge>
           </div>
         </div>
