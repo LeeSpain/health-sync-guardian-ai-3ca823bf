@@ -38,12 +38,13 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ product }) => 
           </Button>
         </div>
         
-        <div className="relative h-80 p-6 bg-white rounded-lg">
+        <div className="relative h-80 p-6 bg-white rounded-lg flex items-center justify-center">
           <OptimizedImage 
             src={product.image} 
             alt={product.name}
             className="h-full w-full"
             priority={true}
+            objectFit="contain"
           />
         </div>
       </Card>

@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -9,6 +10,7 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   width?: number;
   height?: number;
   priority?: boolean;
+  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 }
 
 export const OptimizedImage = ({
@@ -18,20 +20,36 @@ export const OptimizedImage = ({
   width,
   height,
   priority = false,
+  objectFit = 'contain',
   ...props
 }: OptimizedImageProps) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const maxRetries = 2;
 
   // Reset states when src changes
   useEffect(() => {
     setLoaded(false);
     setError(false);
+    setRetryCount(0);
   }, [src]);
 
   const handleError = () => {
     console.error(`Failed to load image: ${src}`);
-    setError(true);
+    
+    // Try to reload the image a couple times before showing error
+    if (retryCount < maxRetries) {
+      setRetryCount(prev => prev + 1);
+      // Force a reload with a cache-busting parameter
+      const cacheBuster = `?reload=${Date.now()}-${retryCount}`;
+      const imgElement = document.querySelector(`img[data-source-path="${src}"]`) as HTMLImageElement;
+      if (imgElement) {
+        imgElement.src = `${src.split('?')[0]}${cacheBuster}`;
+      }
+    } else {
+      setError(true);
+    }
   };
 
   const handleLoad = () => {
@@ -43,16 +61,43 @@ export const OptimizedImage = ({
 
   return (
     <div 
-      className={cn("relative flex items-center justify-center overflow-hidden", className)} 
+      className={cn(
+        "relative overflow-hidden flex items-center justify-center",
+        className
+      )} 
       style={{
-        width: width ? `${width}px` : 'auto',
-        height: height ? `${height}px` : 'auto',
+        width: width ? `${width}px` : '100%',
+        height: height ? `${height}px` : '100%',
       }}
     >
-      {/* Loading indicator */}
+      {/* Loading skeleton */}
       {!loaded && !error && (
-        <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-brand-teal/30 border-t-brand-teal rounded-full animate-spin"></div>
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100/60">
+          <Skeleton className="w-full h-full absolute inset-0" />
+          <div className="w-8 h-8 border-4 border-brand-teal/30 border-t-brand-teal rounded-full animate-spin z-10"></div>
+        </div>
+      )}
+      
+      {/* Error state */}
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100/60 text-gray-500 text-sm">
+          <div className="text-center p-2">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-8 w-8 mx-auto mb-2 text-gray-400" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
+              />
+            </svg>
+            <span>Image failed to load</span>
+          </div>
         </div>
       )}
       
@@ -62,12 +107,17 @@ export const OptimizedImage = ({
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         // Use the proper HTML attribute for browser support
-        // This will be lowercase in the rendered HTML which is correct
         {...(priority ? { fetchpriority: "high" } : {})}
         onError={handleError}
         onLoad={handleLoad}
+        style={{
+          objectFit: objectFit,
+          width: '100%',
+          height: '100%',
+          transition: 'opacity 0.3s ease'
+        }}
         className={cn(
-          "max-w-full max-h-full object-contain transition-opacity duration-300",
+          "transition-opacity duration-300",
           !loaded && "opacity-0",
           loaded && "opacity-100"
         )}

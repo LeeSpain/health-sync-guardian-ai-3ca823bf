@@ -39,6 +39,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
               alt={name} 
               className="h-full w-full" 
               priority={false}
+              objectFit="contain"
             />
           </div>
           <span className="font-medium">{name}</span>

@@ -21,7 +21,7 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
     product.name === "Thermometer";
 
   return (
-    <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
+    <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full flex flex-col">
       {/* Gradient top bar with animation */}
       <div className="h-2 w-full bg-gradient-to-r from-brand-teal/70 to-brand-teal relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-white/20 overflow-hidden">
@@ -29,7 +29,7 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow">
         {/* Device header */}
         <div className="flex items-start mb-4">
           <div className="w-12 h-12 rounded-full bg-brand-teal/10 flex items-center justify-center mr-4 border border-brand-teal/20 shadow-sm group-hover:scale-110 transition-transform duration-300">
@@ -44,12 +44,13 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
         </div>
         
         {/* Image with improved containment */}
-        <div className="mb-5 relative h-48 bg-white rounded-lg">
+        <div className="mb-5 relative h-48 bg-white rounded-lg flex items-center justify-center">
           <OptimizedImage 
             src={product.image} 
             alt={product.name}
             className="h-full w-full"
             priority={isPriorityProduct}
+            objectFit="contain"
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
           />
         </div>
