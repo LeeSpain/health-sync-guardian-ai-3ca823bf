@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { 
@@ -12,10 +12,26 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingCart, Plus, Minus, Check, Shield, ArrowRight } from 'lucide-react';
+import { 
+  ShoppingCart, 
+  Plus, 
+  Minus, 
+  Check, 
+  Shield, 
+  ArrowRight,
+  Info,
+  CalendarCheck 
+} from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getProductsData } from '@/components/product-showcase/productData';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface CartItem {
   id: string;
@@ -23,12 +39,15 @@ interface CartItem {
   price: number;
   type: 'essential' | 'ai-device' | 'professional';
   isSubscription: boolean;
+  image?: string;
+  monthlyPrice?: number;
 }
 
 const PricingPage: React.FC = () => {
   const { toast } = useToast();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [activeTab, setActiveTab] = useState('all');
+  const productsData = getProductsData();
 
   // Essential item
   const essentialItems = [
@@ -37,8 +56,15 @@ const PricingPage: React.FC = () => {
       name: "iHealth Dashboard Tablet", 
       oneTimePrice: 120.99,
       type: 'essential' as const,
+      image: "/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png"
     }
   ];
+
+  // Get product images from productsData
+  const getProductImageByName = (name: string) => {
+    const product = productsData.find(p => p.name === name);
+    return product?.image || "/placeholder.svg";
+  };
 
   // AI-Powered Devices
   const aiPoweredDevices = [
@@ -48,6 +74,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 60.49, 
       monthlyPrice: 5.49,
       type: 'ai-device' as const,
+      image: getProductImageByName("Guardian Button")
     },
     { 
       id: 'heart-rate-monitor',
@@ -55,6 +82,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 96.79, 
       monthlyPrice: 5.49,
       type: 'ai-device' as const,
+      image: getProductImageByName("Heart Rate Monitor")
     },
     { 
       id: 'smart-scales',
@@ -62,6 +90,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 108.89, 
       monthlyPrice: 5.49,
       type: 'ai-device' as const,
+      image: getProductImageByName("Smart Scales")
     },
     { 
       id: 'thermometer',
@@ -69,6 +98,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 48.39, 
       monthlyPrice: 5.49,
       type: 'ai-device' as const,
+      image: getProductImageByName("Thermometer")
     },
     { 
       id: 'bed-sensor',
@@ -76,6 +106,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 157.29, 
       monthlyPrice: 5.49,
       type: 'ai-device' as const,
+      image: getProductImageByName("Bed Sensor")
     },
     { 
       id: 'family-dashboard',
@@ -83,6 +114,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: null, 
       monthlyPrice: 5.49,
       type: 'ai-device' as const,
+      image: "/placeholder.svg"
     }
   ];
 
@@ -94,6 +126,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 108.89, 
       monthlyPrice: 27.49,
       type: 'professional' as const,
+      image: getProductImageByName("SOS Call Centre")
     },
     { 
       id: 'medication-dispenser',
@@ -101,6 +134,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 241.99, 
       monthlyPrice: 27.49,
       type: 'professional' as const,
+      image: getProductImageByName("Medication Dispenser")
     },
     { 
       id: 'glucose-monitor',
@@ -108,6 +142,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 241.99, 
       monthlyPrice: 27.49,
       type: 'professional' as const,
+      image: getProductImageByName("Glucose Monitor")
     },
     { 
       id: 'nurse-sync',
@@ -115,6 +150,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 181.49, 
       monthlyPrice: 32.99,
       type: 'professional' as const,
+      image: getProductImageByName("Nurse-Sync")
     },
     { 
       id: 'medic-sync',
@@ -122,6 +158,7 @@ const PricingPage: React.FC = () => {
       oneTimePrice: 181.49, 
       monthlyPrice: 38.49,
       type: 'professional' as const,
+      image: getProductImageByName("Medic-Sync")
     }
   ];
 
@@ -150,13 +187,45 @@ const PricingPage: React.FC = () => {
       return;
     }
 
-    setCart([...cart, {
+    // Create new cart item
+    const newCartItem: CartItem = {
       id: item.id,
       name: item.name,
       price,
       type: item.type,
-      isSubscription
-    }]);
+      isSubscription,
+      image: item.image,
+      monthlyPrice: item.monthlyPrice
+    };
+    
+    // Add device to cart with monthly subscription if it's a one-time purchase with available subscription
+    if (!isSubscription && item.monthlyPrice) {
+      const alreadyHasSubscription = cart.some(
+        cartItem => cartItem.id === item.id && cartItem.isSubscription === true
+      );
+      
+      // If it doesn't already have a subscription, add it
+      if (!alreadyHasSubscription) {
+        const subscriptionItem: CartItem = {
+          id: item.id,
+          name: `${item.name} - Monthly Service`,
+          price: item.monthlyPrice,
+          type: item.type,
+          isSubscription: true,
+          image: item.image
+        };
+        
+        setCart([...cart, newCartItem, subscriptionItem]);
+        
+        toast({
+          title: "Added to cart with subscription",
+          description: `${item.name} and its monthly service have been added to your cart`,
+        });
+        return;
+      }
+    }
+    
+    setCart([...cart, newCartItem]);
 
     toast({
       title: "Added to cart",
@@ -168,16 +237,45 @@ const PricingPage: React.FC = () => {
     const newCart = [...cart];
     const removedItem = newCart[index];
     newCart.splice(index, 1);
+    
+    // If this was a device (not a subscription) and we also added its subscription automatically,
+    // find and remove the subscription too
+    if (!removedItem.isSubscription) {
+      const subscriptionIndex = newCart.findIndex(
+        item => item.id === removedItem.id && item.isSubscription
+      );
+      if (subscriptionIndex >= 0) {
+        newCart.splice(subscriptionIndex, 1);
+        toast({
+          title: "Removed from cart",
+          description: `${removedItem.name} and its monthly service have been removed from your cart`,
+        });
+      } else {
+        toast({
+          title: "Removed from cart",
+          description: `${removedItem.name} has been removed from your cart`,
+        });
+      }
+    } else {
+      toast({
+        title: "Removed from cart",
+        description: `${removedItem.name} has been removed from your cart`,
+      });
+    }
+    
     setCart(newCart);
-
-    toast({
-      title: "Removed from cart",
-      description: `${removedItem.name} has been removed from your cart`,
-    });
   };
 
-  const calculateTotal = () => {
+  const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
+  };
+
+  const calculateMonthlyTotal = () => {
+    return cart.filter(item => item.isSubscription).reduce((total, item) => total + item.price, 0);
+  };
+
+  const calculateOneTimeTotal = () => {
+    return cart.filter(item => !item.isSubscription).reduce((total, item) => total + item.price, 0);
   };
 
   const isInCart = (id: string, isSubscription: boolean) => {
@@ -193,7 +291,7 @@ const PricingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-brand-grey/20">
       <Navbar />
       <main className="flex-grow">
         {/* Hero banner for pricing page */}
@@ -202,6 +300,14 @@ const PricingPage: React.FC = () => {
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-brand-teal mb-4">iHealth-Sync Complete Product Catalog</h1>
               <p className="text-xl text-gray-600">Customize your health monitoring system with our innovative products and services</p>
+              <div className="flex justify-center gap-4 mt-8">
+                <Badge variant="outline" className="px-4 py-2 text-brand-teal border-brand-teal bg-white/80 backdrop-blur-sm">
+                  <Check className="w-4 h-4 mr-2" /> Free shipping on orders over €200
+                </Badge>
+                <Badge variant="outline" className="px-4 py-2 text-brand-orange border-brand-orange bg-white/80 backdrop-blur-sm">
+                  <CalendarCheck className="w-4 h-4 mr-2" /> 30-day money-back guarantee
+                </Badge>
+              </div>
             </div>
           </div>
         </div>
@@ -214,11 +320,11 @@ const PricingPage: React.FC = () => {
             </div>
             
             <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4 sm:mt-0">
-              <TabsList>
-                <TabsTrigger value="all">All Products</TabsTrigger>
-                <TabsTrigger value="essential">Essential</TabsTrigger>
-                <TabsTrigger value="ai-devices">AI Devices</TabsTrigger>
-                <TabsTrigger value="professional">Professional Care</TabsTrigger>
+              <TabsList className="bg-brand-grey/20">
+                <TabsTrigger value="all" className="data-[state=active]:bg-white">All Products</TabsTrigger>
+                <TabsTrigger value="essential" className="data-[state=active]:bg-white">Essential</TabsTrigger>
+                <TabsTrigger value="ai-devices" className="data-[state=active]:bg-white">AI Devices</TabsTrigger>
+                <TabsTrigger value="professional" className="data-[state=active]:bg-white">Professional Care</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -236,7 +342,7 @@ const PricingPage: React.FC = () => {
                         Required
                       </Badge>
                     </div>
-                    <div className="bg-blue-50 rounded-lg overflow-hidden border border-blue-100">
+                    <div className="bg-blue-50 rounded-lg overflow-hidden border border-blue-100 shadow-sm">
                       <Table>
                         <TableHeader>
                           <TableRow className="bg-blue-100/50">
@@ -248,7 +354,14 @@ const PricingPage: React.FC = () => {
                         <TableBody>
                           {essentialItems.map((item) => (
                             <TableRow key={item.id}>
-                              <TableCell className="font-medium">{item.name}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                                  </div>
+                                  <span className="font-medium">{item.name}</span>
+                                </div>
+                              </TableCell>
                               <TableCell>€{item.oneTimePrice.toFixed(2)}</TableCell>
                               <TableCell>
                                 <Button 
@@ -277,7 +390,7 @@ const PricingPage: React.FC = () => {
                       </Badge>
                       AI-Powered Devices
                     </h2>
-                    <div className="rounded-lg overflow-hidden border border-gray-200">
+                    <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm bg-white">
                       <Table>
                         <TableHeader>
                           <TableRow className="bg-gray-50">
@@ -290,8 +403,33 @@ const PricingPage: React.FC = () => {
                         <TableBody>
                           {aiPoweredDevices.map((device, index) => (
                             <TableRow key={device.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                              <TableCell className="font-medium">{device.name}</TableCell>
-                              <TableCell>{device.oneTimePrice ? `€${device.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={device.image} alt={device.name} className="w-full h-full object-contain" />
+                                  </div>
+                                  <span className="font-medium">{device.name}</span>
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                {device.oneTimePrice ? (
+                                  <>
+                                    €{device.oneTimePrice.toFixed(2)}
+                                    {device.monthlyPrice && (
+                                      <TooltipProvider>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Info className="h-4 w-4 text-gray-400 ml-1.5 inline cursor-help" />
+                                          </TooltipTrigger>
+                                          <TooltipContent className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                                            <p className="text-sm">Includes automatic monthly subscription</p>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </TooltipProvider>
+                                    )}
+                                  </>
+                                ) : '—'}
+                              </TableCell>
                               <TableCell>{device.monthlyPrice ? `€${device.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
                               <TableCell>
                                 <div className="flex gap-2">
@@ -306,7 +444,7 @@ const PricingPage: React.FC = () => {
                                       <Plus className="h-3 w-3" /> Buy
                                     </Button>
                                   )}
-                                  {device.monthlyPrice !== null && (
+                                  {device.monthlyPrice !== null && !device.oneTimePrice && (
                                     <Button 
                                       size="sm" 
                                       onClick={() => addToCart(device, true)}
@@ -333,7 +471,7 @@ const PricingPage: React.FC = () => {
                       </Badge>
                       Professional Care Services
                     </h2>
-                    <div className="rounded-lg overflow-hidden border border-purple-100">
+                    <div className="rounded-lg overflow-hidden border border-purple-100 shadow-sm">
                       <Table>
                         <TableHeader>
                           <TableRow className="bg-purple-50">
@@ -346,8 +484,33 @@ const PricingPage: React.FC = () => {
                         <TableBody>
                           {professionalServices.map((service, index) => (
                             <TableRow key={service.id} className={index % 2 === 0 ? "bg-white" : "bg-purple-50"}>
-                              <TableCell className="font-medium">{service.name}</TableCell>
-                              <TableCell>{service.oneTimePrice ? `€${service.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={service.image} alt={service.name} className="w-full h-full object-contain" />
+                                  </div>
+                                  <span className="font-medium">{service.name}</span>
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                {service.oneTimePrice ? (
+                                  <>
+                                    €{service.oneTimePrice.toFixed(2)}
+                                    {service.monthlyPrice && (
+                                      <TooltipProvider>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Info className="h-4 w-4 text-gray-400 ml-1.5 inline cursor-help" />
+                                          </TooltipTrigger>
+                                          <TooltipContent className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                                            <p className="text-sm">Includes automatic monthly subscription</p>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </TooltipProvider>
+                                    )}
+                                  </>
+                                ) : '—'}
+                              </TableCell>
                               <TableCell>{service.monthlyPrice ? `€${service.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
                               <TableCell>
                                 <div className="flex gap-2">
@@ -362,7 +525,7 @@ const PricingPage: React.FC = () => {
                                       <Plus className="h-3 w-3" /> Buy
                                     </Button>
                                   )}
-                                  {service.monthlyPrice !== null && (
+                                  {service.monthlyPrice !== null && !service.oneTimePrice && (
                                     <Button 
                                       size="sm" 
                                       onClick={() => addToCart(service, true)}
@@ -392,7 +555,7 @@ const PricingPage: React.FC = () => {
                         Required
                       </Badge>
                     </div>
-                    <div className="bg-blue-50 rounded-lg overflow-hidden border border-blue-100">
+                    <div className="bg-blue-50 rounded-lg overflow-hidden border border-blue-100 shadow-sm">
                       <Table>
                         <TableHeader>
                           <TableRow className="bg-blue-100/50">
@@ -404,7 +567,14 @@ const PricingPage: React.FC = () => {
                         <TableBody>
                           {essentialItems.map((item) => (
                             <TableRow key={item.id}>
-                              <TableCell className="font-medium">{item.name}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                                  </div>
+                                  <span className="font-medium">{item.name}</span>
+                                </div>
+                              </TableCell>
                               <TableCell>€{item.oneTimePrice.toFixed(2)}</TableCell>
                               <TableCell>
                                 <Button 
@@ -435,7 +605,7 @@ const PricingPage: React.FC = () => {
                       </Badge>
                       AI-Powered Devices
                     </h2>
-                    <div className="rounded-lg overflow-hidden border border-gray-200">
+                    <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm bg-white">
                       <Table>
                         <TableHeader>
                           <TableRow className="bg-gray-50">
@@ -448,8 +618,33 @@ const PricingPage: React.FC = () => {
                         <TableBody>
                           {aiPoweredDevices.map((device, index) => (
                             <TableRow key={device.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                              <TableCell className="font-medium">{device.name}</TableCell>
-                              <TableCell>{device.oneTimePrice ? `€${device.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={device.image} alt={device.name} className="w-full h-full object-contain" />
+                                  </div>
+                                  <span className="font-medium">{device.name}</span>
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                {device.oneTimePrice ? (
+                                  <>
+                                    €{device.oneTimePrice.toFixed(2)}
+                                    {device.monthlyPrice && (
+                                      <TooltipProvider>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Info className="h-4 w-4 text-gray-400 ml-1.5 inline cursor-help" />
+                                          </TooltipTrigger>
+                                          <TooltipContent className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                                            <p className="text-sm">Includes automatic monthly subscription</p>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </TooltipProvider>
+                                    )}
+                                  </>
+                                ) : '—'}
+                              </TableCell>
                               <TableCell>{device.monthlyPrice ? `€${device.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
                               <TableCell>
                                 <div className="flex gap-2">
@@ -464,7 +659,7 @@ const PricingPage: React.FC = () => {
                                       <Plus className="h-3 w-3" /> Buy
                                     </Button>
                                   )}
-                                  {device.monthlyPrice !== null && (
+                                  {device.monthlyPrice !== null && !device.oneTimePrice && (
                                     <Button 
                                       size="sm" 
                                       onClick={() => addToCart(device, true)}
@@ -493,7 +688,7 @@ const PricingPage: React.FC = () => {
                       </Badge>
                       Professional Care Services
                     </h2>
-                    <div className="rounded-lg overflow-hidden border border-purple-100">
+                    <div className="rounded-lg overflow-hidden border border-purple-100 shadow-sm">
                       <Table>
                         <TableHeader>
                           <TableRow className="bg-purple-50">
@@ -506,8 +701,33 @@ const PricingPage: React.FC = () => {
                         <TableBody>
                           {professionalServices.map((service, index) => (
                             <TableRow key={service.id} className={index % 2 === 0 ? "bg-white" : "bg-purple-50"}>
-                              <TableCell className="font-medium">{service.name}</TableCell>
-                              <TableCell>{service.oneTimePrice ? `€${service.oneTimePrice.toFixed(2)}` : '—'}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={service.image} alt={service.name} className="w-full h-full object-contain" />
+                                  </div>
+                                  <span className="font-medium">{service.name}</span>
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                {service.oneTimePrice ? (
+                                  <>
+                                    €{service.oneTimePrice.toFixed(2)}
+                                    {service.monthlyPrice && (
+                                      <TooltipProvider>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Info className="h-4 w-4 text-gray-400 ml-1.5 inline cursor-help" />
+                                          </TooltipTrigger>
+                                          <TooltipContent className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                                            <p className="text-sm">Includes automatic monthly subscription</p>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </TooltipProvider>
+                                    )}
+                                  </>
+                                ) : '—'}
+                              </TableCell>
                               <TableCell>{service.monthlyPrice ? `€${service.monthlyPrice.toFixed(2)}` : '—'}</TableCell>
                               <TableCell>
                                 <div className="flex gap-2">
@@ -522,7 +742,7 @@ const PricingPage: React.FC = () => {
                                       <Plus className="h-3 w-3" /> Buy
                                     </Button>
                                   )}
-                                  {service.monthlyPrice !== null && (
+                                  {service.monthlyPrice !== null && !service.oneTimePrice && (
                                     <Button 
                                       size="sm" 
                                       onClick={() => addToCart(service, true)}
@@ -573,17 +793,18 @@ const PricingPage: React.FC = () => {
             {/* Shopping Cart */}
             <div className="lg:sticky lg:top-24 h-fit">
               <Card className="border-2 border-brand-teal/20 shadow-md">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-bold flex items-center gap-2">
+                <CardHeader className="pb-0">
+                  <CardTitle className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
                       <ShoppingCart className="h-5 w-5 text-brand-teal" />
                       Your Cart
-                    </h2>
+                    </div>
                     <Badge variant="outline" className="bg-brand-teal/10 text-brand-teal border-brand-teal">
                       {cart.length} item(s)
                     </Badge>
-                  </div>
-
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6 pt-4">
                   {cart.length === 0 ? (
                     <div className="text-center py-12 text-gray-500">
                       <ShoppingCart className="h-12 w-12 mx-auto mb-4 text-gray-300" />
@@ -595,21 +816,28 @@ const PricingPage: React.FC = () => {
                       <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 mb-6">
                         {cart.map((item, index) => (
                           <div key={index} className="flex justify-between items-center border-b pb-4">
-                            <div>
-                              <p className="font-medium">{item.name}</p>
-                              <div className="flex items-center gap-2 mt-1">
-                                <Badge variant="outline" className={`text-xs ${
-                                  item.type === 'essential' 
-                                    ? 'border-blue-500 text-blue-700 bg-blue-50' 
-                                    : item.type === 'ai-device'
-                                      ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
-                                      : 'border-purple-500 text-purple-700 bg-purple-50'
-                                }`}>
-                                  {item.isSubscription ? 'Monthly' : 'One-time'}
-                                </Badge>
-                                {item.isSubscription && (
-                                  <span className="text-xs text-gray-500">12-month commitment</span>
-                                )}
+                            <div className="flex items-center gap-2">
+                              {item.image && (
+                                <div className="w-10 h-10 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                  <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-medium text-sm">{item.name}</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <Badge variant="outline" className={`text-xs ${
+                                    item.type === 'essential' 
+                                      ? 'border-blue-500 text-blue-700 bg-blue-50' 
+                                      : item.type === 'ai-device'
+                                        ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
+                                        : 'border-purple-500 text-purple-700 bg-purple-50'
+                                  }`}>
+                                    {item.isSubscription ? 'Monthly' : 'One-time'}
+                                  </Badge>
+                                  {item.isSubscription && (
+                                    <span className="text-xs text-gray-500">12-month commitment</span>
+                                  )}
+                                </div>
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
@@ -628,26 +856,44 @@ const PricingPage: React.FC = () => {
                       </div>
 
                       <div className="pt-4 border-t border-gray-200">
-                        <div className="flex justify-between text-sm text-gray-500 mb-1">
-                          <span>Subtotal:</span>
-                          <span className="font-mono">€{calculateTotal().toFixed(2)}</span>
+                        <div className="space-y-1 mb-3">
+                          <div className="flex justify-between text-sm text-gray-500">
+                            <span>One-time purchases:</span>
+                            <span className="font-mono">€{calculateOneTimeTotal().toFixed(2)}</span>
+                          </div>
+                          <div className="flex justify-between text-sm text-gray-500">
+                            <span>Monthly subscription:</span>
+                            <span className="font-mono">€{calculateMonthlyTotal().toFixed(2)}/mo</span>
+                          </div>
+                          <div className="flex justify-between text-sm text-gray-500">
+                            <span>VAT (21%):</span>
+                            <span className="font-mono">€{(calculateSubtotal() * 0.21).toFixed(2)}</span>
+                          </div>
                         </div>
-                        <div className="flex justify-between text-sm text-gray-500 mb-3">
-                          <span>Estimated VAT:</span>
-                          <span className="font-mono">€{(calculateTotal() * 0.21).toFixed(2)}</span>
+                        
+                        <div className="bg-gray-50 p-3 rounded-lg mb-6">
+                          <div className="flex justify-between font-bold text-lg">
+                            <span>Total:</span>
+                            <span className="font-mono">€{(calculateSubtotal() * 1.21).toFixed(2)}</span>
+                          </div>
+                          {calculateMonthlyTotal() > 0 && (
+                            <div className="flex justify-between text-sm text-brand-orange font-medium mt-1">
+                              <span>Recurring monthly:</span>
+                              <span className="font-mono">€{(calculateMonthlyTotal() * 1.10).toFixed(2)}/mo</span>
+                            </div>
+                          )}
                         </div>
-                        <div className="flex justify-between font-bold text-lg mb-6">
-                          <span>Total:</span>
-                          <span className="font-mono">€{(calculateTotal() * 1.21).toFixed(2)}</span>
-                        </div>
+                        
                         <Button 
                           className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white flex items-center justify-center gap-2 py-6"
                           onClick={checkout}
+                          disabled={cart.length === 0}
                         >
                           <ShoppingCart className="h-5 w-5" />
                           Proceed to Checkout
                         </Button>
-                        <p className="text-xs text-center text-gray-500 mt-3">
+                        <p className="text-xs text-center text-gray-500 mt-3 flex items-center justify-center">
+                          <Shield className="h-3 w-3 inline mr-1 text-brand-teal" />
                           Secure payment processing. No credit card data is stored on our servers.
                         </p>
                       </div>
@@ -655,6 +901,25 @@ const PricingPage: React.FC = () => {
                   )}
                 </CardContent>
               </Card>
+              
+              {/* Special Offer Card */}
+              {cart.length > 0 && calculateSubtotal() < 200 && (
+                <Card className="mt-4 border-2 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-transparent">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-brand-orange/10 flex items-center justify-center text-brand-orange">
+                        <Info className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm text-brand-orange">Free Shipping Offer</p>
+                        <p className="text-xs text-gray-600">
+                          Add €{(200 - calculateSubtotal()).toFixed(2)} more to qualify for free shipping!
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </div>
