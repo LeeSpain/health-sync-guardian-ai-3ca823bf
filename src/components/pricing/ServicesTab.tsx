@@ -115,54 +115,7 @@ const ServicesTab: React.FC = () => {
         </div>
       </div>
 
-      {/* Nurse Services */}
-      <div className="max-w-4xl mx-auto">
-        <Card className="border-2 border-brand-teal overflow-hidden hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-brand-teal/5 to-transparent">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/3 bg-gradient-to-br from-brand-teal/10 to-transparent p-6 flex items-center justify-center">
-              <img
-                src="/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png"
-                alt="Nurse-Sync Services"
-                className="h-48 w-48 object-contain"
-              />
-            </div>
-            <div className="md:w-2/3">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-2xl text-brand-teal">Nurse-Sync Services</CardTitle>
-                  <Badge className="bg-brand-teal text-white">Premium Service</Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
-                    <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="font-medium">Personalized care packages</span>
-                  </div>
-                  <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
-                    <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="font-medium">Professional nurse support</span>
-                  </div>
-                  <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
-                    <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="font-medium">Flexible scheduling</span>
-                  </div>
-                  <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
-                    <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="font-medium">Comprehensive care plans</span>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full md:w-auto ml-auto bg-brand-teal hover:bg-brand-teal/90 group">
-                  <span>View Nurse-Sync Packages</span>
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </CardFooter>
-            </div>
-          </div>
-        </Card>
-      </div>
+      {/* Nurse-Sync Section Removed */}
     </div>
   );
 };
