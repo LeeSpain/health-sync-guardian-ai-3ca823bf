@@ -35,6 +35,16 @@ const deferWork = (fn: () => void, timeout = 1000) => {
   }
 };
 
+// Add type for Chrome's performance.memory
+interface MemoryInfo {
+  usedJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
+interface PerformanceWithMemory extends Performance {
+  memory?: MemoryInfo;
+}
+
 // Optimize initial rendering
 const initApp = () => {
   // Get the root element
@@ -67,8 +77,9 @@ const initApp = () => {
       // Add memory leak detection in development
       if (process.env.NODE_ENV === 'development') {
         deferWork(() => {
-          console.log('Memory usage:', performance.memory ? 
-            `${Math.round(performance.memory.usedJSHeapSize / 1048576)} MB / ${Math.round(performance.memory.jsHeapSizeLimit / 1048576)} MB` : 
+          const performanceWithMemory = performance as PerformanceWithMemory;
+          console.log('Memory usage:', performanceWithMemory.memory ? 
+            `${Math.round(performanceWithMemory.memory.usedJSHeapSize / 1048576)} MB / ${Math.round(performanceWithMemory.memory.jsHeapSizeLimit / 1048576)} MB` : 
             'Not available');
         }, 5000);
       }

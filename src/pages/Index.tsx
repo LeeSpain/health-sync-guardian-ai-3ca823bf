@@ -47,6 +47,12 @@ const ProductShowcaseLoader = () => (
   </div>
 );
 
+// Define connection types
+interface NetworkInformation {
+  saveData?: boolean;
+  effectiveType?: string;
+}
+
 // Enhanced lazy loaded component with optimized intersection observer
 const LazyComponent = ({ 
   component: Component, 
@@ -91,8 +97,8 @@ const Index: React.FC = () => {
     const shouldPreload = () => {
       if (!('connection' in navigator)) return true;
       
-      // @ts-ignore - connection may not be recognized in TypeScript
-      const connection = navigator.connection;
+      // Type assertion for navigator.connection
+      const connection = (navigator as any).connection as NetworkInformation | undefined;
       if (!connection) return true;
       
       // Don't preload if user has save-data enabled or on slow connections
