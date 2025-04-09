@@ -103,7 +103,7 @@ const DevicesTab: React.FC = () => {
                   key={index}
                   className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col"
                 >
-                  <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                  <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
                     <OptimizedImage
                       src={device.image}
                       alt={device.name}

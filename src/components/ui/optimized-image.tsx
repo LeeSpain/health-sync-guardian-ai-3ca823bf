@@ -25,15 +25,31 @@ export const OptimizedImage = ({
 }: OptimizedImageProps) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   const handleError = () => {
+    // Log error but don't retry more than twice
     console.error(`Failed to load image: ${src}`);
-    setError(true);
+    
+    // If we haven't retried too many times, try again
+    if (retryCount < 2) {
+      const img = new Image();
+      img.src = `${src}?retry=${retryCount}`;
+      img.onload = () => {
+        setRetryCount(prev => prev + 1);
+        setError(false);
+      };
+      img.onerror = () => {
+        setError(true);
+      };
+    } else {
+      setError(true);
+    }
   };
 
   const handleLoad = () => {
-    console.log(`Successfully loaded image: ${src}`);
     setLoaded(true);
+    setError(false);
   };
 
   return (
@@ -44,10 +60,10 @@ export const OptimizedImage = ({
       )} 
       style={{
         width: width ? `${width}px` : '100%',
-        height: height ? `${height}px` : '100%',
+        height: height ? `${height}px` : 'auto', // Changed to auto for better responsiveness
       }}
     >
-      {/* Loading skeleton */}
+      {/* Loading skeleton - only show if not loaded and not errored */}
       {!loaded && !error && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100/60">
           <Skeleton className="w-full h-full absolute inset-0" />
@@ -57,7 +73,7 @@ export const OptimizedImage = ({
       
       {/* Error state */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100/60 text-gray-500 text-sm">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100/60 text-gray-500 text-sm">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             className="h-8 w-8 mx-auto mb-2 text-gray-400" 
@@ -88,11 +104,12 @@ export const OptimizedImage = ({
           width: '100%',
           height: '100%',
           opacity: loaded ? 1 : 0,
-          transition: 'opacity 0.3s ease'
+          transition: 'opacity 0.3s ease',
+          display: error ? 'none' : 'block'
         }}
         className={cn(
           "transition-opacity duration-300",
-          loaded && "opacity-100"
+          loaded && !error ? "opacity-100" : "opacity-0"
         )}
         {...props}
       />

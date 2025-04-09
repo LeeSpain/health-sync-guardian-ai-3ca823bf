@@ -44,7 +44,7 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
         </div>
         
         {/* Image with improved containment */}
-        <div className="mb-5 relative h-48 bg-white rounded-lg flex items-center justify-center">
+        <div className="mb-5 relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center">
           <OptimizedImage 
             src={product.image} 
             alt={product.name}
