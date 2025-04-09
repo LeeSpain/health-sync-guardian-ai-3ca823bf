@@ -23,9 +23,6 @@ const ShippingOffer: React.FC<ShippingOfferProps> = ({ oneTimeTotal }) => {
           </div>
           <div>
             <p className="font-medium text-sm text-brand-orange">Free Shipping Offer</p>
-            <p className="text-xs text-gray-600">
-              Add <span className="font-mono font-semibold">€{(FREE_SHIPPING_THRESHOLD - oneTimeTotal).toFixed(2)}</span> more to qualify for free shipping!
-            </p>
           </div>
         </div>
       </CardContent>
@@ -34,3 +31,4 @@ const ShippingOffer: React.FC<ShippingOfferProps> = ({ oneTimeTotal }) => {
 };
 
 export default ShippingOffer;
+
