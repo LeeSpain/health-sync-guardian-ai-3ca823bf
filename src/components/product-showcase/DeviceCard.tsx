@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
@@ -22,21 +23,6 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
     product.name === "Heart Rate Monitor" ||
     product.name === "Smart Scales" ||
     product.name === "iHealth Dashboard Tablet";
-  
-  // Track when image is loaded
-  const [imageLoaded, setImageLoaded] = React.useState(false);
-  
-  // Handle image loaded event
-  const handleImageLoaded = () => {
-    setImageLoaded(true);
-    console.log(`Image loaded: ${product.name}`);
-  };
-  
-  // Handle image error
-  const handleImageError = () => {
-    console.error(`Failed to load image for ${product.name}:`, product.image);
-    setImageLoaded(true); // Still mark as "loaded" to remove loading state
-  };
   
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
@@ -66,26 +52,14 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           <AspectRatio ratio={16/9} className="bg-muted">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
             
-            {/* Show loading state until image is loaded */}
-            {!imageLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                <div className="animate-pulse rounded-full h-12 w-12 bg-brand-teal/20 flex items-center justify-center">
-                  <div className="animate-spin h-6 w-6 border-2 border-brand-teal/30 border-t-brand-teal rounded-full"></div>
-                </div>
-              </div>
-            )}
-            
-            {/* Fixed: Changed fetchpriority to fetchPriority to match React's TypeScript definitions */}
-            <img 
+            <OptimizedImage
               src={product.image}
               alt={product.name}
-              className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-              loading={isPriorityProduct ? "eager" : "lazy"}
-              fetchPriority={isPriorityProduct ? "high" : "auto"}
+              priority={isPriorityProduct}
               width={640}
               height={360}
-              onLoad={handleImageLoaded}
-              onError={handleImageError}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loadingClassName="bg-gray-100"
               data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
             />
             

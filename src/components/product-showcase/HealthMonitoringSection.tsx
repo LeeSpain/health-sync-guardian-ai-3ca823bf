@@ -1,31 +1,45 @@
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Heart, Wand2 } from 'lucide-react';
+import { Heart, Wand2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { DeviceCard } from './DeviceCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { HealthMetricsDashboard } from './HealthMetricsDashboard';
 import { DecorationLines } from './DecorationLines';
+import { DeviceCard } from './DeviceCard';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 interface HealthMonitoringSectionProps {
   products: Product[];
 }
 
 export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionProps) => {
-  // All health monitoring products are high priority for this section
-  const isPriorityProduct = (product: Product) => true;
+  // Implement intersection observer to defer rendering until visible
+  const { ref, inView } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '100px 0px',
+    triggerOnce: true
+  });
   
-  React.useEffect(() => {
-    // Log all product images for debugging
-    console.log('Health Monitoring products:', 
-      products.map(p => `${p.name}: ${p.image}`).join(', '));
-  }, [products]);
+  // All health monitoring products are high priority for this section
+  const isPriorityProduct = (product: Product, index: number) => {
+    // Only the first 3 products are high priority
+    return index < 3;
+  };
+  
+  // Track if section has been rendered
+  const hasRendered = useRef(false);
+  
+  useEffect(() => {
+    if (inView && !hasRendered.current) {
+      hasRendered.current = true;
+    }
+  }, [inView]);
   
   return (
-    <div>
-      <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+    <div ref={ref}>
+      <div className="flex flex-col md:flex-row items-center justify-between mb-8">
         <div className="flex items-center">
           <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-teal to-brand-teal/70 flex items-center justify-center mr-4 shadow-md">
             <Heart className="h-6 w-6 text-white" />
@@ -45,12 +59,12 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
               <CarouselItem key={index}>
                 <DeviceCard 
                   product={product}
-                  priorityImage={isPriorityProduct(product)}
+                  priorityImage={isPriorityProduct(product, index)}
                 />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-4">
             <CarouselPrevious className="static translate-y-0 mx-2 bg-white border border-gray-200 hover:bg-gray-50" />
             <CarouselNext className="static translate-y-0 mx-2 bg-white border border-gray-200 hover:bg-gray-50" />
           </div>
@@ -68,21 +82,21 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             <div key={index} className="transform transition-all duration-500 hover:-translate-y-2">
               <DeviceCard 
                 product={product} 
-                priorityImage={isPriorityProduct(product)} 
+                priorityImage={isPriorityProduct(product, index)} 
               />
             </div>
           ))}
         </div>
         
         {/* Decorative connecting lines */}
-        <DecorationLines />
+        {hasRendered.current && <DecorationLines />}
       </div>
       
-      {/* Health metrics visualization - simplified for better performance */}
-      <HealthMetricsDashboard />
+      {/* Health metrics visualization - load only when in view */}
+      {hasRendered.current && <HealthMetricsDashboard />}
       
       {/* Call to action */}
-      <div className="mt-10 text-center">
+      <div className="mt-8 text-center">
         <Button size="lg" className="bg-brand-teal hover:bg-brand-teal/90 group">
           Explore All Devices
           <Wand2 className="ml-2 h-4 w-4 group-hover:rotate-12 transition-transform" />

@@ -5,6 +5,7 @@ import './App.css';
 
 // Import loading component
 import { Skeleton } from '@/components/ui/skeleton';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Lazy load the pages with better chunk names for easier debugging
 const Index = lazy(() => import(/* webpackChunkName: "index-page" */ './pages/Index'));
@@ -76,6 +77,8 @@ function App() {
 
   return (
     <Router>
+      {/* Add ScrollToTop component to ensure pages start at the top */}
+      <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Index />} />

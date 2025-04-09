@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>health-sync-guardian-ai</title>
-    <meta name="description" content="Lovable Generated Project" />
+    <meta name="description" content="AI-Powered Health Monitoring For Everyone" />
     <meta name="author" content="Lovable" />
 
     <meta property="og:title" content="health-sync-guardian-ai" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:description" content="AI-Powered Health Monitoring For Everyone" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
@@ -20,7 +20,7 @@
     <!-- Critical CSS inlined to prevent render-blocking -->
     <style>
       /* Critical CSS for immediate rendering */
-      body {margin: 0; font-family: system-ui, -apple-system, sans-serif;}
+      body {margin: 0; font-family: system-ui, -apple-system, sans-serif; text-rendering: optimizeLegibility;}
       .image-placeholder {background-color: #f5f5f5; animation: pulse 1.5s infinite;}
       @keyframes pulse {0%, 100% {opacity: 0.6;} 50% {opacity: 0.8;}}
       
@@ -35,10 +35,12 @@
     </style>
     
     <!-- Preload critical CSS -->
-    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="preload" href="/src/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
     
     <!-- Preconnect to critical domains -->
     <link rel="preconnect" href="/" crossorigin>
+    <link rel="dns-prefetch" href="/">
     
     <!-- HIGH PRIORITY IMAGES - Force immediate loading for visible images -->
     <link rel="preload" href="/lovable-uploads/c38f7f2c-ac88-45a4-be0e-6ca22e7498f1.png" as="image" fetchpriority="high" />
@@ -67,6 +69,29 @@
             img.addEventListener('load', () => img.classList.add('loaded'));
           }
         });
+
+        // Add lazy loading to all images that don't have it yet
+        if ('loading' in HTMLImageElement.prototype) {
+          const lazyImages = document.querySelectorAll('img:not([loading])');
+          lazyImages.forEach(img => {
+            if (!img.hasAttribute('fetchpriority') || img.getAttribute('fetchpriority') !== 'high') {
+              img.setAttribute('loading', 'lazy');
+            }
+          });
+        }
+      });
+
+      // Remove unused event listeners to improve memory usage
+      window.addEventListener('load', () => {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            // Clean up any performance monitoring after initial load
+            const unusedElements = document.querySelectorAll('.image-placeholder');
+            unusedElements.forEach(el => {
+              el.classList.remove('image-placeholder');
+            });
+          });
+        }
       });
     </script>
   </body>
