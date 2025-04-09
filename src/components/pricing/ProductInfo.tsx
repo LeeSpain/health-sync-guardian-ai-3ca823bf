@@ -9,6 +9,14 @@ const ProductInfo: React.FC = () => {
 
   return (
     <div className="mt-8 space-y-6">
+      <div className="p-6 bg-brand-orange/5 rounded-lg border border-brand-orange/20 shadow-sm">
+        <h3 className="text-lg font-semibold text-brand-orange mb-2">Dashboard Services</h3>
+        <p className="text-sm text-gray-600 mb-4">
+          Nurse-Sync and Medic-Sync services are accessible through your dashboard after joining our service. 
+          These professional healthcare monitoring services provide immediate access to qualified healthcare professionals.
+        </p>
+      </div>
+      
       <div className="p-6 bg-brand-grey/10 rounded-lg border border-gray-200 shadow-sm">
         <div className="flex flex-col md:flex-row items-start gap-4">
           <div className="rounded-full bg-white p-3 flex items-center justify-center shadow-sm">
@@ -44,28 +52,6 @@ const ProductInfo: React.FC = () => {
             >
               View Complete Documentation <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
-          </div>
-        </div>
-      </div>
-      
-      <div className="p-6 bg-brand-orange/5 rounded-lg border border-brand-orange/20 shadow-sm">
-        <h3 className="text-lg font-semibold text-brand-orange mb-2">Dashboard Services</h3>
-        <p className="text-sm text-gray-600 mb-4">
-          Nurse-Sync and Medic-Sync services are accessible through your dashboard after joining our service. 
-          These professional healthcare monitoring services provide immediate access to qualified healthcare professionals.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <h4 className="font-medium text-brand-teal">Nurse-Sync</h4>
-            <p className="text-xs text-gray-500 mt-1">
-              Connect with certified nurses for regular health monitoring and advice
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <h4 className="font-medium text-brand-teal">Medic-Sync</h4>
-            <p className="text-xs text-gray-500 mt-1">
-              Schedule virtual consultations with doctors and specialists 
-            </p>
           </div>
         </div>
       </div>
