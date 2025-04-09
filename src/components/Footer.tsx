@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <Logo className="mb-4" />
             <p className="text-gray-400">
@@ -15,24 +15,11 @@ const Footer: React.FC = () => {
           </div>
           
           <div>
-            <h3 className="font-bold text-lg mb-4">Products</h3>
+            <h3 className="font-bold text-lg mb-4">Healthcare Eco System</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Guardian Button</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Heart Rate Monitor</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">iHealth Dashboard</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Bed Sensor</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">All Devices</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-lg mb-4">Services</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">SOS Call Centre</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Nurse Support</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">AI Guardian</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Family Dashboard</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Medication Management</a></li>
+              <li><a href="https://www.globalhealthsync.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Global Health Sync</a></li>
+              <li><a href="https://www.nurse-sync.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Nurse-Sync</a></li>
+              <li><a href="https://www.medic-sync.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Medic-Sync</a></li>
             </ul>
           </div>
           
