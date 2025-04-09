@@ -55,27 +55,30 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Image container - full height image with no background */}
-        <div className="relative h-[300px] overflow-hidden">
-          <OptimizedImage
-            src={product.image}
-            alt={product.name}
-            priority={false}
-            objectFit="cover"
-            className="w-full h-full object-center"
-          />
-          
-          {/* Subtle overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent"></div>
-          
-          {/* Product name overlay at bottom of image */}
-          <div className="absolute bottom-0 left-0 right-0 p-4">
-            <h4 className="text-xl font-bold text-white drop-shadow-md">{product.name}</h4>
+        {/* Image container - modified to fill the complete area */}
+        <div className="h-[220px] relative overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100">
+          {/* Full background image */}
+          <div className="absolute inset-0 w-full h-full">
+            <OptimizedImage
+              src={product.image}
+              alt={product.name}
+              priority={false}
+              objectFit="cover"
+              className="w-full h-full"
+            />
           </div>
+          
+          {/* Overlay gradient for better text visibility if needed */}
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-100/40 to-transparent"></div>
+          
+          {/* Decorative elements on top of the image */}
+          <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
+          <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
         </div>
         
         {/* Content container */}
         <div className="p-6 flex flex-col h-full">
+          <h4 className="text-xl font-bold text-brand-orange mb-3">{product.name}</h4>
           <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
           
           {product.benefits && (
