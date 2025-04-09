@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,7 @@ import {
   ResizableHandle,
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Link } from 'react-router-dom';
 
 const Pricing: React.FC = () => {
   const [activeTab, setActiveTab] = useState('plans');
@@ -213,6 +213,12 @@ const Pricing: React.FC = () => {
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Start with our powerful health monitoring dashboard and customize with devices and services
           </p>
+          <Link to="/pricing">
+            <Button className="mt-6 bg-brand-orange hover:bg-brand-orange/90">
+              View Full Product Catalog
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-16">
