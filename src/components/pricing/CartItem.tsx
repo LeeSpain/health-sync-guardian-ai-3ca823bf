@@ -47,9 +47,6 @@ const CartItem: React.FC<CartItemProps> = ({
             }`}>
               {isSubscription ? 'Monthly' : 'One-time'}
             </Badge>
-            {isSubscription && (
-              <span className="text-xs text-gray-500">12-month commitment</span>
-            )}
           </div>
         </div>
       </div>
