@@ -35,7 +35,7 @@
       div:has(> img) {
         display: flex !important;
         align-items: center !important;
-        justify-center: center !important;
+        justify-content: center !important;
       }
       
       /* Image placeholder */
@@ -80,87 +80,202 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- GREATLY IMPROVED image loading script -->
+    <!-- IMPROVED image loading script with CORS fixes -->
     <script>
-      // Function to forcefully load all images
-      function forceLoadAllImages() {
-        console.log("Forcing all images to load");
-        
-        // Get all images on the page
-        const allImages = document.querySelectorAll('img');
-        
-        // Process each image
-        allImages.forEach((img, index) => {
-          // Skip already loaded images
-          if (img.complete && img.naturalWidth > 0) return;
-          
-          // Skip placeholder images
-          if (img.src.includes('placeholder.svg')) return;
-          
-          // Create a new image object to test loading
-          const testImg = new Image();
-          
-          // Set up load handler
-          testImg.onload = function() {
-            // If original image wasn't loaded, update its src
-            if (!img.complete || img.naturalWidth === 0) {
-              img.src = testImg.src;
-              console.log(`Successfully forced load: ${testImg.src}`);
-            }
-          };
-          
-          // Set up error handler
-          testImg.onerror = function() {
-            console.error(`Error loading image: ${img.src}`);
-            
-            // If not already a placeholder and error loading, use placeholder
-            if (!img.src.includes('placeholder.svg')) {
-              img.src = '/placeholder.svg';
-            }
-          };
-          
-          // Store original src
-          const originalSrc = img.getAttribute('src');
-          
-          // If src exists, try to load it with cache-busting
-          if (originalSrc && !originalSrc.includes('placeholder.svg')) {
-            testImg.src = `${originalSrc}?t=${new Date().getTime()}&forcedLoad=true`;
+      // Enhanced image loading strategy
+      (function() {
+        // Setup console logging wrapper for debug
+        const debug = {
+          log: function(msg, ...args) {
+            console.log(`[ImageLoader] ${msg}`, ...args);
+          },
+          error: function(msg, ...args) {
+            console.error(`[ImageLoader Error] ${msg}`, ...args);
           }
-        });
-      }
-
-      // Run immediate check when DOM is ready
-      document.addEventListener('DOMContentLoaded', () => {
-        // Add error handlers to all images
-        document.querySelectorAll('img').forEach(img => {
-          if (!img.complete) {
-            img.addEventListener('error', (e) => {
-              console.error(`Image failed to load: ${img.src}`);
-              if (!img.src.includes('placeholder.svg')) {
-                img.src = '/placeholder.svg';
+        };
+        
+        // Key image paths to prioritize
+        const criticalImagePaths = [
+          'lovable-uploads/c38f7f2c-ac88-45a4-be0e-6ca22e7498f1.png',
+          'lovable-uploads/ec15308f-f7c7-4558-8c68-3a3c04deac25.png',
+          'lovable-uploads/bc5cfcc2-3468-4e5f-a99f-111609b5d011.png',
+          'lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png',
+          'lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png',
+          'lovable-uploads/8d6cc63b-a2fa-4688-9ba8-2a6c0e3a327a.png',
+          'lovable-uploads/9efe10d8-856e-4d64-a958-5461e748258f.png'
+        ];
+        
+        // Main function to force load all images
+        function forceLoadAllImages(options = {}) {
+          const { priorityOnly = false, delay = 0 } = options;
+          
+          debug.log(`Force loading images (priorityOnly: ${priorityOnly}, delay: ${delay}ms)`);
+          
+          // Process after specified delay
+          setTimeout(() => {
+            // Get all images on the page
+            const allImages = document.querySelectorAll('img');
+            debug.log(`Found ${allImages.length} images on page`);
+            
+            // Process each image
+            allImages.forEach((img, index) => {
+              // Skip already loaded images
+              if (img.complete && img.naturalWidth > 0) {
+                debug.log(`Image already loaded: ${img.src}`);
+                return;
+              }
+              
+              // Skip placeholder images
+              if (img.src && img.src.includes('placeholder.svg')) {
+                return;
+              }
+              
+              // Check if this is a priority image
+              const isPriority = criticalImagePaths.some(path => 
+                img.src && img.src.includes(path)
+              );
+              
+              // If priorityOnly flag is set and this isn't a priority image, skip it
+              if (priorityOnly && !isPriority) {
+                return;
+              }
+              
+              // If this is a priority image, set appropriate attributes
+              if (isPriority) {
+                img.setAttribute('loading', 'eager');
+                img.setAttribute('fetchpriority', 'high');
+                debug.log(`Setting priority loading for: ${img.src}`);
+              }
+              
+              // Force the image to load with a new image object
+              const originalSrc = img.getAttribute('src');
+              if (!originalSrc || originalSrc.includes('placeholder.svg')) return;
+              
+              // Add a timestamp to avoid cache issues
+              const cacheBuster = `?t=${new Date().getTime()}&forced=true`;
+              const forcedSrc = originalSrc.includes('?') 
+                ? `${originalSrc}&forced=true` 
+                : `${originalSrc}${cacheBuster}`;
+              
+              // Create a new image element to test loading
+              const testImg = new Image();
+              
+              // Set up event handlers
+              testImg.onload = function() {
+                debug.log(`Successfully loaded: ${originalSrc}`);
+                
+                // If the original image isn't already loaded, update its source
+                if (!img.complete || img.naturalWidth === 0) {
+                  img.src = originalSrc; // Use original source without cache buster
+                }
+              };
+              
+              testImg.onerror = function() {
+                debug.error(`Failed to load: ${originalSrc}`);
+                
+                // Try without cache buster as fallback
+                if (forcedSrc !== originalSrc) {
+                  debug.log(`Trying fallback without cache buster: ${originalSrc}`);
+                  const fallbackImg = new Image();
+                  fallbackImg.src = originalSrc;
+                  
+                  fallbackImg.onload = function() {
+                    debug.log(`Fallback load successful: ${originalSrc}`);
+                    if (!img.complete || img.naturalWidth === 0) {
+                      img.src = originalSrc;
+                    }
+                  };
+                  
+                  fallbackImg.onerror = function() {
+                    debug.error(`Fallback load failed: ${originalSrc}`);
+                    if (!img.src.includes('placeholder.svg')) {
+                      img.src = '/placeholder.svg';
+                    }
+                  };
+                } else {
+                  // Last resort: use placeholder
+                  if (!img.src.includes('placeholder.svg')) {
+                    img.src = '/placeholder.svg';
+                  }
+                }
+              };
+              
+              // Start loading the test image
+              testImg.src = forcedSrc;
+            });
+          }, delay);
+        }
+        
+        // Register global function for manual triggering
+        window.forceLoadAllImages = forceLoadAllImages;
+        
+        // Function to fix images after React hydration
+        function fixImagesAfterHydration() {
+          debug.log("Fixing images after hydration");
+          
+          // Add error handlers to all images
+          document.querySelectorAll('img').forEach(img => {
+            if (!img.hasAttribute('data-error-handler-added')) {
+              img.setAttribute('data-error-handler-added', 'true');
+              
+              img.addEventListener('error', (e) => {
+                debug.error(`Image error event: ${img.src}`);
+                if (!img.src.includes('placeholder.svg')) {
+                  img.src = '/placeholder.svg';
+                }
+              });
+            }
+          });
+          
+          // Force loading priority images immediately
+          forceLoadAllImages({ priorityOnly: true });
+          
+          // Then load all other images with a slight delay
+          forceLoadAllImages({ delay: 500 });
+          
+          // Final sweep after a longer delay
+          forceLoadAllImages({ delay: 2000 });
+        }
+        
+        // Register event listeners for different page lifecycle events
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', fixImagesAfterHydration);
+        } else {
+          fixImagesAfterHydration();
+        }
+        
+        // Also run when the page is fully loaded
+        window.addEventListener('load', () => {
+          forceLoadAllImages();
+          
+          // Monitor for new images with MutationObserver
+          const observer = new MutationObserver((mutations) => {
+            let hasNewImages = false;
+            
+            mutations.forEach(mutation => {
+              if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(node => {
+                  if (node.nodeName === 'IMG' || 
+                      (node.nodeType === Node.ELEMENT_NODE && node.querySelector('img'))) {
+                    hasNewImages = true;
+                  }
+                });
               }
             });
-          }
+            
+            if (hasNewImages) {
+              debug.log("New images detected, forcing load");
+              forceLoadAllImages();
+            }
+          });
+          
+          // Start observing the document
+          observer.observe(document.body, { 
+            childList: true, 
+            subtree: true 
+          });
         });
-        
-        // Force loading of specific image paths
-        document.querySelectorAll('img[src*="lovable-uploads"]').forEach(img => {
-          img.setAttribute('loading', 'eager');
-          img.setAttribute('fetchpriority', 'high');
-        });
-        
-        // First attempt to force all images to load
-        setTimeout(forceLoadAllImages, 500);
-        
-        // Second attempt after a longer delay
-        setTimeout(forceLoadAllImages, 2000);
-      });
-      
-      // Run again when page is fully loaded
-      window.addEventListener('load', () => {
-        // Final attempt to force all images to load
-        setTimeout(forceLoadAllImages, 500);
-      });
+      })();
     </script>
   </body>
 </html>

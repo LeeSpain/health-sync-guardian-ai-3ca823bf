@@ -1,10 +1,11 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check, Shield, PhoneCall } from 'lucide-react';
+import { ArrowRight, Check, Shield } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface ProfessionalServicesSectionProps {
   products: Product[];
@@ -74,37 +75,22 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
 
 // Helper component for service cards
 const ServiceCard = ({ product }: { product: Product }) => {
-  const [imgLoaded, setImgLoaded] = React.useState(false);
-  const [imgError, setImgError] = React.useState(false);
-  
   return (
     <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="flex flex-col md:flex-row bg-white h-full">
         {/* Image container - takes full height of parent */}
-        <div className="md:w-2/5 flex items-center justify-center p-6 h-full">
+        <div className="md:w-2/5 p-6 h-full">
           {product.image.includes('placeholder') ? (
             <div className="w-full h-full min-h-[160px] bg-gray-100 rounded-lg flex items-center justify-center">
               {product.icon}
             </div>
           ) : (
-            <div className="w-full h-full min-h-[160px] flex items-center justify-center relative">
-              {!imgLoaded && !imgError && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                  <div className="w-8 h-8 border-4 border-brand-orange/30 border-t-brand-orange rounded-full animate-spin"></div>
-                </div>
-              )}
-              
-              <img
-                src={imgError ? '/placeholder.svg' : product.image}
+            <div className="w-full h-full min-h-[160px]">
+              <OptimizedImage
+                src={product.image}
                 alt={product.name}
-                className="max-h-full max-w-full object-contain"
-                loading="lazy"
-                onError={(e) => {
-                  console.error(`Failed to load image: ${product.image}`);
-                  setImgError(true);
-                }}
-                onLoad={() => setImgLoaded(true)}
-                style={{ display: imgLoaded ? 'block' : 'none' }}
+                className="h-full w-full"
+                priority={false}
               />
             </div>
           )}

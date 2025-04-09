@@ -5,6 +5,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface DeviceCardProps {
   product: Product;
@@ -18,9 +19,6 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
     product.name === "Guardian Button" || 
     product.name === "Bed Sensor" || 
     product.name === "Thermometer";
-  
-  const [imgLoaded, setImgLoaded] = React.useState(false);
-  const [imgError, setImgError] = React.useState(false);
 
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
@@ -46,25 +44,13 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
         </div>
         
         {/* Image with improved containment */}
-        <div className="mb-5 relative flex items-center justify-center h-48 bg-white rounded-lg">
-          {!imgLoaded && !imgError && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-              <div className="w-8 h-8 border-4 border-brand-teal/30 border-t-brand-teal rounded-full animate-spin"></div>
-            </div>
-          )}
-          
-          <img
-            src={imgError ? '/placeholder.svg' : product.image}
+        <div className="mb-5 relative h-48 bg-white rounded-lg">
+          <OptimizedImage 
+            src={product.image} 
             alt={product.name}
-            className="max-w-full max-h-full object-contain"
-            loading={isPriorityProduct ? "eager" : "lazy"}
+            className="h-full w-full"
+            priority={isPriorityProduct}
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-            onError={(e) => {
-              console.error(`Failed to load image: ${product.image}`);
-              setImgError(true);
-            }}
-            onLoad={() => setImgLoaded(true)}
-            style={{ display: imgLoaded ? 'block' : 'none' }}
           />
         </div>
         
