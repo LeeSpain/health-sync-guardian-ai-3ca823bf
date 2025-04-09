@@ -30,21 +30,21 @@ const ProductShowcase: React.FC = () => {
       <BackgroundDecorations />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-12">
-          <Badge className="mb-4 px-4 py-1.5 text-sm font-medium bg-gradient-to-r from-brand-teal/10 to-brand-teal/20 text-brand-teal border-none">
-            Our Products
+        <div className="text-center mb-8">
+          <Badge className="mb-3 px-3 py-1 text-sm font-medium bg-gradient-to-r from-brand-teal/10 to-brand-teal/20 text-brand-teal border-none">
+            Our Solutions
           </Badge>
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-brand-teal to-brand-teal/80 bg-clip-text text-transparent mb-4">
+          <h2 className="text-3xl font-bold text-gray-800 mb-3">
             Complete Care Ecosystem
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 max-w-2xl mx-auto text-md">
             Our integrated solutions work seamlessly together to provide comprehensive health tracking and emergency response.
           </p>
         </div>
 
         {/* All Products in One View */}
         <div className="space-y-16">
-          {/* Featured Product Section */}
+          {/* Featured Product Section - Now more compact and professional */}
           {featuredDevice && <FeaturedProduct product={featuredDevice} />}
 
           {/* Health Monitoring Devices Section */}
