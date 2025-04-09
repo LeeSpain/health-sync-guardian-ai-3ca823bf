@@ -5,7 +5,6 @@ import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface FeaturedProductProps {
   product: Product;
@@ -39,13 +38,11 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ product }) => 
         </div>
         
         <div className="relative bg-white rounded-lg flex items-center justify-center h-80 p-6">
-          <OptimizedImage 
+          <img 
             src={product.image} 
             alt={product.name}
             className="h-auto w-auto max-h-full max-w-full object-contain"
-            width={400}
-            height={400}
-            priority={true}
+            loading="eager"
           />
         </div>
       </Card>

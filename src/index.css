@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -108,36 +107,51 @@
   }
 }
 
-/* Product image styling */
+/* Product image styling - IMPROVED */
 .product-image {
   max-width: 100%;
   max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
   transition: transform 0.3s ease;
 }
 
-.product-image:hover {
-  transform: scale(1.05);
-}
-
-/* Professional service image styling - ensuring full visibility */
-.professional-service-image {
+/* Fix to enforce proper image display */
+img {
+  max-width: 100%;
+  max-height: 100%;
   width: auto !important;
   height: auto !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
   object-fit: contain !important;
-  padding: 0.5rem !important;
-  display: block !important;
-  margin: 0 auto !important;
 }
 
-/* Remove hover effects that might distort the image */
-.professional-service-image:hover {
-  transform: none;
-  filter: none;
+/* Ensure lovable upload images display properly */
+img[src^="/lovable-uploads/"] {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Fix image display issues in cards and containers */
+.card img, .bg-white img, [class*="flex"] img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Ensure images can be seen in div containers */
+div:has(> img) {
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Custom ecg line for logo */

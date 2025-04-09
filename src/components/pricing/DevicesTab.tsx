@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -107,7 +106,7 @@ const DevicesTab: React.FC = () => {
                       src={device.image}
                       alt={device.name}
                       className="h-auto w-auto max-h-full max-w-full object-contain"
-                      loading={index < 3 ? "eager" : "lazy"}
+                      loading={index < 2 ? "eager" : "lazy"}
                     />
                   </div>
                   <CardHeader className="pb-2">

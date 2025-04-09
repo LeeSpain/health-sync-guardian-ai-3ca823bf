@@ -28,22 +28,26 @@
       img {opacity: 0; transition: opacity 0.3s;}
       img.loaded {opacity: 1;}
       
-      /* Prevent layout shift with aspect ratios */
-      .aspect-container {position: relative; height: 0; overflow: hidden;}
-      .aspect-16-9 {padding-top: 56.25%;}
-      .aspect-content {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
-      
-      /* Base image display settings */
+      /* Base image display settings - FIXED for proper rendering */
       img {
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
       }
       
       /* Ensure product images display properly */
       .product-image, [data-testid^="device-image"] {
+        object-fit: contain !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+      }
+
+      /* Fix for lovable uploads */
+      img[src^="/lovable-uploads/"] {
         object-fit: contain !important;
         max-width: 100% !important;
         max-height: 100% !important;
@@ -67,14 +71,6 @@
     <link rel="preload" href="/lovable-uploads/30a5eb40-c8db-4c13-ba65-2af816834fb8.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/lovable-uploads/8d6cc63b-a2fa-4688-9ba8-2a6c0e3a327a.png" as="image" fetchpriority="high" />
-    
-    <!-- Font preloading -->
-    <link rel="preload" as="font" href="/fonts/inter-var.woff2" type="font/woff2" crossorigin="anonymous">
-    
-    <!-- Add preloads for critical JavaScript files -->
-    <link rel="modulepreload" href="/src/main.tsx">
-    <link rel="modulepreload" href="/src/App.tsx">
-    <link rel="modulepreload" href="/src/pages/Index.tsx">
   </head>
 
   <body>
@@ -88,6 +84,15 @@
       // Mark images as loaded when they complete loading
       document.addEventListener('DOMContentLoaded', () => {
         const images = document.querySelectorAll('img');
+        // First pass - directly set src attributes for lovable uploads that might be missing
+        images.forEach(img => {
+          // Ensure lovable uploads are loaded directly
+          if (img.getAttribute('data-src') && img.getAttribute('data-src').includes('/lovable-uploads/')) {
+            img.src = img.getAttribute('data-src');
+          }
+        });
+        
+        // Second pass - handle loading events
         images.forEach(img => {
           if (img.complete) {
             img.classList.add('loaded');
@@ -95,8 +100,8 @@
             img.addEventListener('load', () => img.classList.add('loaded'));
             img.addEventListener('error', () => {
               // Set fallback for failed images
+              console.warn(`Image failed to load: ${img.src}`);
               if (img.src !== '/placeholder.svg') {
-                console.warn(`Image failed to load: ${img.src}`);
                 img.src = '/placeholder.svg';
                 img.classList.add('loaded');
               }
@@ -104,61 +109,18 @@
           }
         });
 
-        // Add lazy loading to all images that don't have it yet
-        if ('loading' in HTMLImageElement.prototype) {
-          const lazyImages = document.querySelectorAll('img:not([loading])');
-          lazyImages.forEach(img => {
-            if (!img.hasAttribute('fetchpriority') || img.getAttribute('fetchpriority') !== 'high') {
-              img.setAttribute('loading', 'lazy');
+        // For OptimizedImage component, make sure images are visible
+        setTimeout(() => {
+          document.querySelectorAll('[data-image-id]').forEach(container => {
+            const img = container.querySelector('img');
+            if (img && !img.src) {
+              const dataSrc = img.getAttribute('data-src');
+              if (dataSrc) {
+                img.src = dataSrc;
+              }
             }
           });
-        }
-        
-        // Set fetchpriority on important above-the-fold images
-        const visibleImages = document.querySelectorAll('img:not([fetchpriority])');
-        let index = 0;
-        visibleImages.forEach(img => {
-          // Only set high priority on the first few visible images to avoid overloading
-          if (index < 3 && isElementInViewport(img)) {
-            img.setAttribute('fetchpriority', 'high');
-            index++;
-          }
-        });
-      });
-      
-      // Helper function to check if element is in viewport
-      function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-          rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-      }
-
-      // Remove unused event listeners to improve memory usage
-      window.addEventListener('load', () => {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => {
-            // Clean up any performance monitoring after initial load
-            const unusedElements = document.querySelectorAll('.image-placeholder');
-            unusedElements.forEach(el => {
-              el.classList.remove('image-placeholder');
-            });
-            
-            // Prefetch other likely routes for faster navigation
-            if ('connection' in navigator && 
-                navigator.connection && 
-                (navigator.connection.saveData === false || 
-                 navigator.connection.effectiveType === '4g')) {
-              const prefetcher = document.createElement('link');
-              prefetcher.rel = 'prefetch';
-              prefetcher.href = '/pricing';
-              document.head.appendChild(prefetcher);
-            }
-          });
-        }
+        }, 100);
       });
     </script>
   </body>

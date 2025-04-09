@@ -27,12 +27,6 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
     i >= 2 && i !== glucoseMonitorIndex
   );
 
-  // Log products to help with debugging
-  React.useEffect(() => {
-    console.log("Professional Services products:", products.map(p => `${p.name}: ${p.image}`));
-    console.log("Glucose Monitor index:", glucoseMonitorIndex);
-  }, [products, glucoseMonitorIndex]);
-
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between mb-12">
@@ -92,7 +86,6 @@ const ServiceCard = ({ product }: { product: Product }) => (
               alt={product.name}
               className="w-auto h-auto max-w-full max-h-full object-contain"
               loading="lazy"
-              data-testid={`${product.name.toLowerCase().replace(/\s+/g, '-')}-image`}
             />
           </div>
         )}
