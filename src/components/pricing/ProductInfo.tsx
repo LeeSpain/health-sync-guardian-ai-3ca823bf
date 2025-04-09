@@ -27,7 +27,7 @@ const ProductInfo: React.FC = () => {
               </p>
               <p className="flex items-start">
                 <Clock className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
-                Flexible service options. Cancel or modify your subscription at any time.
+                No long-term contracts. You can cancel or modify your subscription at any time with no penalties.
               </p>
               <p className="flex items-start">
                 <Shield className="h-4 w-4 text-brand-orange mr-2 mt-0.5 flex-shrink-0" />
@@ -56,4 +56,3 @@ const ProductInfo: React.FC = () => {
 };
 
 export default ProductInfo;
-
