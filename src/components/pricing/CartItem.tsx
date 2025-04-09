@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Minus } from 'lucide-react';
+import { Minus, Euro } from 'lucide-react';
 
 export interface CartItemProps {
   id: string;
@@ -27,14 +27,14 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
   return (
     <div className="flex justify-between items-center border-b pb-4">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {image && (
-          <div className="w-10 h-10 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+          <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 shadow-sm">
             <img src={image} alt={name} className="w-full h-full object-contain" />
           </div>
         )}
         <div>
-          <p className="font-medium text-sm">{name}</p>
+          <p className="font-medium text-sm line-clamp-2">{name}</p>
           <div className="flex items-center gap-2 mt-1">
             <Badge variant="outline" className={`text-xs ${
               type === 'essential' 
@@ -52,7 +52,10 @@ const CartItem: React.FC<CartItemProps> = ({
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono font-medium">€{price.toFixed(2)}</span>
+        <div className="flex items-center">
+          <Euro className="h-3.5 w-3.5 mr-1 text-gray-700" />
+          <span className="font-mono font-semibold text-gray-800">{price.toFixed(2)}</span>
+        </div>
         <Button 
           size="sm" 
           variant="ghost" 

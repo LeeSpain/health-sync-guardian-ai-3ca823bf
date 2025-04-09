@@ -43,13 +43,13 @@ const PricingPage: React.FC = () => {
     }
   ];
 
-  // AI-Powered Devices
+  // AI-Powered Devices - Updated pricing to 4.99€ + 10% for monthly subscription
   const aiPoweredDevices = [
     { 
       id: 'guardian-button',
       name: "Guardian Button", 
       oneTimePrice: 60.49, 
-      monthlyPrice: 5.49,
+      monthlyPrice: 4.99,
       type: 'ai-device' as const,
       image: getProductImageByName("Guardian Button")
     },
@@ -57,7 +57,7 @@ const PricingPage: React.FC = () => {
       id: 'heart-rate-monitor',
       name: "Heart Rate Monitor", 
       oneTimePrice: 96.79, 
-      monthlyPrice: 5.49,
+      monthlyPrice: 4.99,
       type: 'ai-device' as const,
       image: getProductImageByName("Heart Rate Monitor")
     },
@@ -65,7 +65,7 @@ const PricingPage: React.FC = () => {
       id: 'smart-scales',
       name: "Smart Scales", 
       oneTimePrice: 108.89, 
-      monthlyPrice: 5.49,
+      monthlyPrice: 4.99,
       type: 'ai-device' as const,
       image: getProductImageByName("Smart Scales")
     },
@@ -73,7 +73,7 @@ const PricingPage: React.FC = () => {
       id: 'thermometer',
       name: "Thermometer", 
       oneTimePrice: 48.39, 
-      monthlyPrice: 5.49,
+      monthlyPrice: 4.99,
       type: 'ai-device' as const,
       image: getProductImageByName("Thermometer")
     },
@@ -81,7 +81,7 @@ const PricingPage: React.FC = () => {
       id: 'bed-sensor',
       name: "Bed Sensor", 
       oneTimePrice: 157.29, 
-      monthlyPrice: 5.49,
+      monthlyPrice: 4.99,
       type: 'ai-device' as const,
       image: getProductImageByName("Bed Sensor")
     },
@@ -89,19 +89,19 @@ const PricingPage: React.FC = () => {
       id: 'family-dashboard',
       name: "Family Dashboard Access", 
       oneTimePrice: null, 
-      monthlyPrice: 5.49,
+      monthlyPrice: 4.99,
       type: 'ai-device' as const,
       image: "/placeholder.svg"
     }
   ];
 
-  // Professional Care Services
+  // Professional Care Services - Updated pricing to 24.99€ + 10% for monthly subscription
   const professionalServices = [
     { 
       id: 'sos-pendant',
       name: "SOS Pendant & Call Centre", 
       oneTimePrice: 108.89, 
-      monthlyPrice: 27.49,
+      monthlyPrice: 24.99,
       type: 'professional' as const,
       image: getProductImageByName("SOS Call Centre")
     },
@@ -109,7 +109,7 @@ const PricingPage: React.FC = () => {
       id: 'medication-dispenser',
       name: "Medication Dispenser", 
       oneTimePrice: 241.99, 
-      monthlyPrice: 27.49,
+      monthlyPrice: 24.99,
       type: 'professional' as const,
       image: getProductImageByName("Medication Dispenser")
     },
@@ -117,25 +117,27 @@ const PricingPage: React.FC = () => {
       id: 'glucose-monitor',
       name: "Glucose Monitor", 
       oneTimePrice: 241.99, 
-      monthlyPrice: 27.49,
+      monthlyPrice: 24.99,
       type: 'professional' as const,
       image: getProductImageByName("Glucose Monitor")
     },
     { 
       id: 'nurse-sync',
       name: "Nurse-Sync", 
-      oneTimePrice: 181.49, 
-      monthlyPrice: 32.99,
+      oneTimePrice: null, 
+      monthlyPrice: null,
       type: 'professional' as const,
-      image: getProductImageByName("Nurse-Sync")
+      image: getProductImageByName("Nurse-Sync"),
+      dashboardOnly: true
     },
     { 
       id: 'medic-sync',
       name: "Medic-Sync", 
-      oneTimePrice: 181.49, 
-      monthlyPrice: 38.49,
+      oneTimePrice: null, 
+      monthlyPrice: null,
       type: 'professional' as const,
-      image: getProductImageByName("Medic-Sync")
+      image: getProductImageByName("Medic-Sync"),
+      dashboardOnly: true
     }
   ];
 
@@ -147,6 +149,15 @@ const PricingPage: React.FC = () => {
   }, [cart]);
 
   const addToCart = (item: any, isSubscription: boolean) => {
+    if (item.dashboardOnly) {
+      toast({
+        title: "Dashboard Service",
+        description: `${item.name} is accessible through your dashboard after joining.`,
+        variant: "default",
+      });
+      return;
+    }
+    
     const price = isSubscription ? item.monthlyPrice : item.oneTimePrice;
     
     if (price === null) {

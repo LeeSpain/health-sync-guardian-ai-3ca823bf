@@ -11,6 +11,7 @@ export interface ProductCatalogItem {
   monthlyPrice: number | null;
   type: 'essential' | 'ai-device' | 'professional';
   image: string;
+  dashboardOnly?: boolean;
 }
 
 interface ProductCatalogProps {

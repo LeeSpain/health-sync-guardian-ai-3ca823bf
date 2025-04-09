@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ShoppingCart, CreditCard, Shield, TruckIcon } from 'lucide-react';
+import { ShoppingCart, CreditCard, Shield, TruckIcon, Euro } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import CartItem, { CartItemProps } from './CartItem';
 
@@ -74,7 +74,7 @@ const Cart: React.FC<CartProps> = ({ cart, removeFromCart, showTaxes }) => {
   return (
     <div className="lg:sticky lg:top-24 h-fit">
       <Card className="border-2 border-brand-teal/20 shadow-md overflow-hidden">
-        <CardHeader className="pb-0 bg-gradient-to-r from-brand-teal/5 to-transparent">
+        <CardHeader className="pb-4 bg-gradient-to-r from-brand-teal/10 to-transparent">
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ShoppingCart className="h-5 w-5 text-brand-teal" />
@@ -108,32 +108,47 @@ const Cart: React.FC<CartProps> = ({ cart, removeFromCart, showTaxes }) => {
               </ScrollArea>
 
               <div className="pt-4 border-t border-gray-200">
-                <div className="space-y-1 mb-3">
-                  <div className="flex justify-between text-sm text-gray-500">
+                <div className="space-y-3 mb-4">
+                  <div className="flex justify-between text-sm text-gray-600">
                     <span>One-time purchases:</span>
-                    <span className="font-mono">€{calculateOneTimeTotal().toFixed(2)}</span>
+                    <div className="flex items-center">
+                      <Euro className="h-3.5 w-3.5 mr-1 text-gray-600" />
+                      <span className="font-mono font-semibold">{calculateOneTimeTotal().toFixed(2)}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-sm text-gray-500">
+                  <div className="flex justify-between text-sm text-gray-600">
                     <span>Monthly subscription:</span>
-                    <span className="font-mono">€{calculateMonthlyTotal().toFixed(2)}/mo</span>
+                    <div className="flex items-center">
+                      <Euro className="h-3.5 w-3.5 mr-1 text-gray-600" />
+                      <span className="font-mono font-semibold">{calculateMonthlyTotal().toFixed(2)}/mo</span>
+                    </div>
                   </div>
                   {showTaxes && (
-                    <div className="flex justify-between text-sm text-gray-500">
+                    <div className="flex justify-between text-sm text-gray-600">
                       <span>Taxes:</span>
-                      <span className="font-mono">€{calculateTax().toFixed(2)}</span>
+                      <div className="flex items-center">
+                        <Euro className="h-3.5 w-3.5 mr-1 text-gray-600" />
+                        <span className="font-mono font-semibold">{calculateTax().toFixed(2)}</span>
+                      </div>
                     </div>
                   )}
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                <div className="bg-gradient-to-r from-brand-grey/10 to-transparent p-5 rounded-lg mb-6">
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total:</span>
-                    <span className="font-mono">€{calculateTotal().toFixed(2)}</span>
+                    <div className="flex items-center">
+                      <Euro className="h-4 w-4 mr-1 text-brand-teal" />
+                      <span className="font-mono text-brand-teal">{calculateTotal().toFixed(2)}</span>
+                    </div>
                   </div>
                   {calculateMonthlyTotal() > 0 && (
                     <div className="flex justify-between text-sm text-brand-orange font-medium mt-1">
                       <span>Recurring monthly:</span>
-                      <span className="font-mono">€{calculateMonthlyTotalWithTax().toFixed(2)}/mo</span>
+                      <div className="flex items-center">
+                        <Euro className="h-3.5 w-3.5 mr-1 text-brand-orange" />
+                        <span className="font-mono">{calculateMonthlyTotalWithTax().toFixed(2)}/mo</span>
+                      </div>
                     </div>
                   )}
                   {showTaxes && (
@@ -172,7 +187,7 @@ const Cart: React.FC<CartProps> = ({ cart, removeFromCart, showTaxes }) => {
               <div>
                 <p className="font-medium text-sm text-brand-orange">Free Shipping Offer</p>
                 <p className="text-xs text-gray-600">
-                  Add €{(200 - calculateSubtotal()).toFixed(2)} more to qualify for free shipping!
+                  Add <span className="font-mono font-semibold">€{(200 - calculateSubtotal()).toFixed(2)}</span> more to qualify for free shipping!
                 </p>
               </div>
             </div>
