@@ -68,7 +68,7 @@ export const OptimizedImage = ({
           !loaded && "opacity-0",
           loaded && "opacity-100"
         )}
-        fetchpriority={priority ? "high" : "auto"}
+        fetchPriority={priority ? "high" : "auto"}
         data-image-loaded={loaded}
         data-image-error={error}
         data-source-path={src}
