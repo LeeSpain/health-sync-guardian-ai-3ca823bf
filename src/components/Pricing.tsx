@@ -153,6 +153,7 @@ const Pricing: React.FC = () => {
 
   const professionalServices = [
     {
+      id: 'sos-pendant',
       name: "SOS Pendant & Call Centre",
       price: "€89.99",
       subscription: "€24.99/month",
@@ -224,11 +225,11 @@ const Pricing: React.FC = () => {
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 {basePlans.map((plan, index) => (
-                  <Card 
-                    key={index} 
+                  <Card
+                    key={index}
                     className={`border-2 overflow-hidden transition-all duration-300 hover:shadow-lg ${
-                      plan.popular 
-                        ? 'border-brand-orange shadow-lg relative' 
+                      plan.popular
+                        ? 'border-brand-orange shadow-lg relative'
                         : 'border-gray-200 hover:border-brand-accent-teal/50'
                     }`}
                   >
@@ -260,10 +261,10 @@ const Pricing: React.FC = () => {
                       </ul>
                     </CardContent>
                     <CardFooter>
-                      <Button 
+                      <Button
                         className={`w-full group ${
-                          plan.popular 
-                            ? 'bg-brand-orange hover:bg-brand-orange/90' 
+                          plan.popular
+                            ? 'bg-brand-orange hover:bg-brand-orange/90'
                             : 'bg-brand-accent-teal hover:bg-brand-accent-teal/90'
                         }`}
                       >
@@ -286,8 +287,8 @@ const Pricing: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 {dashboardAddons.map((addon, index) => (
-                  <Card 
-                    key={index} 
+                  <Card
+                    key={index}
                     className="border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300"
                   >
                     <CardHeader className="pb-2">
@@ -336,14 +337,14 @@ const Pricing: React.FC = () => {
                 <ScrollArea className="h-[600px]">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
                     {smartDevices.map((device, index) => (
-                      <Card 
-                        key={index} 
+                      <Card
+                        key={index}
                         className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
                       >
                         <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex items-center justify-center">
-                          <img 
-                            src={device.image} 
-                            alt={device.name} 
+                          <img
+                            src={device.image}
+                            alt={device.name}
                             className="h-36 w-36 object-contain"
                           />
                         </div>
@@ -438,14 +439,14 @@ const Pricing: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                   {professionalServices.map((service, index) => (
-                    <Card 
-                      key={index} 
+                    <Card
+                      key={index}
                       className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
                     >
                       <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center">
-                        <img 
-                          src={service.image} 
-                          alt={service.name} 
+                        <img
+                          src={service.image}
+                          alt={service.name}
                           className="h-36 w-36 object-contain"
                         />
                       </div>
@@ -485,9 +486,9 @@ const Pricing: React.FC = () => {
                 <Card className="border-2 border-brand-teal overflow-hidden hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-brand-teal/5 to-transparent">
                   <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/3 bg-gradient-to-br from-brand-teal/10 to-transparent p-6 flex items-center justify-center">
-                      <img 
-                        src="/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png" 
-                        alt="Nurse-Sync Services" 
+                      <img
+                        src="/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png"
+                        alt="Nurse-Sync Services"
                         className="h-48 w-48 object-contain"
                       />
                     </div>
