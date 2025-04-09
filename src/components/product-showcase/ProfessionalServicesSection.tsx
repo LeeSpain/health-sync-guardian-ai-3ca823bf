@@ -55,7 +55,7 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
       {/* Display glucose monitor centered in bottom row */}
       {bottomRowProduct && (
         <div className="flex justify-center mb-8">
-          <div className="md:w-1/2">
+          <div className="w-full md:w-1/2">
             <ServiceCard product={bottomRowProduct} />
           </div>
         </div>
@@ -76,11 +76,11 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
 // Helper component for service cards
 const ServiceCard = ({ product }: { product: Product }) => {
   return (
-    <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-      <div className="flex flex-col md:flex-row bg-white h-full">
+    <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
+      <div className="flex flex-col md:flex-row h-full">
         {/* Image container - fixed height and width for consistency */}
-        <div className="md:w-2/5 p-4 flex items-center justify-center bg-gray-50 min-h-[180px]">
-          <div className="w-full h-[160px] relative flex items-center justify-center">
+        <div className="md:w-1/3 p-4 flex items-center justify-center bg-gray-50 h-[200px] md:h-auto">
+          <div className="w-[160px] h-[160px] relative flex items-center justify-center">
             <OptimizedImage
               src={product.image}
               alt={product.name}
@@ -92,13 +92,13 @@ const ServiceCard = ({ product }: { product: Product }) => {
         </div>
         
         {/* Content container (right side) */}
-        <div className="md:w-3/5 p-6 md:p-6 flex flex-col">
+        <div className="md:w-2/3 p-6 flex flex-col">
           <h4 className="text-xl text-brand-orange font-bold mb-3">{product.name}</h4>
-          <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
+          <p className="text-gray-600 mb-4 text-sm line-clamp-2">{product.description}</p>
           
           {product.benefits && (
             <ul className="mt-2 space-y-2 mb-5">
-              {product.benefits.map((benefit, i) => (
+              {product.benefits.slice(0, 3).map((benefit, i) => (
                 <li key={i} className="flex items-start text-gray-600 text-sm">
                   <Check className="h-3 w-3 text-brand-orange mt-1 mr-2 flex-shrink-0" />
                   <span>{benefit}</span>

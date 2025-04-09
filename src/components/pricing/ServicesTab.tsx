@@ -27,41 +27,43 @@ const ServiceFeature = memo(({ feature }: { feature: string }) => (
 const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
   <Card
     key={service.id}
-    className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
+    className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full"
   >
-    <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 p-4 flex items-center justify-center">
-      <div className="h-40 w-40 flex items-center justify-center">
-        <OptimizedImage
-          src={service.image}
-          alt={service.name}
-          objectFit="contain"
-          className="max-w-full max-h-full"
-        />
+    <div className="flex flex-col h-full">
+      <div className="h-[180px] bg-gradient-to-br from-orange-50 to-orange-100 p-4 flex items-center justify-center">
+        <div className="h-[140px] w-[140px] flex items-center justify-center">
+          <OptimizedImage
+            src={service.image}
+            alt={service.name}
+            objectFit="contain"
+            className="max-w-full max-h-full"
+          />
+        </div>
       </div>
+      <CardHeader className="pb-2 flex-grow-0">
+        <CardTitle className="text-xl text-brand-orange">{service.name}</CardTitle>
+        <div className="mt-2 flex items-baseline">
+          <span className="text-2xl font-bold">{service.price}</span>
+          <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
+            {service.subscription}
+          </Badge>
+        </div>
+        <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <ul className="space-y-2">
+          {service.features.map((feature, i) => (
+            <ServiceFeature key={i} feature={feature} />
+          ))}
+        </ul>
+      </CardContent>
+      <CardFooter className="mt-auto">
+        <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group">
+          <span>{service.cta}</span>
+          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Button>
+      </CardFooter>
     </div>
-    <CardHeader className="pb-2">
-      <CardTitle className="text-xl text-brand-orange">{service.name}</CardTitle>
-      <div className="mt-2 flex items-baseline">
-        <span className="text-2xl font-bold">{service.price}</span>
-        <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
-          {service.subscription}
-        </Badge>
-      </div>
-      <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
-    </CardHeader>
-    <CardContent>
-      <ul className="space-y-2">
-        {service.features.map((feature, i) => (
-          <ServiceFeature key={i} feature={feature} />
-        ))}
-      </ul>
-    </CardContent>
-    <CardFooter>
-      <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group">
-        <span>{service.cta}</span>
-        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-      </Button>
-    </CardFooter>
   </Card>
 ));
 
