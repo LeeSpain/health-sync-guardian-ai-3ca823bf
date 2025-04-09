@@ -12,10 +12,11 @@ export interface CartItemData {
   id: string;
   name: string;
   price: number;
-  type: 'essential' | 'ai-device' | 'professional';
+  type: 'essential' | 'ai-device' | 'professional' | 'subscription';
   isSubscription: boolean;
   image?: string;
   monthlyPrice?: number;
+  isMandatory?: boolean;
 }
 
 interface CartProps {
@@ -31,12 +32,17 @@ const Cart: React.FC<CartProps> = ({ cart, removeFromCart, showTaxes }) => {
   const VAT_RATE = 0.21; // 21% VAT for one-time purchases
   const SUBSCRIPTION_TAX = 0.10; // 10% tax for subscriptions
 
+  // Dashboard subscription constants
+  const DASHBOARD_PRICE = 9.99;
+  const DASHBOARD_TAX = DASHBOARD_PRICE * SUBSCRIPTION_TAX;
+  const DASHBOARD_TOTAL = DASHBOARD_PRICE + DASHBOARD_TAX;
+
   const calculateSubtotal = () => {
-    return cart.reduce((total, item) => total + item.price, 0);
+    return cart.reduce((total, item) => total + item.price, 0) + DASHBOARD_PRICE;
   };
 
   const calculateMonthlyTotal = () => {
-    return cart.filter(item => item.isSubscription).reduce((total, item) => total + item.price, 0);
+    return cart.filter(item => item.isSubscription).reduce((total, item) => total + item.price, 0) + DASHBOARD_PRICE;
   };
 
   const calculateOneTimeTotal = () => {
@@ -96,6 +102,31 @@ const Cart: React.FC<CartProps> = ({ cart, removeFromCart, showTaxes }) => {
             <>
               <ScrollArea className="max-h-[300px] pr-2 mb-6">
                 <div className="space-y-4">
+                  {/* Mandatory Dashboard subscription */}
+                  <div className="flex justify-between items-center border-b pb-4 bg-brand-teal/5 p-3 rounded-md">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 shadow-sm flex items-center justify-center">
+                        <ShoppingCart className="h-6 w-6 text-brand-teal" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm line-clamp-2">iHealth Dashboard Subscription</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Badge variant="outline" className="border-brand-teal text-brand-teal bg-brand-teal/10 text-xs">
+                            Monthly
+                          </Badge>
+                          <Badge variant="outline" className="border-brand-orange text-brand-orange bg-brand-orange/10 text-xs">
+                            Required
+                          </Badge>
+                          <span className="text-xs text-gray-500">12-month commitment</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <Euro className="h-3.5 w-3.5 mr-1 text-gray-700" />
+                      <span className="font-mono font-semibold text-gray-800">{DASHBOARD_PRICE.toFixed(2)}</span>
+                    </div>
+                  </div>
+                  
                   {cart.map((item, index) => (
                     <CartItem 
                       key={`${item.id}-${item.isSubscription ? 'sub' : 'one'}-${index}`}
@@ -161,7 +192,6 @@ const Cart: React.FC<CartProps> = ({ cart, removeFromCart, showTaxes }) => {
                 <Button 
                   className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white flex items-center justify-center gap-2 py-6"
                   onClick={checkout}
-                  disabled={cart.length === 0}
                 >
                   <CreditCard className="h-5 w-5" />
                   Proceed to Checkout

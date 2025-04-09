@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 const PriceComparison: React.FC = () => {
   const plans = [
     { name: "Free App", basePrice: "€0.00", tax: "€0.00", total: "€0.00" },
-    { name: "Subscribers App", basePrice: "€9.99", tax: "€1.00", total: "€10.99" }
+    { name: "Dashboard Subscription", basePrice: "€9.99", tax: "€1.00", total: "€10.99", isRequired: true }
   ];
 
   // Essential item in its own category
@@ -180,9 +180,9 @@ const PriceComparison: React.FC = () => {
                             Free
                           </Badge>
                         )}
-                        {plan.name === "Subscribers App" && (
+                        {plan.name === "Dashboard Subscription" && (
                           <Badge variant="outline" className="ml-2 text-xs border-brand-orange text-brand-orange">
-                            Popular
+                            Required
                           </Badge>
                         )}
                       </TableCell>
@@ -304,6 +304,7 @@ const PriceComparison: React.FC = () => {
         </Tabs>
 
         <div className="mt-8 text-center text-sm text-gray-500 max-w-3xl mx-auto">
+          <p className="font-medium text-brand-teal mb-2">All purchases require the iHealth Dashboard Subscription (€9.99/month + 10% tax)</p>
           <p>* All prices are inclusive of applicable taxes. Monthly subscriptions are subject to 10% VAT, while one-time purchases include 21% IVA (Spanish VAT).</p>
           <p className="mt-2">* Service contracts require minimum 12-month commitment. Early termination fees may apply.</p>
         </div>
