@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { MedicalCross, Stethoscope, ExternalLink, Users, ClipboardList, Calendar } from 'lucide-react';
+import { Hospital, Stethoscope, ExternalLink, Users, ClipboardList, Calendar } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const DashboardServices: React.FC = () => {
@@ -82,7 +82,7 @@ const DashboardServices: React.FC = () => {
             <div className="p-6">
               <div className="flex items-start">
                 <div className="mr-4 p-3 rounded-full bg-brand-orange/10">
-                  <MedicalCross className="h-8 w-8 text-brand-orange" />
+                  <Hospital className="h-8 w-8 text-brand-orange" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-brand-orange">Medic-Sync</h3>
