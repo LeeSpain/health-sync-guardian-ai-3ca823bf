@@ -25,7 +25,7 @@ const ProductShowcase: React.FC = () => {
   }, [featuredDevice, healthMonitoringDevices]);
   
   return (
-    <div id="products" className="py-20 relative overflow-hidden">
+    <div id="products" className="py-12 relative overflow-hidden">
       {/* Background decorations extracted to a separate component */}
       <BackgroundDecorations />
       
@@ -34,17 +34,17 @@ const ProductShowcase: React.FC = () => {
           <Badge className="mb-3 px-3 py-1 text-sm font-medium bg-gradient-to-r from-brand-teal/10 to-brand-teal/20 text-brand-teal border-none">
             Our Solutions
           </Badge>
-          <h2 className="text-3xl font-bold text-gray-800 mb-3">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
             Complete Care Ecosystem
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-md">
+          <p className="text-gray-600 max-w-xl mx-auto text-sm">
             Our integrated solutions work seamlessly together to provide comprehensive health tracking and emergency response.
           </p>
         </div>
 
         {/* All Products in One View */}
-        <div className="space-y-16">
-          {/* Featured Product Section - Now more compact and professional */}
+        <div className="space-y-12">
+          {/* Featured Product Section - More compact */}
           {featuredDevice && <FeaturedProduct product={featuredDevice} />}
 
           {/* Health Monitoring Devices Section */}
@@ -62,3 +62,4 @@ const ProductShowcase: React.FC = () => {
 };
 
 export default ProductShowcase;
+
