@@ -70,19 +70,19 @@ const UserRoles: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-16 relative overflow-hidden bg-gradient-to-b from-white via-white to-gray-50">
-      {/* Decorative background elements */}
+    <section id="about" className="py-12 relative overflow-hidden bg-gradient-to-b from-white via-white to-gray-50">
+      {/* Decorative background elements - simplified and reduced for a more compact look */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute w-full h-full">
-          <svg className="absolute top-0 left-0 w-full opacity-[0.15]" viewBox="0 0 1200 600" preserveAspectRatio="none">
+          <svg className="absolute top-0 left-0 w-full opacity-[0.15]" viewBox="0 0 1200 300" preserveAspectRatio="none">
             <path 
-              d="M0,50 Q300,150 600,50 T1200,100" 
+              d="M0,25 Q300,75 600,25 T1200,50" 
               fill="none" 
               stroke="url(#gradient-path-1)" 
               strokeWidth="2" 
             />
             <path 
-              d="M0,150 Q300,250 600,150 T1200,200" 
+              d="M0,75 Q300,125 600,75 T1200,100" 
               fill="none" 
               stroke="url(#gradient-path-2)" 
               strokeWidth="2" 
@@ -102,17 +102,17 @@ const UserRoles: React.FC = () => {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-12 max-w-2xl mx-auto">
-          <Badge className="mb-3 px-3 py-1 text-sm font-medium bg-gradient-to-r from-brand-teal/10 to-brand-teal/20 text-brand-teal border-none">
+        <div className="text-center mb-8 max-w-2xl mx-auto">
+          <Badge className="mb-2 px-3 py-1 text-sm font-medium bg-gradient-to-r from-brand-teal/10 to-brand-teal/20 text-brand-teal border-none">
             User-Centric Platform
           </Badge>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">A Platform For Everyone</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-3">A Platform For Everyone</h2>
           <p className="text-gray-600 text-lg">
             iHealth-Sync connects various roles in the health ecosystem to ensure comprehensive support for users of all ages.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {roles.map((role, index) => (
             <Card 
               key={index} 
@@ -120,17 +120,18 @@ const UserRoles: React.FC = () => {
             >
               <div className={`h-2 w-full ${role.color} transition-colors duration-300 ${role.hoverColor}`}></div>
               
-              <CardContent className="p-6 h-full flex flex-col">
-                <div className="flex items-center mb-4">
+              <CardContent className="p-4 h-full flex flex-col">
+                <div className="flex items-center mb-3">
                   <div className={`${role.color} p-2 rounded-lg transition-colors duration-300 ${role.hoverColor}`}>
                     {role.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-brand-teal ml-3">{role.title}</h3>
+                  <h3 className="text-lg font-semibold text-brand-teal ml-3">{role.title}</h3>
                 </div>
                 
-                <p className="text-gray-600 mb-4 text-sm">{role.description}</p>
+                <p className="text-gray-600 mb-3 text-sm">{role.description}</p>
                 
-                <div className="relative w-full h-32 mb-4 rounded-lg overflow-hidden">
+                {/* More compact image container with reduced height */}
+                <div className="relative w-full h-24 mb-3 rounded-lg overflow-hidden">
                   <div className={`absolute inset-0 bg-gradient-to-br ${role.gradient} rounded-lg z-0`}></div>
                   <OptimizedImage
                     src={role.image}
@@ -141,9 +142,9 @@ const UserRoles: React.FC = () => {
                   />
                 </div>
                 
-                <ul className="space-y-2 mt-auto">
+                <ul className="space-y-1.5 mt-auto">
                   {role.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-gray-700 text-sm">
+                    <li key={i} className="flex items-center text-gray-700 text-xs">
                       <div className={`${role.color} p-1 rounded-full mr-2 transition-colors duration-300 ${role.hoverColor}`}>
                         {feature.icon}
                       </div>

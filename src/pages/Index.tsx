@@ -5,6 +5,7 @@ import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { Skeleton } from '@/components/ui/skeleton';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Lazy loaded components with optimized chunk names
 const Features = lazy(() => import(/* webpackChunkName: "features" */ '@/components/Features'));
@@ -91,6 +92,7 @@ const Index: React.FC = () => {
   
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <ScrollToTop /> {/* Added ScrollToTop component to ensure page scrolls to top on navigation */}
       <Navbar />
       <main className="flex-grow space-y-12 relative">
         <Hero />

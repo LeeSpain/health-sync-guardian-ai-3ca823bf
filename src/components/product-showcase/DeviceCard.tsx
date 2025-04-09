@@ -47,7 +47,7 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image with optimized loading strategy */}
+        {/* Image with optimized loading strategy - FIXED: Changed to object-contain to show full image */}
         <div className="mb-5 relative bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-muted">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-brand-teal/10"></div>
@@ -58,7 +58,7 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
               priority={isPriorityProduct}
               width={640}
               height={360}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
               loadingClassName="bg-gray-100"
               data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
             />
