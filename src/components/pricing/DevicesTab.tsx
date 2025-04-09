@@ -104,13 +104,14 @@ const DevicesTab: React.FC = () => {
                   className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col"
                 >
                   <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
-                    <OptimizedImage
-                      src={device.image}
-                      alt={device.name}
-                      className="h-full w-full"
-                      priority={index < 2}
-                      objectFit="contain"
-                    />
+                    <div className="w-full h-full flex items-center justify-center">
+                      <OptimizedImage
+                        src={device.image}
+                        alt={device.name}
+                        priority={index < 2}
+                        objectFit="contain"
+                      />
+                    </div>
                   </div>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-xl text-brand-teal">{device.name}</CardTitle>

@@ -28,16 +28,15 @@ export const OptimizedImage = ({
   const [retryCount, setRetryCount] = useState(0);
 
   const handleError = () => {
-    // Log error but don't retry more than twice
-    console.error(`Failed to load image: ${src}`);
-    
-    // If we haven't retried too many times, try again
     if (retryCount < 2) {
+      setRetryCount(prev => prev + 1);
+      // Add a cache buster to the URL
+      const cacheBuster = `?retry=${Date.now()}`;
       const img = new Image();
-      img.src = `${src}?retry=${retryCount}`;
+      img.src = src.includes('?') ? `${src}&cb=${cacheBuster}` : `${src}${cacheBuster}`;
       img.onload = () => {
-        setRetryCount(prev => prev + 1);
         setError(false);
+        setLoaded(true);
       };
       img.onerror = () => {
         setError(true);
@@ -55,12 +54,12 @@ export const OptimizedImage = ({
   return (
     <div 
       className={cn(
-        "relative overflow-hidden",
+        "relative w-full h-full flex items-center justify-center",
         className
       )} 
       style={{
         width: width ? `${width}px` : '100%',
-        height: height ? `${height}px` : 'auto', // Changed to auto for better responsiveness
+        height: height ? `${height}px` : '100%',
       }}
     >
       {/* Loading skeleton - only show if not loaded and not errored */}
@@ -99,18 +98,14 @@ export const OptimizedImage = ({
         loading={priority ? "eager" : "lazy"}
         onError={handleError}
         onLoad={handleLoad}
-        style={{
-          objectFit: objectFit,
-          width: '100%',
-          height: '100%',
-          opacity: loaded ? 1 : 0,
-          transition: 'opacity 0.3s ease',
-          display: error ? 'none' : 'block'
-        }}
         className={cn(
-          "transition-opacity duration-300",
+          "max-w-full max-h-full w-auto h-auto transition-opacity duration-300",
           loaded && !error ? "opacity-100" : "opacity-0"
         )}
+        style={{
+          objectFit: objectFit,
+          opacity: loaded ? 1 : 0
+        }}
         {...props}
       />
     </div>

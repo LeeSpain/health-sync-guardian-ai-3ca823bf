@@ -43,12 +43,11 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
           </div>
         </div>
         
-        {/* Image with improved containment */}
-        <div className="mb-5 relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center">
+        {/* Image container with fixed height */}
+        <div className="mb-5 h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
           <OptimizedImage 
             src={product.image} 
             alt={product.name}
-            className="h-full w-full"
             priority={isPriorityProduct}
             objectFit="contain"
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
