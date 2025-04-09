@@ -2,7 +2,7 @@
 import React, { memo } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { OptimizedImage } from '@/components/ui/optimized-image';
 
@@ -27,22 +27,29 @@ const ServiceFeature = memo(({ feature }: { feature: string }) => (
 const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
   <Card
     key={service.id}
-    className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full"
+    className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
   >
     <div className="flex flex-col h-full">
-      <div className="h-[180px] bg-gradient-to-br from-orange-50 to-orange-100 p-4 flex items-center justify-center">
-        <div className="h-[140px] w-[140px] flex items-center justify-center">
+      <div className="h-[220px] bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
+        <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
+        
+        <div className="h-[180px] w-[180px] relative z-10 flex items-center justify-center">
           <OptimizedImage
             src={service.image}
             alt={service.name}
             objectFit="contain"
-            className="max-w-full max-h-full"
+            className="max-w-full max-h-full transition-transform duration-300 group-hover:scale-105"
+            priority={true}
           />
         </div>
       </div>
-      <CardHeader className="pb-2 flex-grow-0">
-        <CardTitle className="text-xl text-brand-orange">{service.name}</CardTitle>
-        <div className="mt-2 flex items-baseline">
+      <CardHeader className="pb-2 flex-grow-0 pt-5">
+        <CardTitle className="text-xl font-bold text-brand-orange flex items-center">
+          {service.name}
+        </CardTitle>
+        <div className="mt-3 flex items-baseline">
           <span className="text-2xl font-bold">{service.price}</span>
           <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
             {service.subscription}
@@ -50,17 +57,18 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
         </div>
         <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <ul className="space-y-2">
+      <CardContent className="flex-grow pt-2">
+        <ul className="space-y-3">
           {service.features.map((feature, i) => (
             <ServiceFeature key={i} feature={feature} />
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="mt-auto">
-        <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group">
-          <span>{service.cta}</span>
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+      <CardFooter className="mt-auto pt-2 pb-6">
+        <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group relative overflow-hidden shadow-md">
+          <span className="relative z-10">{service.cta}</span>
+          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 relative z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-orange to-brand-orange/90 opacity-0 group-hover:opacity-100 transition-opacity"></div>
         </Button>
       </CardFooter>
     </div>
@@ -119,10 +127,13 @@ const ServicesTab: React.FC = memo(() => {
     <div className="space-y-16">
       {/* Professional Services */}
       <div>
-        <div className="text-center mb-8">
-          <h3 className="text-2xl text-brand-teal font-bold">Professional Care</h3>
-          <p className="text-gray-600 mt-2">
-            Expert healthcare services and monitoring solutions
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center p-2 bg-brand-orange/10 rounded-full mb-4">
+            <Shield className="h-6 w-6 text-brand-orange" />
+          </div>
+          <h3 className="text-2xl sm:text-3xl text-brand-orange font-bold">Professional Care Services</h3>
+          <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
+            Expert healthcare services and monitoring solutions designed for your peace of mind
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
