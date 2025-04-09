@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Info, TagIcon, Clock, Shield, ArrowRight, Euro } from 'lucide-react';
@@ -14,6 +15,20 @@ const ProductInfo: React.FC = () => {
           Nurse-Sync and Medic-Sync services are accessible through your dashboard after joining our service. 
           These professional healthcare monitoring services provide immediate access to qualified healthcare professionals.
         </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <h4 className="font-medium text-brand-teal">Nurse-Sync</h4>
+            <p className="text-xs text-gray-500 mt-1">
+              Professional service - Connect with certified nurses for regular health monitoring and advice through the Global Health Sync ecosystem
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <h4 className="font-medium text-brand-teal">Medic-Sync</h4>
+            <p className="text-xs text-gray-500 mt-1">
+              Professional service - Schedule virtual consultations with doctors and specialists through the Global Health Sync ecosystem
+            </p>
+          </div>
+        </div>
       </div>
       
       <div className="p-6 bg-brand-grey/10 rounded-lg border border-gray-200 shadow-sm">
