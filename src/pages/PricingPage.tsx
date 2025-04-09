@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -98,7 +97,7 @@ const PricingPage: React.FC = () => {
     }
   ];
 
-  // Professional Care Services - Updated pricing to 24.99€ + 10% for monthly subscription
+  // Professional Care Services - Updated to remove Nurse-Sync and Medic-Sync
   const professionalServices = [
     { 
       id: 'sos-pendant',
@@ -123,24 +122,6 @@ const PricingPage: React.FC = () => {
       monthlyPrice: 24.99,
       type: 'professional' as const,
       image: getProductImageByName("Glucose Monitor")
-    },
-    { 
-      id: 'nurse-sync',
-      name: "Nurse-Sync", 
-      oneTimePrice: null, 
-      monthlyPrice: null,
-      type: 'professional' as const,
-      image: getProductImageByName("Nurse-Sync"),
-      dashboardOnly: true
-    },
-    { 
-      id: 'medic-sync',
-      name: "Medic-Sync", 
-      oneTimePrice: null, 
-      monthlyPrice: null,
-      type: 'professional' as const,
-      image: getProductImageByName("Medic-Sync"),
-      dashboardOnly: true
     }
   ];
 
