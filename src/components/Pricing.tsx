@@ -193,18 +193,6 @@ const Pricing: React.FC = () => {
     }
   ];
 
-  const nurseServices = {
-    name: "Nurse-Sync Services",
-    features: [
-      "Personalized care packages",
-      "Professional nurse support",
-      "Flexible scheduling",
-      "Comprehensive care plans"
-    ],
-    cta: "View Nurse-Sync Packages",
-    image: "/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png"
-  };
-
   return (
     <section id="pricing" className="py-16 bg-gradient-to-b from-brand-grey/20 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -498,31 +486,41 @@ const Pricing: React.FC = () => {
                   <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/3 bg-gradient-to-br from-brand-teal/10 to-transparent p-6 flex items-center justify-center">
                       <img 
-                        src={nurseServices.image} 
-                        alt={nurseServices.name} 
+                        src="/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png" 
+                        alt="Nurse-Sync Services" 
                         className="h-48 w-48 object-contain"
                       />
                     </div>
                     <div className="md:w-2/3">
                       <CardHeader>
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-2xl text-brand-teal">{nurseServices.name}</CardTitle>
+                          <CardTitle className="text-2xl text-brand-teal">Nurse-Sync Services</CardTitle>
                           <Badge className="bg-brand-teal text-white">Premium Service</Badge>
                         </div>
                       </CardHeader>
                       <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {nurseServices.features.map((feature, i) => (
-                            <div key={i} className="flex items-start p-3 bg-white rounded-lg shadow-sm">
-                              <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
-                              <span className="font-medium">{feature}</span>
-                            </div>
-                          ))}
+                          <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
+                            <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
+                            <span className="font-medium">Personalized care packages</span>
+                          </div>
+                          <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
+                            <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
+                            <span className="font-medium">Professional nurse support</span>
+                          </div>
+                          <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
+                            <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
+                            <span className="font-medium">Flexible scheduling</span>
+                          </div>
+                          <div className="flex items-start p-3 bg-white rounded-lg shadow-sm">
+                            <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
+                            <span className="font-medium">Comprehensive care plans</span>
+                          </div>
                         </div>
                       </CardContent>
                       <CardFooter>
                         <Button className="w-full md:w-auto ml-auto bg-brand-teal hover:bg-brand-teal/90 group">
-                          <span>{nurseServices.cta}</span>
+                          <span>View Nurse-Sync Packages</span>
                           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                       </CardFooter>
