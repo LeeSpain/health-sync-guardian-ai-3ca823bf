@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -13,7 +13,7 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 }
 
-export const OptimizedImage = ({
+export const OptimizedImage = memo(({
   src,
   alt,
   className,
@@ -27,7 +27,8 @@ export const OptimizedImage = ({
   const [error, setError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
 
-  const handleError = () => {
+  // Use useCallback for event handlers to prevent recreating functions on each render
+  const handleError = useCallback(() => {
     if (retryCount < 2) {
       setRetryCount(prev => prev + 1);
       // Add a cache buster to the URL
@@ -44,12 +45,22 @@ export const OptimizedImage = ({
     } else {
       setError(true);
     }
-  };
+  }, [retryCount, src]);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     setLoaded(true);
     setError(false);
-  };
+  }, []);
+
+  // Preload high priority images
+  React.useEffect(() => {
+    if (priority && !loaded && !error) {
+      const img = new Image();
+      img.src = src;
+      img.onload = handleLoad;
+      img.onerror = handleError;
+    }
+  }, [priority, src, loaded, error, handleLoad, handleError]);
 
   return (
     <div 
@@ -62,7 +73,7 @@ export const OptimizedImage = ({
         height: height ? `${height}px` : '100%',
       }}
     >
-      {/* Loading skeleton - only show if not loaded and not errored */}
+      {/* Only show loader when not loaded and not errored */}
       {!loaded && !error && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100/60">
           <Skeleton className="w-full h-full absolute inset-0" />
@@ -91,7 +102,7 @@ export const OptimizedImage = ({
         </div>
       )}
       
-      {/* The actual image */}
+      {/* The actual image - using native loading="lazy" for better performance */}
       <img
         src={error ? '/placeholder.svg' : src}
         alt={alt}
@@ -104,10 +115,11 @@ export const OptimizedImage = ({
         )}
         style={{
           objectFit: objectFit,
-          opacity: loaded ? 1 : 0
         }}
         {...props}
       />
     </div>
   );
-};
+});
+
+OptimizedImage.displayName = 'OptimizedImage';

@@ -3,89 +3,45 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-// Enhanced performance measurement function
-const measurePerformance = async () => {
-  if (process.env.NODE_ENV === 'development') {
-    try {
-      const { onCLS, onFID, onLCP, onINP, onTTFB } = await import('web-vitals');
-      
-      const reportWebVital = (metric: any) => {
-        // Log vital with timestamp for better debugging
-        console.log(`[${new Date().toISOString()}] Web Vital: ${metric.name}`, metric);
-      };
-      
-      // Core Web Vitals + Time to First Byte
-      onCLS(reportWebVital);
-      onFID(reportWebVital);
-      onLCP(reportWebVital);
-      onINP(reportWebVital);
-      onTTFB(reportWebVital);
-    } catch (error) {
-      console.error('Failed to load web-vitals:', error);
-    }
-  }
-};
-
-// Defer non-critical work
-const deferWork = (fn: () => void, timeout = 1000) => {
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => fn(), { timeout });
-  } else {
-    setTimeout(fn, timeout);
-  }
-};
-
-// Add type for Chrome's performance.memory
-interface MemoryInfo {
-  usedJSHeapSize: number;
-  jsHeapSizeLimit: number;
-}
-
-interface PerformanceWithMemory extends Performance {
-  memory?: MemoryInfo;
-}
-
-// Optimize initial rendering
-const initApp = () => {
-  // Get the root element
-  const rootElement = document.getElementById("root");
-  
-  if (!rootElement) {
-    console.error("Root element not found!");
-    return;
-  }
-  
-  // Create root
+// Create root element efficiently
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  console.error("Root element not found!");
+} else {
+  // Create root and render app
   const root = createRoot(rootElement);
-  
-  // Render the app
   root.render(<App />);
   
-  // Measure performance after first paint
-  deferWork(() => {
-    measurePerformance();
-  }, 2000);
-  
+  // Measure performance metrics when idle
+  if (process.env.NODE_ENV === 'development') {
+    const measurePerformance = async () => {
+      try {
+        const { onCLS, onFID, onLCP, onINP, onTTFB } = await import('web-vitals');
+        
+        // Simple reporting function
+        const reportWebVital = (metric: any) => {
+          console.log(`Web Vital: ${metric.name}`, metric);
+        };
+        
+        // Core Web Vitals
+        onCLS(reportWebVital);
+        onFID(reportWebVital);
+        onLCP(reportWebVital);
+        onINP(reportWebVital);
+        onTTFB(reportWebVital);
+      } catch (error) {
+        console.error('Failed to load web-vitals:', error);
+      }
+    };
+    
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => measurePerformance(), { timeout: 2000 });
+    } else {
+      setTimeout(measurePerformance, 2000);
+    }
+  }
+
   // Add efficient passive event listeners
   window.addEventListener('scroll', () => {}, { passive: true });
   window.addEventListener('touchstart', () => {}, { passive: true });
-  
-  // Cleanup non-critical resources when idle
-  window.addEventListener('load', () => {
-    deferWork(() => {
-      // Remove startup scripts or listeners that are no longer needed
-      // Add memory leak detection in development
-      if (process.env.NODE_ENV === 'development') {
-        deferWork(() => {
-          const performanceWithMemory = performance as PerformanceWithMemory;
-          console.log('Memory usage:', performanceWithMemory.memory ? 
-            `${Math.round(performanceWithMemory.memory.usedJSHeapSize / 1048576)} MB / ${Math.round(performanceWithMemory.memory.jsHeapSizeLimit / 1048576)} MB` : 
-            'Not available');
-        }, 5000);
-      }
-    }, 1000);
-  });
-};
-
-// Start the application
-initApp();
+}

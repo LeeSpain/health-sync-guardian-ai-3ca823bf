@@ -5,7 +5,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { visualizer } from "rollup-plugin-visualizer";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -45,10 +44,7 @@ export default defineConfig(({ mode }) => ({
           }
           
           // Group UI components together
-          if (id.includes('@/components/ui/button') || 
-              id.includes('@/components/ui/card') || 
-              id.includes('@/components/ui/badge') || 
-              id.includes('@/components/ui/aspect-ratio')) {
+          if (id.includes('@/components/ui/')) {
             return 'ui-components';
           }
           
@@ -61,13 +57,19 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('@/lib/utils')) {
             return 'utils';
           }
-          
-          // Let Vite handle other dependencies automatically
-          return null;
         },
       },
     },
-    // Reduce chunk size warning limit
+    // Enable SWC minify for faster builds
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production',
+        drop_debugger: mode === 'production',
+      },
+    },
+    modulePreload: {
+      polyfill: true,
+    },
     chunkSizeWarningLimit: 1000,
   },
   resolve: {
@@ -87,5 +89,12 @@ export default defineConfig(({ mode }) => ({
       'clsx',
       'tailwind-merge',
     ],
+    esbuildOptions: {
+      target: 'es2020',
+    },
+  },
+  // Disable CSS code-splitting for faster first load
+  css: {
+    devSourcemap: false,
   },
 }));

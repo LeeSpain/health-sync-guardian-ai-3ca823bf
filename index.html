@@ -6,34 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>health-sync-guardian-ai</title>
     <meta name="description" content="AI-Powered Health Monitoring For Everyone" />
-    <meta name="author" content="Lovable" />
-
+    
+    <!-- OpenGraph and Twitter cards -->
     <meta property="og:title" content="health-sync-guardian-ai" />
     <meta property="og:description" content="AI-Powered Health Monitoring For Everyone" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
     <!-- Critical CSS inlined to prevent render-blocking -->
     <style>
-      /* Critical CSS for immediate rendering */
       body {margin: 0; font-family: system-ui, -apple-system, sans-serif; text-rendering: optimizeLegibility;}
+      .page-loading {position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #f8f8f8;}
+      .loader {width: 40px; height: 40px; border: 4px solid rgba(0,169,157,0.2); border-top-color: rgba(0,169,157,1); border-radius: 50%; animation: spin 1s infinite linear;}
+      @keyframes spin {to {transform: rotate(360deg);}}
     </style>
-    
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="/src/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
     
     <!-- Preconnect to critical domains -->
     <link rel="preconnect" href="/" crossorigin>
     <link rel="dns-prefetch" href="/">
+    
+    <!-- Use modulepreload to optimize main script loading -->
+    <link rel="modulepreload" href="/src/main.tsx">
+    
+    <!-- Preload CSS as non-blocking -->
+    <link rel="preload" href="/src/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Initial loading indicator, removed once React mounts -->
+      <div class="page-loading">
+        <div class="loader"></div>
+      </div>
+    </div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
