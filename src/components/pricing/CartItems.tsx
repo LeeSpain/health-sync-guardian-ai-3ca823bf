@@ -3,9 +3,10 @@ import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import CartItem, { CartItemProps } from './CartItem';
 import DashboardSubscription from './DashboardSubscription';
+import { CartItemData } from './Cart';
 
 interface CartItemsProps {
-  items: CartItemProps[];
+  items: CartItemData[];
   removeFromCart: (index: number) => void;
   dashboardPrice: number;
 }
