@@ -11,6 +11,9 @@ interface FeaturedProductProps {
 }
 
 export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ product }) => {
+  const [imgLoaded, setImgLoaded] = React.useState(false);
+  const [imgError, setImgError] = React.useState(false);
+
   return (
     <div className="bg-gradient-to-br from-brand-teal/5 to-brand-teal/10 rounded-2xl p-1 shadow-lg">
       <Card className="overflow-hidden border-none shadow-none bg-white grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
@@ -37,16 +40,24 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ product }) => 
           </Button>
         </div>
         
-        <div className="relative bg-white rounded-lg flex items-center justify-center h-80 p-6">
+        <div className="relative flex items-center justify-center h-80 p-6 bg-white rounded-lg">
+          {!imgLoaded && !imgError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+              <div className="w-10 h-10 border-4 border-brand-teal/30 border-t-brand-teal rounded-full animate-spin"></div>
+            </div>
+          )}
+          
           <img 
-            src={product.image} 
+            src={imgError ? '/placeholder.svg' : product.image} 
             alt={product.name}
             className="max-h-full max-w-full object-contain"
             loading="eager"
             onError={(e) => {
               console.error(`Failed to load image: ${product.image}`);
-              e.currentTarget.src = '/placeholder.svg';
+              setImgError(true);
             }}
+            onLoad={() => setImgLoaded(true)}
+            style={{ display: imgLoaded ? 'block' : 'none' }}
           />
         </div>
       </Card>

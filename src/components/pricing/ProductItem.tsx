@@ -28,20 +28,31 @@ const ProductItem: React.FC<ProductItemProps> = ({
   onAddToCart,
   alternateRowColor = false
 }) => {
+  const [imgLoaded, setImgLoaded] = React.useState(false);
+  const [imgError, setImgError] = React.useState(false);
+  
   return (
     <TableRow className={alternateRowColor ? "bg-gray-50" : "bg-white"}>
       <TableCell>
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center relative">
+            {!imgLoaded && !imgError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                <div className="w-4 h-4 border-2 border-gray-300/30 border-t-gray-300 rounded-full animate-spin"></div>
+              </div>
+            )}
+            
             <img 
-              src={image} 
+              src={imgError ? '/placeholder.svg' : image} 
               alt={name} 
               className="max-h-10 max-w-10 object-contain" 
               loading="lazy"
               onError={(e) => {
                 console.error(`Failed to load image: ${image}`);
-                e.currentTarget.src = '/placeholder.svg';
+                setImgError(true);
               }}
+              onLoad={() => setImgLoaded(true)}
+              style={{ display: imgLoaded ? 'block' : 'none' }}
             />
           </div>
           <span className="font-medium">{name}</span>

@@ -21,31 +21,38 @@
     <style>
       /* Critical CSS for immediate rendering */
       body {margin: 0; font-family: system-ui, -apple-system, sans-serif; text-rendering: optimizeLegibility;}
-      .image-placeholder {background-color: #f5f5f5; animation: pulse 1.5s infinite;}
-      @keyframes pulse {0%, 100% {opacity: 0.6;} 50% {opacity: 0.8;}}
       
-      /* CRITICAL FIX: Base image styles to prevent layout shift */
+      /* CRITICAL FIX: Image Handling */
       img {
         max-width: 100% !important;
         max-height: 100% !important;
         width: auto !important;
         height: auto !important;
         object-fit: contain !important;
-        display: block;
+        display: block !important;
       }
       
-      /* Container styles for images */
       div:has(> img) {
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-center: center !important;
       }
       
-      /* Fix for image containers */
-      [class*="flex"] img, .card img, .bg-white img {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
+      /* Image placeholder */
+      .image-placeholder {background-color: #f5f5f5; animation: pulse 1.5s infinite;}
+      @keyframes pulse {0%, 100% {opacity: 0.6;} 50% {opacity: 0.8;}}
+      
+      /* Spinner for image loading */
+      .loading-spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(0, 139, 139, 0.2);
+        border-top-color: #008B8B;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {transform: rotate(360deg);}
       }
     </style>
     
@@ -73,39 +80,86 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Optimize image loading -->
+    <!-- GREATLY IMPROVED image loading script -->
     <script>
-      // Ensure all images load properly
-      document.addEventListener('DOMContentLoaded', () => {
-        // First pass - force set all image sources directly
-        document.querySelectorAll('img[data-src]').forEach(img => {
-          img.src = img.getAttribute('data-src');
-        });
+      // Function to forcefully load all images
+      function forceLoadAllImages() {
+        console.log("Forcing all images to load");
         
-        // Second pass - add error handlers to all images
+        // Get all images on the page
+        const allImages = document.querySelectorAll('img');
+        
+        // Process each image
+        allImages.forEach((img, index) => {
+          // Skip already loaded images
+          if (img.complete && img.naturalWidth > 0) return;
+          
+          // Skip placeholder images
+          if (img.src.includes('placeholder.svg')) return;
+          
+          // Create a new image object to test loading
+          const testImg = new Image();
+          
+          // Set up load handler
+          testImg.onload = function() {
+            // If original image wasn't loaded, update its src
+            if (!img.complete || img.naturalWidth === 0) {
+              img.src = testImg.src;
+              console.log(`Successfully forced load: ${testImg.src}`);
+            }
+          };
+          
+          // Set up error handler
+          testImg.onerror = function() {
+            console.error(`Error loading image: ${img.src}`);
+            
+            // If not already a placeholder and error loading, use placeholder
+            if (!img.src.includes('placeholder.svg')) {
+              img.src = '/placeholder.svg';
+            }
+          };
+          
+          // Store original src
+          const originalSrc = img.getAttribute('src');
+          
+          // If src exists, try to load it with cache-busting
+          if (originalSrc && !originalSrc.includes('placeholder.svg')) {
+            testImg.src = `${originalSrc}?t=${new Date().getTime()}&forcedLoad=true`;
+          }
+        });
+      }
+
+      // Run immediate check when DOM is ready
+      document.addEventListener('DOMContentLoaded', () => {
+        // Add error handlers to all images
         document.querySelectorAll('img').forEach(img => {
           if (!img.complete) {
-            img.addEventListener('error', () => {
+            img.addEventListener('error', (e) => {
               console.error(`Image failed to load: ${img.src}`);
-              if (img.src !== '/placeholder.svg') {
+              if (!img.src.includes('placeholder.svg')) {
                 img.src = '/placeholder.svg';
               }
             });
           }
         });
         
-        // Force load any images from lovable-uploads that might not be loading
-        setTimeout(() => {
-          document.querySelectorAll('img').forEach(img => {
-            // If image is still not loaded and isn't a placeholder
-            if (!img.complete && !img.src.includes('placeholder.svg')) {
-              console.log(`Reloading image: ${img.src}`);
-              const originalSrc = img.src;
-              img.src = '/placeholder.svg';  // Reset to clear any pending loads
-              setTimeout(() => { img.src = originalSrc; }, 50);
-            }
-          });
-        }, 500);
+        // Force loading of specific image paths
+        document.querySelectorAll('img[src*="lovable-uploads"]').forEach(img => {
+          img.setAttribute('loading', 'eager');
+          img.setAttribute('fetchpriority', 'high');
+        });
+        
+        // First attempt to force all images to load
+        setTimeout(forceLoadAllImages, 500);
+        
+        // Second attempt after a longer delay
+        setTimeout(forceLoadAllImages, 2000);
+      });
+      
+      // Run again when page is fully loaded
+      window.addEventListener('load', () => {
+        // Final attempt to force all images to load
+        setTimeout(forceLoadAllImages, 500);
       });
     </script>
   </body>

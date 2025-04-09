@@ -19,6 +19,9 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
     product.name === "Bed Sensor" || 
     product.name === "Thermometer";
   
+  const [imgLoaded, setImgLoaded] = React.useState(false);
+  const [imgError, setImgError] = React.useState(false);
+
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full">
       {/* Gradient top bar with animation */}
@@ -43,17 +46,25 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
         </div>
         
         {/* Image with improved containment */}
-        <div className="mb-5 relative bg-white rounded-lg overflow-hidden flex items-center justify-center h-48">
+        <div className="mb-5 relative flex items-center justify-center h-48 bg-white rounded-lg">
+          {!imgLoaded && !imgError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+              <div className="w-8 h-8 border-4 border-brand-teal/30 border-t-brand-teal rounded-full animate-spin"></div>
+            </div>
+          )}
+          
           <img
-            src={product.image}
+            src={imgError ? '/placeholder.svg' : product.image}
             alt={product.name}
-            className="max-h-full max-w-full object-contain"
+            className="max-w-full max-h-full object-contain"
             loading={isPriorityProduct ? "eager" : "lazy"}
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
             onError={(e) => {
               console.error(`Failed to load image: ${product.image}`);
-              e.currentTarget.src = '/placeholder.svg';
+              setImgError(true);
             }}
+            onLoad={() => setImgLoaded(true)}
+            style={{ display: imgLoaded ? 'block' : 'none' }}
           />
         </div>
         
