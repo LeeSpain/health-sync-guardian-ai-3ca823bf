@@ -1,9 +1,16 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, ArrowRight, Shield, Zap, PlusCircle, Heart, HelpCircle, AlertCircle } from 'lucide-react';
+import { Check, ArrowRight, Shield, Zap, PlusCircle, Heart, HelpCircle, AlertCircle, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Pricing: React.FC = () => {
   const [activeTab, setActiveTab] = useState('plans');
@@ -80,62 +87,67 @@ const Pricing: React.FC = () => {
     {
       name: "Guardian Button",
       price: "€49.99",
-      subscription: "+ €4.99/month",
+      subscription: "€4.99/month",
       features: [
         "One-touch emergency alert",
         "Water-resistant design",
         "GPS tracking",
         "Long battery life"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/c38f7f2c-ac88-45a4-be0e-6ca22e7498f1.png"
     },
     {
       name: "Heart Rate Monitor",
       price: "€79.99",
-      subscription: "+ €4.99/month",
+      subscription: "€4.99/month",
       features: [
         "24/7 heart rate monitoring",
         "ECG capabilities",
         "Irregular rhythm detection",
         "Mobile app integration"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png"
     },
     {
       name: "Smart Scales",
       price: "€89.99",
-      subscription: "+ €4.99/month",
+      subscription: "€4.99/month",
       features: [
         "Multiple health metrics",
         "Smart phone sync",
         "Family profiles",
         "Trend analysis"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/8d6cc63b-a2fa-4688-9ba8-2a6c0e3a327a.png"
     },
     {
       name: "Thermometer",
       price: "€39.99",
-      subscription: "+ €4.99/month",
+      subscription: "€4.99/month",
       features: [
         "Instant readings",
         "Fever alerts",
         "History tracking",
         "Multi-user support"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/ec15308f-f7c7-4558-8c68-3a3c04deac25.png"
     },
     {
       name: "Bed Sensor",
       price: "€129.99",
-      subscription: "+ €4.99/month",
+      subscription: "€4.99/month",
       features: [
         "Sleep pattern analysis",
         "Movement detection",
         "Environmental monitoring",
         "Smart alarms"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/bc5cfcc2-3468-4e5f-a99f-111609b5d011.png"
     }
   ];
 
@@ -143,38 +155,41 @@ const Pricing: React.FC = () => {
     {
       name: "SOS Pendant & Call Centre",
       price: "€89.99",
-      subscription: "+ €24.99/month",
+      subscription: "€24.99/month",
       features: [
         "24/7 emergency response",
         "Professional call handlers",
         "Multi-language support",
         "GPS location tracking"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/3bc60e76-02c6-4226-972b-87293e92d1cf.png"
     },
     {
       name: "Medication Dispenser",
       price: "€199.99",
-      subscription: "+ €24.99/month",
+      subscription: "€24.99/month",
       features: [
         "Automated dispensing",
         "Medication tracking",
         "Smart reminders",
         "Refill monitoring"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/aec16bb7-f544-4fb2-a359-9daa3038709b.png"
     },
     {
       name: "Glucose Monitor",
       price: "€199.99",
-      subscription: "+ €24.99/month",
+      subscription: "€24.99/month",
       features: [
         "Continuous monitoring",
         "Real-time alerts",
         "Trend analysis",
         "Healthcare integration"
       ],
-      cta: "Add to Cart"
+      cta: "Add to Cart",
+      image: "/lovable-uploads/db9b76be-b145-473e-a52d-4e6dd3a111e4.png"
     }
   ];
 
@@ -186,21 +201,22 @@ const Pricing: React.FC = () => {
       "Flexible scheduling",
       "Comprehensive care plans"
     ],
-    cta: "View Nurse-Sync Packages"
+    cta: "View Nurse-Sync Packages",
+    image: "/lovable-uploads/f68f076e-3106-408f-8115-40910ce100da.png"
   };
 
   return (
-    <section id="pricing" className="py-24 bg-gradient-to-b from-brand-grey to-white">
+    <section id="pricing" className="py-16 bg-gradient-to-b from-brand-grey/20 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-brand-teal mb-4">Choose Your Plan</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Start with our powerful health monitoring dashboard
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-4">Choose Your Plan</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+            Start with our powerful health monitoring dashboard and customize with devices and services
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-16">
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-10">
             <TabsList className="grid w-full max-w-md grid-cols-3">
               <TabsTrigger value="plans">Base Plans</TabsTrigger>
               <TabsTrigger value="devices">Devices</TabsTrigger>
@@ -238,6 +254,7 @@ const Pricing: React.FC = () => {
                       <div className="mb-6">
                         <span className="text-4xl font-bold">{plan.price}</span>
                         <span className="text-gray-500">/{plan.period}</span>
+                        <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
                       </div>
                       <ul className="space-y-3 text-left mb-6">
                         {plan.features.map((feature, i) => (
@@ -289,6 +306,7 @@ const Pricing: React.FC = () => {
                       <div className="mb-4">
                         <span className="text-2xl font-bold">{addon.price}</span>
                         <span className="text-gray-500"> {addon.period}</span>
+                        <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
                       </div>
                       <ul className="space-y-2">
                         {addon.features.map((feature, i) => (
@@ -319,47 +337,98 @@ const Pricing: React.FC = () => {
                 Enhance Your Experience - Add smart devices to your monitoring system
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {smartDevices.map((device, index) => (
-                <Card 
-                  key={index} 
-                  className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
-                >
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex items-center justify-center">
-                    <img 
-                      src="/placeholder.svg" 
-                      alt={device.name} 
-                      className="h-24 w-24 object-contain"
-                    />
+            <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border">
+              <ResizablePanel defaultSize={75} minSize={40}>
+                <ScrollArea className="h-[600px]">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
+                    {smartDevices.map((device, index) => (
+                      <Card 
+                        key={index} 
+                        className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
+                      >
+                        <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 p-6 flex items-center justify-center">
+                          <img 
+                            src={device.image} 
+                            alt={device.name} 
+                            className="h-36 w-36 object-contain"
+                          />
+                        </div>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-xl text-brand-teal">{device.name}</CardTitle>
+                          <div className="mt-2 flex items-baseline">
+                            <span className="text-2xl font-bold">{device.price}</span>
+                            <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
+                              {device.subscription}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {device.features.map((feature, i) => (
+                              <li key={i} className="flex items-start">
+                                <Check className="h-5 w-5 text-brand-accent-teal mr-2 mt-0.5 flex-shrink-0" />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                        <CardFooter>
+                          <Button className="w-full bg-brand-accent-teal hover:bg-brand-accent-teal/90 group">
+                            <span>{device.cta}</span>
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
                   </div>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-xl text-brand-teal">{device.name}</CardTitle>
-                    <div className="mt-2 flex items-baseline">
-                      <span className="text-2xl font-bold">{device.price}</span>
-                      <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
-                        {device.subscription}
-                      </Badge>
+                </ScrollArea>
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel defaultSize={25} minSize={20}>
+                <div className="bg-brand-grey/10 p-6 h-full">
+                  <h3 className="text-lg font-semibold text-brand-teal mb-4">Device Specifications</h3>
+                  <div className="space-y-6">
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <h4 className="font-medium mb-2 flex items-center">
+                        <Star className="h-4 w-4 text-brand-orange mr-2" />
+                        Advanced AI Processing
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        All our devices utilize advanced AI algorithms to provide accurate health metrics and predictive insights.
+                      </p>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {device.features.map((feature, i) => (
-                        <li key={i} className="flex items-start">
-                          <Check className="h-5 w-5 text-brand-accent-teal mr-2 mt-0.5 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-brand-accent-teal hover:bg-brand-accent-teal/90 group">
-                      <span>{device.cta}</span>
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <h4 className="font-medium mb-2 flex items-center">
+                        <Star className="h-4 w-4 text-brand-orange mr-2" />
+                        Seamless Integration
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Every device connects seamlessly with the iHealth Dashboard for a unified monitoring experience.
+                      </p>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <h4 className="font-medium mb-2 flex items-center">
+                        <Star className="h-4 w-4 text-brand-orange mr-2" />
+                        Extended Battery Life
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Our devices are designed with low power consumption for extended use between charges.
+                      </p>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <h4 className="font-medium mb-2 flex items-center">
+                        <AlertCircle className="h-4 w-4 text-brand-teal mr-2" />
+                        Monthly Subscription
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        The monthly subscription includes cloud storage, continuous software updates, and priority customer support.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </TabsContent>
 
           {/* Services Tab */}
@@ -379,11 +448,11 @@ const Pricing: React.FC = () => {
                       key={index} 
                       className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
                     >
-                      <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center">
+                      <div className="h-48 bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center">
                         <img 
-                          src="/placeholder.svg" 
+                          src={service.image} 
                           alt={service.name} 
-                          className="h-24 w-24 object-contain"
+                          className="h-36 w-36 object-contain"
                         />
                       </div>
                       <CardHeader className="pb-2">
@@ -394,6 +463,7 @@ const Pricing: React.FC = () => {
                             {service.subscription}
                           </Badge>
                         </div>
+                        <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-2">
@@ -419,35 +489,46 @@ const Pricing: React.FC = () => {
               {/* Nurse Services */}
               <div className="max-w-4xl mx-auto">
                 <Card className="border-2 border-brand-teal overflow-hidden hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-brand-teal/5 to-transparent">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-2xl text-brand-teal">{nurseServices.name}</CardTitle>
-                      <Badge className="bg-brand-teal text-white">Premium Service</Badge>
+                  <div className="flex flex-col md:flex-row">
+                    <div className="md:w-1/3 bg-gradient-to-br from-brand-teal/10 to-transparent p-6 flex items-center justify-center">
+                      <img 
+                        src={nurseServices.image} 
+                        alt={nurseServices.name} 
+                        className="h-48 w-48 object-contain"
+                      />
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {nurseServices.features.map((feature, i) => (
-                        <div key={i} className="flex items-start p-3 bg-white rounded-lg shadow-sm">
-                          <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
-                          <span className="font-medium">{feature}</span>
+                    <div className="md:w-2/3">
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-2xl text-brand-teal">{nurseServices.name}</CardTitle>
+                          <Badge className="bg-brand-teal text-white">Premium Service</Badge>
                         </div>
-                      ))}
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {nurseServices.features.map((feature, i) => (
+                            <div key={i} className="flex items-start p-3 bg-white rounded-lg shadow-sm">
+                              <Check className="h-5 w-5 text-brand-teal mr-2 mt-0.5 flex-shrink-0" />
+                              <span className="font-medium">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full md:w-auto ml-auto bg-brand-teal hover:bg-brand-teal/90 group">
+                          <span>{nurseServices.cta}</span>
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
+                      </CardFooter>
                     </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full md:w-auto ml-auto bg-brand-teal hover:bg-brand-teal/90 group">
-                      <span>{nurseServices.cta}</span>
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </CardFooter>
+                  </div>
                 </Card>
               </div>
             </div>
           </TabsContent>
         </Tabs>
 
-        <div className="mt-16 bg-brand-grey rounded-lg p-8 max-w-5xl mx-auto">
+        <div className="mt-16 bg-brand-grey/10 rounded-lg p-8 max-w-5xl mx-auto border border-gray-200 shadow-sm">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
             <div className="flex-shrink-0 bg-white p-4 rounded-full shadow-md">
               <HelpCircle className="h-12 w-12 text-brand-teal" />
@@ -467,6 +548,14 @@ const Pricing: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="mt-10 text-center">
+          <p className="text-sm text-gray-500">
+            For detailed pricing information including taxes and shipping costs, please proceed to the checkout page.
+            <br />
+            All prices are subject to applicable taxes which will be calculated at checkout.
+          </p>
         </div>
       </div>
     </section>

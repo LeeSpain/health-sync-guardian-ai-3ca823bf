@@ -22,7 +22,11 @@ import {
   Shield, 
   ArrowRight,
   Info,
-  CalendarCheck 
+  CalendarCheck,
+  CreditCard,
+  TruckIcon,
+  TagIcon,
+  Clock
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getProductsData } from '@/components/product-showcase/productData';
@@ -32,6 +36,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface CartItem {
   id: string;
@@ -48,6 +53,11 @@ const PricingPage: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [activeTab, setActiveTab] = useState('all');
   const productsData = getProductsData();
+  const [showTaxes, setShowTaxes] = useState(false);
+
+  // Tax rates
+  const VAT_RATE = 0.21; // 21% VAT for one-time purchases
+  const SUBSCRIPTION_TAX = 0.10; // 10% tax for subscriptions
 
   // Essential item
   const essentialItems = [
@@ -162,6 +172,13 @@ const PricingPage: React.FC = () => {
     }
   ];
 
+  // Automatically enable tax display when viewing cart
+  useEffect(() => {
+    if (cart.length > 0) {
+      setShowTaxes(true);
+    }
+  }, [cart]);
+
   const addToCart = (item: any, isSubscription: boolean) => {
     const price = isSubscription ? item.monthlyPrice : item.oneTimePrice;
     
@@ -264,6 +281,11 @@ const PricingPage: React.FC = () => {
     }
     
     setCart(newCart);
+    
+    // If cart is empty after removal, hide taxes
+    if (newCart.length === 0) {
+      setShowTaxes(false);
+    }
   };
 
   const calculateSubtotal = () => {
@@ -277,6 +299,26 @@ const PricingPage: React.FC = () => {
   const calculateOneTimeTotal = () => {
     return cart.filter(item => !item.isSubscription).reduce((total, item) => total + item.price, 0);
   };
+  
+  const calculateTax = () => {
+    const oneTimeTax = calculateOneTimeTotal() * VAT_RATE;
+    const subscriptionTax = calculateMonthlyTotal() * SUBSCRIPTION_TAX;
+    return oneTimeTax + subscriptionTax;
+  };
+  
+  const calculateTotal = () => {
+    if (showTaxes) {
+      return calculateSubtotal() + calculateTax();
+    }
+    return calculateSubtotal();
+  };
+
+  const calculateMonthlyTotalWithTax = () => {
+    if (showTaxes) {
+      return calculateMonthlyTotal() * (1 + SUBSCRIPTION_TAX);
+    }
+    return calculateMonthlyTotal();
+  };
 
   const isInCart = (id: string, isSubscription: boolean) => {
     return cart.some(item => item.id === id && item.isSubscription === isSubscription);
@@ -285,13 +327,13 @@ const PricingPage: React.FC = () => {
   const checkout = () => {
     toast({
       title: "Checkout initiated",
-      description: "This would normally redirect to a payment gateway",
+      description: "Processing your order. Please complete payment on the next screen.",
     });
     // Here you would normally redirect to your payment gateway
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-brand-grey/20">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-brand-grey/10">
       <Navbar />
       <main className="flex-grow">
         {/* Hero banner for pricing page */}
@@ -300,9 +342,9 @@ const PricingPage: React.FC = () => {
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-brand-teal mb-4">iHealth-Sync Complete Product Catalog</h1>
               <p className="text-xl text-gray-600">Customize your health monitoring system with our innovative products and services</p>
-              <div className="flex justify-center gap-4 mt-8">
+              <div className="flex flex-wrap justify-center gap-4 mt-8">
                 <Badge variant="outline" className="px-4 py-2 text-brand-teal border-brand-teal bg-white/80 backdrop-blur-sm">
-                  <Check className="w-4 h-4 mr-2" /> Free shipping on orders over €200
+                  <TruckIcon className="w-4 h-4 mr-2" /> Free shipping on orders over €200
                 </Badge>
                 <Badge variant="outline" className="px-4 py-2 text-brand-orange border-brand-orange bg-white/80 backdrop-blur-sm">
                   <CalendarCheck className="w-4 h-4 mr-2" /> 30-day money-back guarantee
@@ -763,17 +805,26 @@ const PricingPage: React.FC = () => {
                 </TabsContent>
               </Tabs>
 
-              <div className="mt-8 p-6 bg-brand-grey rounded-lg">
+              <div className="mt-8 p-6 bg-brand-grey/10 rounded-lg border border-gray-200 shadow-sm">
                 <div className="flex flex-col md:flex-row items-start gap-4">
                   <div className="rounded-full bg-white p-3 flex items-center justify-center">
-                    <Shield className="h-6 w-6 text-brand-teal" />
+                    <Info className="h-6 w-6 text-brand-teal" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-brand-teal mb-2">Product Information</h3>
                     <div className="space-y-2 text-sm text-gray-600">
-                      <p>* All prices are inclusive of applicable taxes. Monthly subscriptions are subject to 10% VAT, while one-time purchases include 21% IVA (Spanish VAT).</p>
-                      <p>* Service contracts require minimum 12-month commitment. Early termination fees may apply.</p>
-                      <p>* Product warranty: All devices come with a standard 2-year manufacturer warranty.</p>
+                      <p className="flex items-start">
+                        <TagIcon className="h-4 w-4 text-brand-orange mr-2 mt-0.5" />
+                        All prices shown exclude applicable taxes. Taxes will be calculated at checkout.
+                      </p>
+                      <p className="flex items-start">
+                        <Clock className="h-4 w-4 text-brand-orange mr-2 mt-0.5" />
+                        Service contracts require minimum 12-month commitment. Early termination fees may apply.
+                      </p>
+                      <p className="flex items-start">
+                        <Shield className="h-4 w-4 text-brand-orange mr-2 mt-0.5" />
+                        All devices come with a standard 2-year manufacturer warranty.
+                      </p>
                     </div>
                     <Button 
                       variant="link" 
@@ -792,8 +843,8 @@ const PricingPage: React.FC = () => {
 
             {/* Shopping Cart */}
             <div className="lg:sticky lg:top-24 h-fit">
-              <Card className="border-2 border-brand-teal/20 shadow-md">
-                <CardHeader className="pb-0">
+              <Card className="border-2 border-brand-teal/20 shadow-md overflow-hidden">
+                <CardHeader className="pb-0 bg-gradient-to-r from-brand-teal/5 to-transparent">
                   <CardTitle className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <ShoppingCart className="h-5 w-5 text-brand-teal" />
@@ -813,47 +864,49 @@ const PricingPage: React.FC = () => {
                     </div>
                   ) : (
                     <>
-                      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 mb-6">
-                        {cart.map((item, index) => (
-                          <div key={index} className="flex justify-between items-center border-b pb-4">
-                            <div className="flex items-center gap-2">
-                              {item.image && (
-                                <div className="w-10 h-10 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
-                                  <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
-                                </div>
-                              )}
-                              <div>
-                                <p className="font-medium text-sm">{item.name}</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <Badge variant="outline" className={`text-xs ${
-                                    item.type === 'essential' 
-                                      ? 'border-blue-500 text-blue-700 bg-blue-50' 
-                                      : item.type === 'ai-device'
-                                        ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
-                                        : 'border-purple-500 text-purple-700 bg-purple-50'
-                                  }`}>
-                                    {item.isSubscription ? 'Monthly' : 'One-time'}
-                                  </Badge>
-                                  {item.isSubscription && (
-                                    <span className="text-xs text-gray-500">12-month commitment</span>
-                                  )}
+                      <ScrollArea className="max-h-[300px] pr-2 mb-6">
+                        <div className="space-y-4">
+                          {cart.map((item, index) => (
+                            <div key={index} className="flex justify-between items-center border-b pb-4">
+                              <div className="flex items-center gap-2">
+                                {item.image && (
+                                  <div className="w-10 h-10 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0">
+                                    <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                                  </div>
+                                )}
+                                <div>
+                                  <p className="font-medium text-sm">{item.name}</p>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <Badge variant="outline" className={`text-xs ${
+                                      item.type === 'essential' 
+                                        ? 'border-blue-500 text-blue-700 bg-blue-50' 
+                                        : item.type === 'ai-device'
+                                          ? 'border-brand-teal text-brand-teal bg-brand-teal/10'
+                                          : 'border-purple-500 text-purple-700 bg-purple-50'
+                                    }`}>
+                                      {item.isSubscription ? 'Monthly' : 'One-time'}
+                                    </Badge>
+                                    {item.isSubscription && (
+                                      <span className="text-xs text-gray-500">12-month commitment</span>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-mono font-medium">€{item.price.toFixed(2)}</span>
+                                <Button 
+                                  size="sm" 
+                                  variant="ghost" 
+                                  onClick={() => removeFromCart(index)}
+                                  className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full"
+                                >
+                                  <Minus className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono font-medium">€{item.price.toFixed(2)}</span>
-                              <Button 
-                                size="sm" 
-                                variant="ghost" 
-                                onClick={() => removeFromCart(index)}
-                                className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full"
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
 
                       <div className="pt-4 border-t border-gray-200">
                         <div className="space-y-1 mb-3">
@@ -865,22 +918,29 @@ const PricingPage: React.FC = () => {
                             <span>Monthly subscription:</span>
                             <span className="font-mono">€{calculateMonthlyTotal().toFixed(2)}/mo</span>
                           </div>
-                          <div className="flex justify-between text-sm text-gray-500">
-                            <span>VAT (21%):</span>
-                            <span className="font-mono">€{(calculateSubtotal() * 0.21).toFixed(2)}</span>
-                          </div>
+                          {showTaxes && (
+                            <div className="flex justify-between text-sm text-gray-500">
+                              <span>Taxes:</span>
+                              <span className="font-mono">€{calculateTax().toFixed(2)}</span>
+                            </div>
+                          )}
                         </div>
                         
-                        <div className="bg-gray-50 p-3 rounded-lg mb-6">
+                        <div className="bg-gray-50 p-4 rounded-lg mb-6">
                           <div className="flex justify-between font-bold text-lg">
                             <span>Total:</span>
-                            <span className="font-mono">€{(calculateSubtotal() * 1.21).toFixed(2)}</span>
+                            <span className="font-mono">€{calculateTotal().toFixed(2)}</span>
                           </div>
                           {calculateMonthlyTotal() > 0 && (
                             <div className="flex justify-between text-sm text-brand-orange font-medium mt-1">
                               <span>Recurring monthly:</span>
-                              <span className="font-mono">€{(calculateMonthlyTotal() * 1.10).toFixed(2)}/mo</span>
+                              <span className="font-mono">€{calculateMonthlyTotalWithTax().toFixed(2)}/mo</span>
                             </div>
+                          )}
+                          {showTaxes && (
+                            <p className="text-xs text-gray-500 mt-2">
+                              * One-time purchases include 21% VAT, subscriptions include 10% service tax
+                            </p>
                           )}
                         </div>
                         
@@ -889,7 +949,7 @@ const PricingPage: React.FC = () => {
                           onClick={checkout}
                           disabled={cart.length === 0}
                         >
-                          <ShoppingCart className="h-5 w-5" />
+                          <CreditCard className="h-5 w-5" />
                           Proceed to Checkout
                         </Button>
                         <p className="text-xs text-center text-gray-500 mt-3 flex items-center justify-center">
@@ -908,7 +968,7 @@ const PricingPage: React.FC = () => {
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-brand-orange/10 flex items-center justify-center text-brand-orange">
-                        <Info className="h-5 w-5" />
+                        <TruckIcon className="h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium text-sm text-brand-orange">Free Shipping Offer</p>
