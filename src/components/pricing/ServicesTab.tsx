@@ -30,20 +30,25 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
   >
     <div className="flex flex-col h-full">
-      <div className="h-[220px] bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
-        <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
-        
-        <div className="h-[180px] w-[180px] relative z-10 flex items-center justify-center">
+      {/* Modified image container to fill the complete area */}
+      <div className="h-[220px] relative overflow-hidden">
+        {/* Full background image */}
+        <div className="absolute inset-0 w-full h-full">
           <OptimizedImage
             src={service.image}
             alt={service.name}
-            objectFit="contain"
-            className="max-w-full max-h-full transition-transform duration-300 group-hover:scale-105"
+            objectFit="cover"
+            className="w-full h-full"
             priority={true}
           />
         </div>
+        
+        {/* Overlay gradient for better text visibility if needed */}
+        <div className="absolute inset-0 bg-gradient-to-t from-orange-100/30 to-transparent"></div>
+        
+        {/* Decorative elements on top of the image */}
+        <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
+        <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
       </div>
       <CardHeader className="pb-2 flex-grow-0 pt-5">
         <CardTitle className="text-xl font-bold text-brand-orange flex items-center">

@@ -55,21 +55,25 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Image container with decorative elements */}
-        <div className="h-[220px] bg-gradient-to-br from-orange-50 to-orange-100 p-6 flex items-center justify-center relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
-          <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
-          
-          <div className="h-[180px] w-[180px] relative z-10 flex items-center justify-center">
+        {/* Image container - modified to fill the complete area */}
+        <div className="h-[220px] relative overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100">
+          {/* Full background image */}
+          <div className="absolute inset-0 w-full h-full">
             <OptimizedImage
               src={product.image}
               alt={product.name}
               priority={false}
-              objectFit="contain"
-              className="max-w-full max-h-full transition-transform duration-300 group-hover:scale-105"
+              objectFit="cover"
+              className="w-full h-full"
             />
           </div>
+          
+          {/* Overlay gradient for better text visibility if needed */}
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-100/40 to-transparent"></div>
+          
+          {/* Decorative elements on top of the image */}
+          <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
+          <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
         </div>
         
         {/* Content container */}
