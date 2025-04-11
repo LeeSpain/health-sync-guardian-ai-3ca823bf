@@ -32,12 +32,12 @@ const AIGuardianConsole: React.FC = () => {
       </CardHeader>
       <Separator className="bg-brand-teal/10" />
       <CardContent className="pt-2 px-2 pb-2">
-        <div className="h-40 overflow-y-auto space-y-1.5 mb-1 text-[10px]">
+        <div className="h-32 overflow-y-auto space-y-1 mb-1 text-[9px]">
           <div className="flex items-start gap-1">
             <div className="rounded-full bg-brand-teal/10 p-0.5 flex-shrink-0">
               <Bot className="h-2 w-2 text-brand-teal" />
             </div>
-            <div className="bg-gray-100 rounded-lg p-1 text-[9px] text-gray-700 max-w-[85%]">
+            <div className="bg-gray-100 rounded-lg p-1 text-[8px] text-gray-700 max-w-[85%]">
               <p>Good morning! Your health metrics look good today.</p>
             </div>
           </div>
@@ -46,13 +46,13 @@ const AIGuardianConsole: React.FC = () => {
             <div className="rounded-full bg-brand-teal/10 p-0.5 flex-shrink-0">
               <Bot className="h-2 w-2 text-brand-teal" />
             </div>
-            <div className="bg-gray-100 rounded-lg p-1 text-[9px] text-gray-700 max-w-[85%]">
+            <div className="bg-gray-100 rounded-lg p-1 text-[8px] text-gray-700 max-w-[85%]">
               <p>Don't forget to take your medication at 11:00 AM. I'll remind you again closer to the time.</p>
             </div>
           </div>
           
           <div className="flex items-start gap-1 justify-end">
-            <div className="bg-brand-teal/10 rounded-lg p-1 text-[9px] text-brand-teal max-w-[85%]">
+            <div className="bg-brand-teal/10 rounded-lg p-1 text-[8px] text-brand-teal max-w-[85%]">
               <p>Thank you! Can you show me my sleep report from last night?</p>
             </div>
           </div>
@@ -61,7 +61,7 @@ const AIGuardianConsole: React.FC = () => {
             <div className="rounded-full bg-brand-teal/10 p-0.5 flex-shrink-0">
               <Bot className="h-2 w-2 text-brand-teal" />
             </div>
-            <div className="bg-gray-100 rounded-lg p-1 text-[9px] text-gray-700 max-w-[85%]">
+            <div className="bg-gray-100 rounded-lg p-1 text-[8px] text-gray-700 max-w-[85%]">
               <p>Of course! You slept for 7.5 hours last night. Your deep sleep was 2.1 hours, which is excellent. Your sleep efficiency was 92%, which is above your weekly average.</p>
             </div>
           </div>
@@ -75,7 +75,7 @@ const AIGuardianConsole: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
             placeholder="Ask me anything..."
-            className="flex-1 p-1 text-[10px] border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-teal/50"
+            className="flex-1 p-1 text-[9px] border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-teal/50"
           />
           <Button 
             size="sm" 
@@ -91,4 +91,3 @@ const AIGuardianConsole: React.FC = () => {
 };
 
 export default AIGuardianConsole;
-
