@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import DashboardHeader from './DashboardHeader';
@@ -18,7 +17,7 @@ const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-0">  {/* Changed space-y-4 to space-y-0 */}
       {/* Mobile sidebar toggle */}
       <Button 
         variant="outline" 
@@ -30,7 +29,7 @@ const DashboardLayout: React.FC = () => {
         <span>{sidebarOpen ? 'Hide Menu' : 'Show Menu'}</span>
       </Button>
       
-      {/* Welcome section moved up */}
+      {/* Welcome section */}
       <DashboardHeader />
       
       <div className="flex flex-col lg:flex-row gap-4">
