@@ -6,7 +6,6 @@ import { Check, ArrowRight, Star, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface SmartDevice {
   name: string;
@@ -105,11 +104,10 @@ const DevicesTab: React.FC = () => {
                 >
                   <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
                     <div className="w-full h-full flex items-center justify-center">
-                      <OptimizedImage
+                      <img
                         src={device.image}
                         alt={device.name}
-                        priority={index < 2}
-                        objectFit="contain"
+                        className="max-h-full max-w-full object-contain"
                       />
                     </div>
                   </div>

@@ -1,33 +1,17 @@
 
-import React, { Suspense, lazy, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-// Import loading component
-import { Skeleton } from '@/components/ui/skeleton';
+// Import pages directly
+import Index from './pages/Index';
+import PricingPage from './pages/PricingPage';
+import NotFound from './pages/NotFound';
 import ScrollToTop from '@/components/ScrollToTop';
-
-// Lazy load the pages with better chunk names for easier debugging
-const Index = lazy(() => import(/* webpackChunkName: "index-page" */ './pages/Index'));
-const PricingPage = lazy(() => import(/* webpackChunkName: "pricing-page" */ './pages/PricingPage'));
-const NotFound = lazy(() => import(/* webpackChunkName: "not-found-page" */ './pages/NotFound'));
-
-// Loading fallback component
-const PageLoader = () => (
-  <div className="container mx-auto px-4 py-8">
-    <Skeleton className="w-full h-20 mb-4" />
-    <Skeleton className="w-3/4 h-12 mb-8" />
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[1, 2, 3, 4, 5, 6].map(i => (
-        <Skeleton key={i} className="w-full h-64 rounded-lg" />
-      ))}
-    </div>
-  </div>
-);
 
 function App() {
   // Apply optimized scrolling globally
-  useEffect(() => {
+  React.useEffect(() => {
     // Enable passive event listeners for performance
     const passiveSupported = (() => {
       let passive = false;
@@ -58,17 +42,6 @@ function App() {
     const scrollHandler = () => {};
     window.addEventListener('scroll', scrollHandler, passiveSupported ? { passive: true } : false);
     
-    // Prefetch likely-to-be-needed resources when idle
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        // Prefetch routes that might be needed
-        const prefetcher = document.createElement('link');
-        prefetcher.rel = 'prefetch';
-        prefetcher.href = '/pricing';
-        document.head.appendChild(prefetcher);
-      });
-    }
-
     // Cleanup on unmount
     return () => {
       window.removeEventListener('scroll', scrollHandler);
@@ -79,13 +52,11 @@ function App() {
     <Router>
       {/* Add ScrollToTop component to ensure pages start at the top */}
       <ScrollToTop />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Router>
   );
 }

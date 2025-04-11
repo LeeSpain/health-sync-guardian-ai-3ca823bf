@@ -36,7 +36,7 @@ const ProductShowcase: React.FC = () => {
           </p>
         </div>
 
-        {/* All Products in One View */}
+        {/* All Products in One View - Simplified loading */}
         <div className="space-y-12">
           {/* Featured Product Section */}
           {featuredDevice && <FeaturedProduct product={featuredDevice} />}

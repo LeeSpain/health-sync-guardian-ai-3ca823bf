@@ -45,13 +45,12 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Image container with improved sizing for better image display */}
-        <div className="relative h-64 w-full overflow-hidden bg-white">
+        {/* Simplified image container - removed transforms */}
+        <div className="relative h-64 w-full overflow-hidden bg-white p-4 flex items-center justify-center">
           <img 
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-contain transform scale-125"
-            loading="lazy"
+            className="max-h-full max-w-full object-contain"
           />
         </div>
         
