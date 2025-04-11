@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,18 +30,20 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
   >
     <div className="flex flex-col h-full">
-      {/* Modified image container to completely fill the area */}
+      {/* Image container with full coverage */}
       <div className="h-[300px] relative overflow-hidden">
-        <OptimizedImage
-          src={service.image}
-          alt={service.name}
-          objectFit="cover"
-          className="absolute inset-0 w-full h-full object-cover"
-          priority={true}
-        />
+        <div className="absolute inset-0 w-full h-full">
+          <OptimizedImage
+            src={service.image}
+            alt={service.name}
+            objectFit="cover"
+            className="w-full h-full object-cover"
+            priority={true}
+          />
+        </div>
         
-        {/* Overlay gradient for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-orange-100/30 to-transparent"></div>
+        {/* Subtle overlay gradient for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-orange-100/20 to-transparent"></div>
       </div>
       
       <CardHeader className="pb-2 flex-grow-0 pt-5">

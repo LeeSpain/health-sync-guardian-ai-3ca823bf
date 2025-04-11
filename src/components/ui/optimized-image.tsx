@@ -110,8 +110,9 @@ export const OptimizedImage = memo(({
         onError={handleError}
         onLoad={handleLoad}
         className={cn(
-          "max-w-full max-h-full w-auto h-auto transition-opacity duration-300",
-          loaded && !error ? "opacity-100" : "opacity-0"
+          "max-w-full max-h-full w-full h-full transition-opacity duration-300",
+          loaded && !error ? "opacity-100" : "opacity-0",
+          objectFit === 'cover' ? "object-cover" : "object-contain"
         )}
         style={{
           objectFit: objectFit,

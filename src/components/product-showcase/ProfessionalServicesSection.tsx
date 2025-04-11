@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Shield } from 'lucide-react';
@@ -5,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
 import { OptimizedImage } from '@/components/ui/optimized-image';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface ProfessionalServicesSectionProps {
   products: Product[];
@@ -52,18 +54,20 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Image container - modified to completely fill the area */}
-        <div className="h-[300px] relative overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100">
-          <OptimizedImage
-            src={product.image}
-            alt={product.name}
-            priority={false}
-            objectFit="cover"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        {/* Image container with aspect ratio for consistency */}
+        <div className="h-[300px] relative overflow-hidden">
+          <div className="absolute inset-0 w-full h-full">
+            <OptimizedImage
+              src={product.image}
+              alt={product.name}
+              priority={false}
+              objectFit="cover"
+              className="w-full h-full object-cover"
+            />
+          </div>
           
-          {/* Overlay gradient for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-orange-100/40 to-transparent"></div>
+          {/* Subtle overlay gradient for better text visibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-100/30 to-transparent"></div>
         </div>
         
         {/* Content container */}
