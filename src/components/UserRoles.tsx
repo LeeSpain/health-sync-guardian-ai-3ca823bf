@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { User, Users, Stethoscope, Building, Shield, HeartPulse, Clock, Bell } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -69,7 +70,7 @@ const UserRoles: React.FC = () => {
 
   return (
     <section id="about" className="py-12 relative overflow-hidden bg-gradient-to-b from-white via-white to-gray-50">
-      {/* Decorative background elements - simplified and reduced for a more compact look */}
+      {/* Decorative background elements */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute w-full h-full">
           <svg className="absolute top-0 left-0 w-full opacity-[0.15]" viewBox="0 0 1200 300" preserveAspectRatio="none">

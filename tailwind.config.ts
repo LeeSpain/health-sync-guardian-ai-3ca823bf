@@ -68,6 +68,9 @@ export default {
 				"brand-orange": "#FF6F42",
 				"brand-accent-teal": "#14B8A6",
 				"brand-grey": "#F9FAFB",
+				"nurse-dark": "#1A1F2C",
+				"nurse-purple": "#9b87f5",
+				"nurse-light-purple": "#7E69AB",
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

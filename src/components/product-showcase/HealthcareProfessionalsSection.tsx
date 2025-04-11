@@ -1,10 +1,10 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Stethoscope, Users, Calendar, MessageSquare } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface HealthcareProfessionalsSectionProps {
   products: Product[];
@@ -109,7 +109,7 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col md:flex-row items-start gap-6">
+                <div className="flex flex-col md:flex-row items-start gap-6 p-6">
                   <div className={`w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200 flex-shrink-0 bg-gray-50 flex items-center justify-center`}>
                     <img
                       src={professional.image}
