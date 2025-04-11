@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Shield } from 'lucide-react';
@@ -40,7 +39,6 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
         Expert healthcare services and monitoring solutions designed for your peace of mind
       </p>
       
-      {/* Display all products in a responsive grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product, index) => (
           <ServiceCard key={index} product={product} />
@@ -50,30 +48,22 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
   );
 };
 
-// Helper component for service cards - redesigned to match ServicesTab style
 const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Image container - modified to fill the complete area */}
-        <div className="h-[220px] relative overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100">
-          {/* Full background image */}
-          <div className="absolute inset-0 w-full h-full">
-            <OptimizedImage
-              src={product.image}
-              alt={product.name}
-              priority={false}
-              objectFit="cover"
-              className="w-full h-full"
-            />
-          </div>
+        {/* Image container - modified to completely fill the area */}
+        <div className="h-[300px] relative overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100">
+          <OptimizedImage
+            src={product.image}
+            alt={product.name}
+            priority={false}
+            objectFit="cover"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           
-          {/* Overlay gradient for better text visibility if needed */}
+          {/* Overlay gradient for better text visibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-orange-100/40 to-transparent"></div>
-          
-          {/* Decorative elements on top of the image */}
-          <div className="absolute w-40 h-40 rounded-full bg-brand-orange/5 top-[-20px] right-[-20px]"></div>
-          <div className="absolute w-32 h-32 rounded-full bg-brand-orange/5 bottom-[-10px] left-[-10px]"></div>
         </div>
         
         {/* Content container */}
@@ -104,3 +94,5 @@ const ServiceCard = ({ product }: { product: Product }) => {
     </Card>
   );
 };
+
+export default ProfessionalServicesSection;
