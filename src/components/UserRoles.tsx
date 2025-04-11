@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { User, Users, Stethoscope, Building, Shield, HeartPulse, Clock, Bell } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -47,9 +46,9 @@ const UserRoles: React.FC = () => {
         { icon: <Clock className="h-4 w-4" />, text: "Health trend analysis" }
       ],
       image: "/lovable-uploads/3bc60e76-02c6-4226-972b-87293e92d1cf.png",
-      color: "bg-brand-orange",
-      hoverColor: "group-hover:bg-brand-orange/90",
-      gradient: "from-brand-orange/20 to-brand-orange/5"
+      color: "bg-[#9b87f5]",
+      hoverColor: "group-hover:bg-[#9b87f5]/90",
+      gradient: "from-[#9b87f5]/20 to-[#9b87f5]/5"
     },
     {
       icon: <Building className="h-6 w-6 text-white" />,
@@ -124,7 +123,7 @@ const UserRoles: React.FC = () => {
                   <div className={`${role.color} p-2 rounded-lg transition-colors duration-300 ${role.hoverColor}`}>
                     {role.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-brand-teal ml-3">{role.title}</h3>
+                  <h3 className="text-lg font-semibold text-gray-800 ml-3">{role.title}</h3>
                 </div>
                 
                 <p className="text-gray-600 mb-3 text-sm">{role.description}</p>
