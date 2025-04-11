@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, memo } from 'react';
+import React, { useState, useCallback, memo, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -26,7 +26,9 @@ export const OptimizedImage = memo(({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-
+  const imgRef = useRef<HTMLImageElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  
   // Use useCallback for event handlers to prevent recreating functions on each render
   const handleError = useCallback(() => {
     if (retryCount < 2) {
@@ -51,6 +53,48 @@ export const OptimizedImage = memo(({
     setLoaded(true);
     setError(false);
   }, []);
+
+  // Use intersection observer for better lazy loading
+  useEffect(() => {
+    // Skip if this is a priority image or already loaded
+    if (priority || loaded || error) return;
+    
+    if ('IntersectionObserver' in window && imgRef.current) {
+      // Clean up any existing observer
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      
+      // Create new observer
+      observerRef.current = new IntersectionObserver((entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          // Preload the image when it's close to viewport
+          const img = new Image();
+          img.src = src;
+          img.onload = handleLoad;
+          img.onerror = handleError;
+          
+          // Once we start loading, disconnect the observer
+          observerRef.current?.disconnect();
+          observerRef.current = null;
+        }
+      }, {
+        rootMargin: '200px 0px', // Load images 200px before they come into view
+        threshold: 0.01
+      });
+      
+      observerRef.current.observe(imgRef.current);
+    }
+    
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+    };
+  }, [src, priority, loaded, error, handleLoad, handleError]);
 
   // Preload high priority images
   React.useEffect(() => {
@@ -104,9 +148,12 @@ export const OptimizedImage = memo(({
       
       {/* The actual image - using native loading="lazy" for better performance */}
       <img
-        src={error ? '/placeholder.svg' : src}
+        ref={imgRef}
+        src={priority ? src : (loaded || error ? (error ? '/placeholder.svg' : src) : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')} 
+        data-src={src}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
         onError={handleError}
         onLoad={handleLoad}
         className={cn(

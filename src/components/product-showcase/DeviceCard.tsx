@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
@@ -12,7 +12,7 @@ interface DeviceCardProps {
   priorityImage?: boolean;
 }
 
-export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) => {
+export const DeviceCard = memo(({ product, priorityImage = false }: DeviceCardProps) => {
   // Determine if this is a high-priority product
   const isPriorityProduct = 
     priorityImage || 
@@ -81,4 +81,6 @@ export const DeviceCard = ({ product, priorityImage = false }: DeviceCardProps) 
       </div>
     </Card>
   );
-};
+});
+
+DeviceCard.displayName = 'DeviceCard';

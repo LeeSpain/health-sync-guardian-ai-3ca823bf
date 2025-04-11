@@ -1,10 +1,11 @@
 
-import React, { memo } from 'react';
+import React, { memo, useRef, useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Check, ArrowRight, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { OptimizedImage } from '@/components/ui/optimized-image';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 interface ProfessionalService {
   id: string;
@@ -24,7 +25,7 @@ const ServiceFeature = memo(({ feature }: { feature: string }) => (
   </li>
 ));
 
-const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
+const ServiceCard = memo(({ service, priority = false }: { service: ProfessionalService, priority?: boolean }) => (
   <Card
     key={service.id}
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
@@ -38,7 +39,7 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
             alt={service.name}
             objectFit="cover"
             className="w-full h-full object-cover"
-            priority={true}
+            priority={priority}
           />
         </div>
         
@@ -78,6 +79,26 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
 
 // Memoize the entire component to prevent unnecessary re-renders
 const ServicesTab: React.FC = memo(() => {
+  // Use intersection observer to only render content when visible
+  const { ref, inView } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '200px 0px',
+    triggerOnce: true
+  });
+  
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    if (inView) {
+      // Small delay to prevent layout shifts
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [inView]);
+  
   // Hardcoded data to avoid re-creating array on each render
   const professionalServices: ProfessionalService[] = [
     {
@@ -125,7 +146,7 @@ const ServicesTab: React.FC = memo(() => {
   ];
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-16" ref={ref}>
       {/* Professional Services */}
       <div>
         <div className="text-center mb-12">
@@ -137,11 +158,18 @@ const ServicesTab: React.FC = memo(() => {
             Expert healthcare services and monitoring solutions designed for your peace of mind
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {professionalServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </div>
+        
+        {isVisible && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {professionalServices.map((service, index) => (
+              <ServiceCard 
+                key={service.id} 
+                service={service} 
+                priority={index === 0} 
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

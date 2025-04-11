@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Plus, Check, Info } from 'lucide-react';
@@ -18,7 +18,7 @@ export interface ProductItemProps {
   alternateRowColor?: boolean;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({
+const ProductItem: React.FC<ProductItemProps> = memo(({
   id,
   name,
   oneTimePrice,
@@ -39,6 +39,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
               alt={name} 
               priority={false}
               objectFit="contain"
+              width={48}
+              height={48}
             />
           </div>
           <span className="font-medium">{name}</span>
@@ -99,6 +101,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
       </TableCell>
     </TableRow>
   );
-};
+});
+
+ProductItem.displayName = 'ProductItem';
 
 export default ProductItem;
