@@ -38,77 +38,133 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
               )}
               
               <div className="p-8">
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className={`w-24 h-24 rounded-full overflow-hidden border-4 ${professional.type === 'Nurse-Sync' ? 'border-[#9b87f5]/20' : 'border-gray-200'} flex-shrink-0 ${professional.type === 'Nurse-Sync' ? 'bg-[#9b87f5]/5' : 'bg-gray-50'} flex items-center justify-center`}>
-                    {professional.type === 'Nurse-Sync' ? (
-                      <img
-                        src="/lovable-uploads/3bdb9d69-5537-438a-8929-d099f99b1d19.png"
-                        alt="Nurse-Sync Logo"
-                        className="w-full h-full object-contain p-1"
-                      />
-                    ) : (
+                {professional.type === 'Nurse-Sync' ? (
+                  <div className="flex flex-col items-start gap-6">
+                    <div className="flex items-start w-full">
+                      <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 bg-white border-4 border-[#9b87f5]/20 flex items-center justify-center">
+                        <img
+                          src="/lovable-uploads/3bdb9d69-5537-438a-8929-d099f99b1d19.png"
+                          alt="Nurse-Sync Logo"
+                          className="w-16 h-16 object-contain"
+                        />
+                      </div>
+                      
+                      <div className="flex-1 ml-4">
+                        <div className="flex items-center justify-between w-full">
+                          <h4 className="text-[#1A1F2C] text-2xl font-bold">Nurse-Sync</h4>
+                          <Badge 
+                            className="bg-[#f5f5f7] text-[#1A1F2C] px-4 py-1 rounded-full text-sm"
+                          >
+                            Healthcare Professionals
+                          </Badge>
+                        </div>
+                        
+                        <p className="mt-3 text-[#696984] text-base">
+                          Connect with certified nursing professionals for remote health consultations and care coordination.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-4">
+                      <div className="flex items-center text-[#696984]">
+                        <div className="w-6 h-6 rounded-full bg-[#f5f5f7] flex items-center justify-center mr-3">
+                          <Check className="h-4 w-4 text-[#9b87f5]" />
+                        </div>
+                        <span>24/7 access to nursing professionals</span>
+                      </div>
+                      <div className="flex items-center text-[#696984]">
+                        <div className="w-6 h-6 rounded-full bg-[#f5f5f7] flex items-center justify-center mr-3">
+                          <Check className="h-4 w-4 text-[#9b87f5]" />
+                        </div>
+                        <span>Medication management assistance</span>
+                      </div>
+                      <div className="flex items-center text-[#696984]">
+                        <div className="w-6 h-6 rounded-full bg-[#f5f5f7] flex items-center justify-center mr-3">
+                          <Check className="h-4 w-4 text-[#9b87f5]" />
+                        </div>
+                        <span>Personalized care plans</span>
+                      </div>
+                      <div className="flex items-center text-[#696984]">
+                        <div className="w-6 h-6 rounded-full bg-[#f5f5f7] flex items-center justify-center mr-3">
+                          <Check className="h-4 w-4 text-[#9b87f5]" />
+                        </div>
+                        <span>Regular health assessments</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 flex gap-4">
+                      <Button 
+                        className="bg-[#1A1F2C] hover:bg-[#1A1F2C]/90 text-white rounded-md group px-8 py-6"
+                      >
+                        <span className="text-base">Connect Now</span>
+                        <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="border-gray-200 text-[#1A1F2C] hover:bg-gray-50 rounded-md px-8 py-6"
+                      >
+                        <Calendar className="mr-2 h-5 w-5 text-[#9b87f5]" />
+                        <span className="text-base">Schedule</span>
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col md:flex-row items-start gap-6">
+                    <div className={`w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200 flex-shrink-0 bg-gray-50 flex items-center justify-center`}>
                       <img
                         src={professional.image}
                         alt={professional.name}
                         className="w-auto h-auto max-width-full max-height-full object-cover"
                         loading="lazy"
                       />
-                    )}
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <h4 className={`text-xl font-bold ${professional.type === 'Nurse-Sync' ? 'text-[#9b87f5]' : 'text-gray-800'}`}>{professional.name}</h4>
-                      <Badge 
-                        className={`${professional.type === 'Nurse-Sync' 
-                          ? 'bg-[#9b87f5]/10 text-[#9b87f5] border-[#9b87f5]/30' 
-                          : 'bg-gray-100 text-gray-700 border-gray-200'} px-2 py-0.5 text-xs`}
-                      >
-                        {professional.type}
-                      </Badge>
                     </div>
                     
-                    <p className={`mt-2 text-sm ${professional.type === 'Nurse-Sync' ? 'text-gray-600' : 'text-gray-500'}`}>{professional.description}</p>
-                    
-                    {professional.benefits && (
-                      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {professional.benefits.map((benefit, i) => (
-                          <div 
-                            key={i} 
-                            className={`flex items-start ${professional.type === 'Nurse-Sync' ? 'text-gray-600' : 'text-gray-500'} text-sm`}
-                          >
-                            <div className={`mt-0.5 rounded-full p-1 mr-2 flex-shrink-0 ${professional.type === 'Nurse-Sync' 
-                              ? 'bg-[#9b87f5]/10' 
-                              : 'bg-gray-100'}`}>
-                              <Check className={`h-3 w-3 ${professional.type === 'Nurse-Sync' ? 'text-[#9b87f5]' : 'text-gray-500'}`} />
-                            </div>
-                            <span>{benefit}</span>
-                          </div>
-                        ))}
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xl font-bold text-gray-800">{professional.name}</h4>
+                        <Badge 
+                          className="bg-gray-100 text-gray-700 border-gray-200 px-2 py-0.5 text-xs"
+                        >
+                          {professional.type}
+                        </Badge>
                       </div>
-                    )}
-                    
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <Button 
-                        className={`${professional.type === 'Nurse-Sync' 
-                          ? 'bg-[#9b87f5] hover:bg-[#9b87f5]/90 text-white' 
-                          : 'bg-gray-800 hover:bg-gray-700 text-white'} group`}
-                      >
-                        <span>Connect Now</span>
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        className={`${professional.type === 'Nurse-Sync' 
-                          ? 'border-[#9b87f5]/30 text-[#9b87f5] hover:bg-[#9b87f5]/5' 
-                          : 'border-gray-300 text-gray-700 hover:bg-gray-100'}`}
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        <span>Schedule</span>
-                      </Button>
+                      
+                      <p className="mt-2 text-sm text-gray-500">{professional.description}</p>
+                      
+                      {professional.benefits && (
+                        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {professional.benefits.map((benefit, i) => (
+                            <div 
+                              key={i} 
+                              className="flex items-start text-gray-500 text-sm"
+                            >
+                              <div className="mt-0.5 rounded-full p-1 mr-2 flex-shrink-0 bg-gray-100">
+                                <Check className="h-3 w-3 text-gray-500" />
+                              </div>
+                              <span>{benefit}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="mt-6 flex flex-wrap gap-3">
+                        <Button 
+                          className="bg-gray-800 hover:bg-gray-700 text-white group"
+                        >
+                          <span>Connect Now</span>
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                        >
+                          <Calendar className="mr-2 h-4 w-4" />
+                          <span>Schedule</span>
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </Card>
