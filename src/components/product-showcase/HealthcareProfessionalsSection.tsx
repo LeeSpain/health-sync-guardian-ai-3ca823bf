@@ -27,13 +27,18 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {products.map((professional, index) => (
-          <Card key={index} className="overflow-hidden border-0 shadow-xl bg-white group">
+          <Card 
+            key={index} 
+            className={`overflow-hidden border-0 shadow-xl bg-white group ${professional.type === 'Nurse-Sync' ? 'border-2 border-[#9b87f5]' : ''}`}
+          >
             <div className="relative pb-1">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB]"></div>
+              {professional.type === 'Nurse-Sync' && (
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB]"></div>
+              )}
               
               <div className="p-8">
                 <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#9b87f5]/20 flex-shrink-0 bg-[#9b87f5]/5 flex items-center justify-center">
+                  <div className={`w-24 h-24 rounded-full overflow-hidden border-4 ${professional.type === 'Nurse-Sync' ? 'border-[#9b87f5]/20' : 'border-gray-200'} flex-shrink-0 ${professional.type === 'Nurse-Sync' ? 'bg-[#9b87f5]/5' : 'bg-gray-50'} flex items-center justify-center`}>
                     <img
                       src={professional.image}
                       alt={professional.name}
@@ -44,20 +49,29 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
                   
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xl text-[#9b87f5] font-bold">{professional.name}</h4>
-                      <Badge className="bg-[#9b87f5]/10 text-[#9b87f5] border-[#9b87f5]/30 px-2 py-0.5 text-xs">
+                      <h4 className={`text-xl font-bold ${professional.type === 'Nurse-Sync' ? 'text-[#9b87f5]' : 'text-gray-800'}`}>{professional.name}</h4>
+                      <Badge 
+                        className={`${professional.type === 'Nurse-Sync' 
+                          ? 'bg-[#9b87f5]/10 text-[#9b87f5] border-[#9b87f5]/30' 
+                          : 'bg-gray-100 text-gray-700 border-gray-200'} px-2 py-0.5 text-xs`}
+                      >
                         {professional.type}
                       </Badge>
                     </div>
                     
-                    <p className="text-gray-600 mt-2 text-sm">{professional.description}</p>
+                    <p className={`mt-2 text-sm ${professional.type === 'Nurse-Sync' ? 'text-gray-600' : 'text-gray-500'}`}>{professional.description}</p>
                     
                     {professional.benefits && (
                       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
                         {professional.benefits.map((benefit, i) => (
-                          <div key={i} className="flex items-start text-gray-600 text-sm">
-                            <div className="mt-0.5 rounded-full bg-[#9b87f5]/10 p-1 mr-2 flex-shrink-0">
-                              <Check className="h-3 w-3 text-[#9b87f5]" />
+                          <div 
+                            key={i} 
+                            className={`flex items-start ${professional.type === 'Nurse-Sync' ? 'text-gray-600' : 'text-gray-500'} text-sm`}
+                          >
+                            <div className={`mt-0.5 rounded-full p-1 mr-2 flex-shrink-0 ${professional.type === 'Nurse-Sync' 
+                              ? 'bg-[#9b87f5]/10' 
+                              : 'bg-gray-100'}`}>
+                              <Check className={`h-3 w-3 ${professional.type === 'Nurse-Sync' ? 'text-[#9b87f5]' : 'text-gray-500'}`} />
                             </div>
                             <span>{benefit}</span>
                           </div>
@@ -66,11 +80,20 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
                     )}
                     
                     <div className="mt-6 flex flex-wrap gap-3">
-                      <Button className="bg-[#9b87f5] hover:bg-[#9b87f5]/90 text-white group">
+                      <Button 
+                        className={`${professional.type === 'Nurse-Sync' 
+                          ? 'bg-[#9b87f5] hover:bg-[#9b87f5]/90 text-white' 
+                          : 'bg-gray-800 hover:bg-gray-700 text-white'} group`}
+                      >
                         <span>Connect Now</span>
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Button>
-                      <Button variant="outline" className="border-[#9b87f5]/30 text-[#9b87f5] hover:bg-[#9b87f5]/5">
+                      <Button 
+                        variant="outline" 
+                        className={`${professional.type === 'Nurse-Sync' 
+                          ? 'border-[#9b87f5]/30 text-[#9b87f5] hover:bg-[#9b87f5]/5' 
+                          : 'border-gray-300 text-gray-700 hover:bg-gray-100'}`}
+                      >
                         <Calendar className="mr-2 h-4 w-4" />
                         <span>Schedule</span>
                       </Button>
@@ -115,4 +138,3 @@ export const HealthcareProfessionalsSection = ({ products }: HealthcareProfessio
     </div>
   );
 };
-
