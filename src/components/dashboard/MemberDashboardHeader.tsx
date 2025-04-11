@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, Users, Settings, HelpCircle, LogOut, Menu, X } from 'lucide-react';
+import { Menu, X, LogOut, Bell, HelpCircle } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/button';
 
@@ -24,22 +24,20 @@ const MemberDashboardHeader: React.FC = () => {
           </div>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/dashboard" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
-              <LayoutDashboard className="h-4 w-4" />
-              Dashboard
-            </Link>
-            <Link to="/dashboard/family" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
-              <Users className="h-4 w-4" />
-              Family
-            </Link>
-            <Link to="/dashboard/settings" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
-              <Settings className="h-4 w-4" />
-              Settings
-            </Link>
             <Link to="/dashboard/help" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
               <HelpCircle className="h-4 w-4" />
-              Help
+              Support
             </Link>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="text-gray-700 hover:text-brand-teal relative"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                3
+              </span>
+            </Button>
             <Button 
               variant="outline" 
               className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
@@ -64,36 +62,12 @@ const MemberDashboardHeader: React.FC = () => {
         <div className="md:hidden">
           <div className="flex flex-col space-y-4 py-4 px-8 bg-white">
             <Link
-              to="/dashboard" 
-              className="text-gray-700 hover:text-brand-teal transition-colors py-2 flex items-center gap-1"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <LayoutDashboard className="h-4 w-4" />
-              Dashboard
-            </Link>
-            <Link
-              to="/dashboard/family" 
-              className="text-gray-700 hover:text-brand-teal transition-colors py-2 flex items-center gap-1"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <Users className="h-4 w-4" />
-              Family
-            </Link>
-            <Link
-              to="/dashboard/settings" 
-              className="text-gray-700 hover:text-brand-teal transition-colors py-2 flex items-center gap-1"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <Settings className="h-4 w-4" />
-              Settings
-            </Link>
-            <Link
               to="/dashboard/help" 
               className="text-gray-700 hover:text-brand-teal transition-colors py-2 flex items-center gap-1"
               onClick={() => setIsMenuOpen(false)}
             >
               <HelpCircle className="h-4 w-4" />
-              Help
+              Support
             </Link>
             <Button 
               variant="outline" 
