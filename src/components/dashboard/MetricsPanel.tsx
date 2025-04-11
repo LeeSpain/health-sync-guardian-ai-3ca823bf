@@ -10,9 +10,10 @@ import {
   Smile, 
   Pill, 
   Smartphone,
-  TrendingUp
+  TrendingUp,
+  ChevronRight
 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 
 interface MetricCardProps {
   title: string;
@@ -25,31 +26,34 @@ interface MetricCardProps {
 
 const MetricCard: React.FC<MetricCardProps> = ({ title, value, icon, color, subtext, trend }) => {
   return (
-    <div className={`flex items-center p-4 bg-white border-l-4 border-${color}-500 rounded-lg shadow-sm hover:shadow-md transition-all duration-200`}>
-      <div className={`rounded-full p-3 bg-${color}-100 mr-4 flex-shrink-0`}>
-        {icon}
-      </div>
-      <div className="flex-grow">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-gray-600">{title}</h3>
+    <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center">
+            <div className={`rounded-full p-2 bg-${color}-100 mr-3`}>
+              {icon}
+            </div>
+            <h3 className="text-sm font-medium text-gray-700">{title}</h3>
+          </div>
           {trend && (
-            <span className={`text-xs px-2 py-1 rounded-full ${
+            <span className={`text-xs px-2 py-1 rounded-full flex items-center ${
               trend === 'up' ? 'bg-green-100 text-green-700' : 
               trend === 'down' ? 'bg-red-100 text-red-700' : 
               'bg-gray-100 text-gray-700'
             }`}>
-              {trend === 'up' && <TrendingUp className="h-3 w-3 inline mr-1" />}
-              {trend === 'down' && <TrendingUp className="h-3 w-3 inline mr-1 transform rotate-180" />}
-              {trend === 'stable' && '●'}
-              {' '}
-              {trend}
+              {trend === 'up' && <TrendingUp className="h-3 w-3 mr-1" />}
+              {trend === 'down' && <TrendingUp className="h-3 w-3 mr-1 transform rotate-180" />}
+              {trend === 'stable' && <span className="h-2 w-2 rounded-full bg-gray-500 mr-1"></span>}
+              <span>{trend}</span>
             </span>
           )}
         </div>
-        <p className="text-2xl font-bold text-gray-800">{value}</p>
-        {subtext && <p className="text-xs text-gray-500 mt-1">{subtext}</p>}
+        <div className="flex justify-between items-baseline">
+          <p className="text-2xl font-bold text-gray-800">{value}</p>
+          {subtext && <p className="text-xs text-gray-500">{subtext}</p>}
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
@@ -131,14 +135,15 @@ const MetricsPanel: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-brand-teal">Health Metrics & Overview</h2>
-        <button className="text-sm text-brand-teal hover:text-brand-teal/80 font-medium">
+        <button className="text-sm text-brand-teal hover:text-brand-teal/80 font-medium flex items-center">
           View all metrics
+          <ChevronRight className="h-4 w-4 ml-1" />
         </button>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
         {metrics.map((metric, index) => (
           <MetricCard 
             key={index}

@@ -41,8 +41,8 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ activeTab, setActiv
   ];
 
   return (
-    <div className="hidden lg:block w-64 bg-white rounded-xl shadow-sm p-4">
-      <h2 className="font-medium text-gray-500 uppercase text-xs tracking-wider mb-4">Navigation</h2>
+    <div className="w-full bg-white rounded-xl shadow-sm p-3 md:p-4">
+      <h2 className="font-medium text-gray-500 uppercase text-xs tracking-wider mb-3">Navigation</h2>
       <nav className="space-y-1">
         {menuItems.map((item) => (
           <button

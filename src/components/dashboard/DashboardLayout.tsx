@@ -10,27 +10,47 @@ import DashboardSidebar from './DashboardSidebar';
 import MedicationManager from './MedicationManager';
 import EmergencyTools from './EmergencyTools';
 import ProfessionalServices from './ProfessionalServices';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const DashboardLayout: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-4">
       {/* Welcome section moved to top */}
       <DashboardHeader />
       
-      <div className="flex flex-col lg:flex-row gap-6 mt-6">
-        {/* Sidebar for navigation */}
-        <DashboardSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className="flex flex-col lg:flex-row gap-4">
+        {/* Mobile sidebar toggle */}
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="lg:hidden flex items-center gap-2 mb-2"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <Menu className="h-4 w-4" />
+          <span>{sidebarOpen ? 'Hide Menu' : 'Show Menu'}</span>
+        </Button>
+        
+        {/* Sidebar for navigation - hidden on mobile unless toggled */}
+        <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block lg:w-64 flex-shrink-0`}>
+          <DashboardSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        </div>
         
         {/* Main content area */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
+            <div className="bg-white rounded-xl shadow-sm p-3 md:p-4 lg:p-5">
               <TabsContent value="home" className="space-y-6 mt-0 focus:outline-none">
                 <MetricsPanel />
-                <AlertsPanel />
-                <ProfessionalServices />
+                <div className="mt-6">
+                  <AlertsPanel />
+                </div>
+                <div className="mt-6">
+                  <ProfessionalServices />
+                </div>
               </TabsContent>
               
               <TabsContent value="metrics" className="space-y-6 mt-0 focus:outline-none">
@@ -94,10 +114,12 @@ const DashboardLayout: React.FC = () => {
           </Tabs>
         </div>
         
-        {/* AI Guardian Console - Always visible */}
-        <div className="w-full lg:w-72 mt-6 lg:mt-0">
-          <AIGuardianConsole />
-          <EmergencyTools />
+        {/* AI Guardian Console and Emergency Tools - responsive placement */}
+        <div className="w-full lg:w-64 flex-shrink-0 mt-4 lg:mt-0 order-last lg:order-none">
+          <div className="space-y-4">
+            <AIGuardianConsole />
+            <EmergencyTools />
+          </div>
         </div>
       </div>
     </div>
