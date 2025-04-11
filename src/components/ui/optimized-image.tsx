@@ -85,15 +85,16 @@ export const OptimizedImage = memo(({
         </div>
       )}
       
-      {/* The actual image - using simple implementation to ensure it loads */}
+      {/* The actual image - using transforms to ensure it fills the container better */}
       <img
         ref={imgRef}
         src={src}
         alt={alt}
         onError={handleError}
         onLoad={handleLoad}
+        loading={priority ? "eager" : "lazy"}
         className={cn(
-          "max-w-full max-h-full w-full h-full transition-opacity duration-300",
+          "max-w-full max-h-full w-full h-full transition-opacity duration-300 transform scale-110",
           loaded && !error ? "opacity-100" : "opacity-0",
           objectFit === 'cover' ? "object-cover" : "object-contain"
         )}

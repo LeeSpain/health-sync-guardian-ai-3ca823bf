@@ -38,13 +38,13 @@ const ProductShowcase: React.FC = () => {
 
         {/* All Products in One View */}
         <div className="space-y-12">
-          {/* Featured Product Section - More compact */}
+          {/* Featured Product Section */}
           {featuredDevice && <FeaturedProduct product={featuredDevice} />}
 
           {/* Health Monitoring Devices Section */}
           <HealthMonitoringSection products={healthMonitoringDevices} />
 
-          {/* Professional Services Section */}
+          {/* Professional Services Section - Main focus of our update */}
           <ProfessionalServicesSection products={professionalServices} />
 
           {/* Healthcare Professionals Section */}

@@ -45,16 +45,14 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Image container with aspect ratio for consistency */}
-        <div className="h-[300px] relative overflow-hidden">
+        {/* Image container with improved sizing for better image display */}
+        <div className="relative h-64 w-full overflow-hidden bg-white">
           <img 
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain transform scale-125"
+            loading="lazy"
           />
-          
-          {/* Subtle overlay gradient for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-orange-100/30 to-transparent"></div>
         </div>
         
         {/* Content container */}

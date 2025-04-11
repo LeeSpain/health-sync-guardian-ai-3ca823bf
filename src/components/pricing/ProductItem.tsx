@@ -32,11 +32,12 @@ const ProductItem: React.FC<ProductItemProps> = memo(({
     <TableRow className={alternateRowColor ? "bg-gray-50" : "bg-white"}>
       <TableCell>
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center">
             <img 
               src={image} 
               alt={name} 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain scale-110"
+              loading="lazy"
             />
           </div>
           <span className="font-medium">{name}</span>
