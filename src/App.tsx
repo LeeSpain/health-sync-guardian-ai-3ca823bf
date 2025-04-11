@@ -7,6 +7,7 @@ import './App.css';
 import Index from './pages/Index';
 import PricingPage from './pages/PricingPage';
 import NotFound from './pages/NotFound';
+import MemberDashboard from './pages/MemberDashboard';
 import ScrollToTop from '@/components/ScrollToTop';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/dashboard" element={<MemberDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

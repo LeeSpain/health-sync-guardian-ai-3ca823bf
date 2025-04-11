@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Logo from './Logo';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, LayoutDashboard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
@@ -27,12 +27,17 @@ const Navbar: React.FC = () => {
               <ShoppingCart className="h-4 w-4" />
               Pricing
             </Link>
+            <Link to="/dashboard" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
+              <LayoutDashboard className="h-4 w-4" />
+              Dashboard
+            </Link>
             <a href="#about" className="text-gray-700 hover:text-brand-teal transition-colors">About Us</a>
             <div className="flex items-center space-x-2">
               <Button 
                 variant="outline" 
                 className="text-brand-teal border-brand-teal hover:bg-brand-teal/10"
               >
+                <User className="h-4 w-4 mr-1" />
                 Login
               </Button>
               <Button 
@@ -79,6 +84,14 @@ const Navbar: React.FC = () => {
               <ShoppingCart className="h-4 w-4" />
               Pricing
             </Link>
+            <Link
+              to="/dashboard" 
+              className="text-gray-700 hover:text-brand-teal transition-colors py-2 flex items-center gap-1"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              Dashboard
+            </Link>
             <a 
               href="#about" 
               className="text-gray-700 hover:text-brand-teal transition-colors py-2"
@@ -89,8 +102,9 @@ const Navbar: React.FC = () => {
             <div className="flex flex-col space-y-2 pt-2">
               <Button 
                 variant="outline" 
-                className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 w-full"
+                className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 w-full flex items-center justify-center gap-1"
               >
+                <User className="h-4 w-4" />
                 Login
               </Button>
               <Button 
