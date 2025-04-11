@@ -19,21 +19,21 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-4">
-      {/* Welcome section moved to top */}
+      {/* Mobile sidebar toggle */}
+      <Button 
+        variant="outline" 
+        size="sm" 
+        className="lg:hidden flex items-center gap-2 mb-2"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        <Menu className="h-4 w-4" />
+        <span>{sidebarOpen ? 'Hide Menu' : 'Show Menu'}</span>
+      </Button>
+      
+      {/* Welcome section moved up */}
       <DashboardHeader />
       
       <div className="flex flex-col lg:flex-row gap-4">
-        {/* Mobile sidebar toggle */}
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="lg:hidden flex items-center gap-2 mb-2"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          <Menu className="h-4 w-4" />
-          <span>{sidebarOpen ? 'Hide Menu' : 'Show Menu'}</span>
-        </Button>
-        
         {/* Sidebar for navigation - hidden on mobile unless toggled */}
         <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block lg:w-64 flex-shrink-0`}>
           <DashboardSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
