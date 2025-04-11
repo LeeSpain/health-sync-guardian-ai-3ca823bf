@@ -45,11 +45,10 @@ export const DeviceCard = memo(({ product, priorityImage = false }: DeviceCardPr
         
         {/* Image container with fixed height */}
         <div className="mb-5 h-48 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-          <OptimizedImage 
+          <img 
             src={product.image} 
             alt={product.name}
-            priority={isPriorityProduct}
-            objectFit="contain"
+            className="w-full h-full object-contain"
             data-testid={`device-image-${product.name.toLowerCase().replace(/\s+/g, '-')}`}
           />
         </div>

@@ -25,86 +25,26 @@ export const OptimizedImage = memo(({
 }: OptimizedImageProps) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
   
   // Use useCallback for event handlers to prevent recreating functions on each render
   const handleError = useCallback(() => {
-    if (retryCount < 2) {
-      setRetryCount(prev => prev + 1);
-      // Add a cache buster to the URL
-      const cacheBuster = `?retry=${Date.now()}`;
-      const img = new Image();
-      img.src = src.includes('?') ? `${src}&cb=${cacheBuster}` : `${src}${cacheBuster}`;
-      img.onload = () => {
-        setError(false);
-        setLoaded(true);
-      };
-      img.onerror = () => {
-        setError(true);
-      };
-    } else {
-      setError(true);
-    }
-  }, [retryCount, src]);
+    setError(true);
+  }, []);
 
   const handleLoad = useCallback(() => {
     setLoaded(true);
     setError(false);
   }, []);
 
-  // Use intersection observer for better lazy loading
+  // Simplified implementation to ensure images always load
   useEffect(() => {
-    // Skip if this is a priority image or already loaded
-    if (priority || loaded || error) return;
-    
-    if ('IntersectionObserver' in window && imgRef.current) {
-      // Clean up any existing observer
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
+    if (imgRef.current) {
+      if (imgRef.current.complete) {
+        setLoaded(true);
       }
-      
-      // Create new observer
-      observerRef.current = new IntersectionObserver((entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          // Preload the image when it's close to viewport
-          const img = new Image();
-          img.src = src;
-          img.onload = handleLoad;
-          img.onerror = handleError;
-          
-          // Once we start loading, disconnect the observer
-          observerRef.current?.disconnect();
-          observerRef.current = null;
-        }
-      }, {
-        rootMargin: '200px 0px', // Load images 200px before they come into view
-        threshold: 0.01
-      });
-      
-      observerRef.current.observe(imgRef.current);
     }
-    
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
-      }
-    };
-  }, [src, priority, loaded, error, handleLoad, handleError]);
-
-  // Preload high priority images
-  React.useEffect(() => {
-    if (priority && !loaded && !error) {
-      const img = new Image();
-      img.src = src;
-      img.onload = handleLoad;
-      img.onerror = handleError;
-    }
-  }, [priority, src, loaded, error, handleLoad, handleError]);
+  }, []);
 
   return (
     <div 
@@ -121,7 +61,6 @@ export const OptimizedImage = memo(({
       {!loaded && !error && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100/60">
           <Skeleton className="w-full h-full absolute inset-0" />
-          <div className="w-8 h-8 border-4 border-brand-teal/30 border-t-brand-teal rounded-full animate-spin z-10"></div>
         </div>
       )}
       
@@ -146,14 +85,11 @@ export const OptimizedImage = memo(({
         </div>
       )}
       
-      {/* The actual image - using native loading="lazy" for better performance */}
+      {/* The actual image - using simple implementation to ensure it loads */}
       <img
         ref={imgRef}
-        src={priority ? src : (loaded || error ? (error ? '/placeholder.svg' : src) : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')} 
-        data-src={src}
+        src={src}
         alt={alt}
-        loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
         onError={handleError}
         onLoad={handleLoad}
         className={cn(

@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Heart, Wand2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -8,35 +8,12 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { HealthMetricsDashboard } from './HealthMetricsDashboard';
 import { DecorationLines } from './DecorationLines';
 import { DeviceCard } from './DeviceCard';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 interface HealthMonitoringSectionProps {
   products: Product[];
 }
 
 export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionProps) => {
-  // Implement intersection observer to defer rendering until visible
-  const { ref, inView } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '100px 0px',
-    triggerOnce: true
-  });
-  
-  // All health monitoring products are high priority for this section
-  const isPriorityProduct = (product: Product, index: number) => {
-    // Only the first 3 products are high priority
-    return index < 3;
-  };
-  
-  // Track if section has been rendered
-  const hasRendered = useRef(false);
-  
-  useEffect(() => {
-    if (inView && !hasRendered.current) {
-      hasRendered.current = true;
-    }
-  }, [inView]);
-
   // Find thermometer and bed sensor products for special positioning
   const thermometerIndex = products.findIndex(p => p.name === "Thermometer");
   const bedSensorIndex = products.findIndex(p => p.name === "Bed Sensor");
@@ -60,7 +37,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
   );
   
   return (
-    <div ref={ref}>
+    <div>
       <div className="flex flex-col md:flex-row items-center justify-between mb-8">
         <div className="flex items-center">
           <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-teal to-brand-teal/70 flex items-center justify-center mr-4 shadow-md">
@@ -80,8 +57,8 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             {products.map((product, index) => (
               <CarouselItem key={index}>
                 <DeviceCard 
-                  product={product}
-                  priorityImage={isPriorityProduct(product, index)}
+                  product={product} 
+                  priorityImage={index < 3}
                 />
               </CarouselItem>
             ))}
@@ -104,7 +81,7 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
             <div key={index} className="transform transition-all duration-500 hover:-translate-y-2">
               <DeviceCard 
                 product={product} 
-                priorityImage={isPriorityProduct(product, index)} 
+                priorityImage={true} 
               />
             </div>
           ))}
@@ -142,11 +119,11 @@ export const HealthMonitoringSection = ({ products }: HealthMonitoringSectionPro
         )}
         
         {/* Decorative connecting lines */}
-        {hasRendered.current && <DecorationLines />}
+        <DecorationLines />
       </div>
       
-      {/* Health metrics visualization - load only when in view */}
-      {hasRendered.current && <HealthMetricsDashboard />}
+      {/* Health metrics visualization */}
+      <HealthMetricsDashboard />
       
       {/* Call to action */}
       <div className="mt-8 text-center">

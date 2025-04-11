@@ -18,12 +18,6 @@ const ProductShowcase: React.FC = () => {
   const professionalServices = products.filter(product => product.category === "service");
   const healthcareProfessionals = products.filter(product => product.category === "healthcare");
   
-  // Output product data to console for debugging
-  React.useEffect(() => {
-    console.log("Featured device:", featuredDevice?.name, featuredDevice?.image);
-    console.log("Health monitoring devices:", healthMonitoringDevices.map(p => `${p.name}: ${p.image}`));
-  }, [featuredDevice, healthMonitoringDevices]);
-  
   return (
     <div id="products" className="py-12 relative overflow-hidden">
       {/* Background decorations extracted to a separate component */}
@@ -62,4 +56,3 @@ const ProductShowcase: React.FC = () => {
 };
 
 export default ProductShowcase;
-

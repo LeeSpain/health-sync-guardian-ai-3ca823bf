@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Plus, Check, Info } from 'lucide-react';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 export interface ProductItemProps {
   id: string;
@@ -34,13 +33,10 @@ const ProductItem: React.FC<ProductItemProps> = memo(({
       <TableCell>
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-md overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center">
-            <OptimizedImage 
+            <img 
               src={image} 
               alt={name} 
-              priority={false}
-              objectFit="contain"
-              width={48}
-              height={48}
+              className="w-full h-full object-contain"
             />
           </div>
           <span className="font-medium">{name}</span>

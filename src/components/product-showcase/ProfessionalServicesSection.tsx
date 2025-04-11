@@ -1,34 +1,18 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Shield } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 interface ProfessionalServicesSectionProps {
   products: Product[];
 }
 
 export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSectionProps) => {
-  // Find the Glucose Monitor (or any similar product)
-  const glucoseMonitorIndex = products.findIndex(p => 
-    p.name.includes("Glucose") || 
-    p.name.includes("Monitor") || 
-    p.name.includes("Sugar")
-  );
-  
-  // Use intersection observer to lazy load this section
-  const { ref, inView } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '200px 0px',
-    triggerOnce: true
-  });
-
   return (
-    <div ref={ref}>
+    <div>
       <div className="flex items-center justify-between mb-10">
         <div className="flex items-center">
           <div className="inline-flex items-center justify-center p-2 bg-brand-orange/10 rounded-full mr-4">
@@ -45,36 +29,29 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
         Expert healthcare services and monitoring solutions designed for your peace of mind
       </p>
       
-      {inView && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, index) => (
-            <ServiceCard 
-              key={index} 
-              product={product} 
-              priority={index === 0} // Only first image is high priority
-            />
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product, index) => (
+          <ServiceCard 
+            key={index} 
+            product={product} 
+          />
+        ))}
+      </div>
     </div>
   );
 };
 
-const ServiceCard = ({ product, priority = false }: { product: Product, priority?: boolean }) => {
+const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
         {/* Image container with aspect ratio for consistency */}
         <div className="h-[300px] relative overflow-hidden">
-          <div className="absolute inset-0 w-full h-full">
-            <OptimizedImage
-              src={product.image}
-              alt={product.name}
-              priority={priority}
-              objectFit="cover"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <img 
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
           
           {/* Subtle overlay gradient for better text visibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-orange-100/30 to-transparent"></div>

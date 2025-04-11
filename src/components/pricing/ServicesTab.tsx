@@ -1,11 +1,9 @@
 
-import React, { memo, useRef, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Check, ArrowRight, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { OptimizedImage } from '@/components/ui/optimized-image';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 interface ProfessionalService {
   id: string;
@@ -25,7 +23,7 @@ const ServiceFeature = memo(({ feature }: { feature: string }) => (
   </li>
 ));
 
-const ServiceCard = memo(({ service, priority = false }: { service: ProfessionalService, priority?: boolean }) => (
+const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
   <Card
     key={service.id}
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
@@ -33,15 +31,11 @@ const ServiceCard = memo(({ service, priority = false }: { service: Professional
     <div className="flex flex-col h-full">
       {/* Image container with full coverage */}
       <div className="h-[300px] relative overflow-hidden">
-        <div className="absolute inset-0 w-full h-full">
-          <OptimizedImage
-            src={service.image}
-            alt={service.name}
-            objectFit="cover"
-            className="w-full h-full object-cover"
-            priority={priority}
-          />
-        </div>
+        <img
+          src={service.image}
+          alt={service.name}
+          className="w-full h-full object-cover"
+        />
         
         {/* Subtle overlay gradient for better text visibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-orange-100/20 to-transparent"></div>
@@ -79,26 +73,6 @@ const ServiceCard = memo(({ service, priority = false }: { service: Professional
 
 // Memoize the entire component to prevent unnecessary re-renders
 const ServicesTab: React.FC = memo(() => {
-  // Use intersection observer to only render content when visible
-  const { ref, inView } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '200px 0px',
-    triggerOnce: true
-  });
-  
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    if (inView) {
-      // Small delay to prevent layout shifts
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [inView]);
-  
   // Hardcoded data to avoid re-creating array on each render
   const professionalServices: ProfessionalService[] = [
     {
@@ -146,7 +120,7 @@ const ServicesTab: React.FC = memo(() => {
   ];
 
   return (
-    <div className="space-y-16" ref={ref}>
+    <div className="space-y-16">
       {/* Professional Services */}
       <div>
         <div className="text-center mb-12">
@@ -159,17 +133,14 @@ const ServicesTab: React.FC = memo(() => {
           </p>
         </div>
         
-        {isVisible && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {professionalServices.map((service, index) => (
-              <ServiceCard 
-                key={service.id} 
-                service={service} 
-                priority={index === 0} 
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {professionalServices.map((service) => (
+            <ServiceCard 
+              key={service.id} 
+              service={service} 
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
