@@ -16,6 +16,7 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <div className="flex flex-col">
+      {/* Welcome section moved to top */}
       <DashboardHeader />
       
       <div className="flex flex-col lg:flex-row gap-6 mt-6">

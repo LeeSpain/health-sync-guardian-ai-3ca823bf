@@ -12,7 +12,7 @@ const MemberDashboard = () => {
       <ScrollToTop />
       <MemberDashboardHeader />
       <main className="flex-grow pt-16">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-6">
           <DashboardLayout />
         </div>
       </main>
