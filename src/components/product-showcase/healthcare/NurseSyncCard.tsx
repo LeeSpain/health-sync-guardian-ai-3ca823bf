@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check, Calendar } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from '../types';
@@ -54,20 +54,20 @@ const NurseSyncCard = ({ product }: NurseSyncCardProps) => {
               ))}
             </div>
             
-            <div className="mt-4 flex gap-4 w-full">
-              <Button 
-                className="flex-1 bg-[#008B8B] hover:bg-[#008B8B]/90 text-white rounded-md group"
+            <div className="mt-4 w-full">
+              <a 
+                href="https://www.nurse-sync.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full"
               >
-                <span className="text-base">Connect Now</span>
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button 
-                variant="outline" 
-                className="flex-1 border-[#FF7F50]/30 text-[#FF7F50] hover:bg-[#FF7F50]/10 rounded-md"
-              >
-                <Calendar className="mr-2 h-5 w-5" />
-                <span className="text-base">Schedule</span>
-              </Button>
+                <Button 
+                  className="w-full bg-[#008B8B] hover:bg-[#008B8B]/90 text-white rounded-md group"
+                >
+                  <span className="text-base">Learn More</span>
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </a>
             </div>
           </div>
         </div>
