@@ -14,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <ScrollToTop />
       <Navbar />
-      <main className="flex-grow space-y-12 relative pt-16">
+      <main className="flex-grow space-y-12 relative pt-20">
         <Hero />
         <Features />
         <ProductShowcase />
