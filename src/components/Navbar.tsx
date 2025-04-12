@@ -14,8 +14,8 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+      <div className="container mx-auto px-4 flex justify-center">
+        <div className="flex h-16 items-center justify-between w-full max-w-6xl">
           {/* Logo on the left */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
@@ -23,8 +23,8 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
           
-          {/* Navigation links in the center */}
-          <nav className="hidden md:flex items-center space-x-6">
+          {/* Navigation in the center */}
+          <nav className="hidden md:flex items-center space-x-6 flex-grow justify-center">
             <a href="#features" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Features</a>
             <a href="#products" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Products</a>
             <Link to="/pricing" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
