@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Star, Heart, Activity, Scale, HeartPulse, Battery, Bluetooth, Wifi } from 'lucide-react';
@@ -53,6 +52,55 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ productName }) => {
               In addition to weight, the Smart Scales measure BMI, body fat percentage, muscle mass, bone density, 
               and hydration levels. These measurements provide a more complete understanding of overall health status 
               and can help track the effectiveness of nutrition and exercise programs over time.
+            </p>
+          </div>
+        );
+      case "Thermometer":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Product Details</h3>
+            <p className="mb-4">
+              The Thermometer provides contactless temperature readings with fever detection and historical 
+              tracking. This state-of-the-art device allows for quick and accurate temperature measurements 
+              without physical contact, making it ideal for all family members.
+            </p>
+            <p className="mb-4">
+              With its intuitive design, the thermometer can be used by anyone in the household. It stores 
+              historical temperature readings, making it easy to track changes over time and share this 
+              information with healthcare providers when needed.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Advanced Temperature Monitoring</h4>
+            <p>
+              The thermometer features a color-coded display that instantly indicates normal, elevated, 
+              and fever temperatures. It can store readings for multiple family members and automatically 
+              synchronizes data with the iHealth Dashboard. The device also includes customizable fever 
+              alerts that can notify caregivers or family members when temperatures rise above set thresholds.
+            </p>
+          </div>
+        );
+      case "Bed Sensor":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Product Details</h3>
+            <p className="mb-4">
+              The Bed Sensor is a non-invasive device that monitors sleep patterns, bed exits, and 
+              nighttime activity without requiring the user to wear any devices. This innovative 
+              sensor is placed under the mattress where it accurately tracks movement, breathing 
+              rate, and sleep quality.
+            </p>
+            <p className="mb-4">
+              Designed for comfort and privacy, the Bed Sensor works silently in the background to 
+              provide detailed insights into sleep health. It automatically detects when someone gets 
+              into or out of bed and can send alerts to caregivers if unusual patterns are detected.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Comprehensive Sleep Monitoring</h4>
+            <p>
+              The sensor tracks a wide range of sleep metrics including total sleep time, sleep efficiency, 
+              sleep latency (time to fall asleep), and the number of bed exits during the night. The 
+              accompanying app provides detailed sleep reports and trends over time, helping users identify 
+              factors that may be affecting their sleep quality. For caregivers, the system can provide 
+              peace of mind by alerting them to potential concerns such as excessive restlessness or 
+              prolonged periods out of bed.
             </p>
           </div>
         );
@@ -168,6 +216,94 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ productName }) => {
                   <li>Non-slip surface</li>
                   <li>Dimensions: 30cm x 30cm x 2.5cm</li>
                   <li>LCD display with backlight</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      case "Thermometer":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Technical Specifications</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Measurement</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Temperature range: 32°C - 43°C (89.6°F - 109.4°F)</li>
+                  <li>Accuracy: ±0.2°C (±0.4°F)</li>
+                  <li>Infrared contactless sensor</li>
+                  <li>Memory stores last 30 readings</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Connectivity</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Bluetooth 5.0</li>
+                  <li>Automatic sync with iHealth Dashboard</li>
+                  <li>Temperature trend tracking</li>
+                  <li>Fever alerts to connected devices</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Power</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>2 AAA batteries (included)</li>
+                  <li>Up to 3,000 measurements per set</li>
+                  <li>Auto power-off after 30 seconds</li>
+                  <li>Low battery indicator</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Physical</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Dimensions: 15cm x 4cm x 3cm</li>
+                  <li>Weight: 90g (with batteries)</li>
+                  <li>LCD backlit display</li>
+                  <li>Color-coded temperature indicators</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      case "Bed Sensor":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Technical Specifications</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Sensor</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Ultra-thin pressure sensors</li>
+                  <li>No direct skin contact required</li>
+                  <li>Detects micro-movements and vibrations</li>
+                  <li>Compatible with all mattress types</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Connectivity</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Wi-Fi connection</li>
+                  <li>Bluetooth backup</li>
+                  <li>Real-time monitoring</li>
+                  <li>Customizable alert settings</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Power</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>AC powered with battery backup</li>
+                  <li>48-hour battery operation</li>
+                  <li>Power outage detection</li>
+                  <li>Energy efficient design</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Physical</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Dimensions: 78cm x 28cm x 0.2cm</li>
+                  <li>Weight: 350g</li>
+                  <li>Water-resistant design</li>
+                  <li>Hypoallergenic materials</li>
                 </ul>
               </div>
             </div>
