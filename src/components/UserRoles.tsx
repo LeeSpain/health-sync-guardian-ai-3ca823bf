@@ -16,7 +16,7 @@ const UserRoles: React.FC = () => {
         { icon: <Shield className="h-4 w-4" />, text: "Device management" },
         { icon: <Clock className="h-4 w-4" />, text: "Emergency assistance" }
       ],
-      image: "/lovable-uploads/2372f3d6-0624-4858-96b0-44839b74bce5.png",
+      image: "/lovable-uploads/f6c8fa22-f451-4bc2-a8d5-34bf504c32a7.png", // Updated image
       color: "bg-brand-teal",
       hoverColor: "group-hover:bg-brand-teal/90",
       gradient: "from-brand-teal/20 to-brand-teal/5"
