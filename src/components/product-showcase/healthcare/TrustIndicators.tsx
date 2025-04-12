@@ -1,37 +1,38 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Users, MessageSquare } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Shield, Award, Star } from 'lucide-react';
 
 const TrustIndicators = () => {
   return (
-    <div className="mt-12 p-6 bg-[#9b87f5]/5 rounded-xl border border-[#9b87f5]/10">
-      <div className="flex flex-col md:flex-row items-center justify-between">
-        <div className="flex items-center mb-4 md:mb-0">
-          <Users className="h-6 w-6 text-[#9b87f5] mr-3" />
-          <h4 className="text-lg font-semibold text-[#9b87f5]">Certified Healthcare Professionals</h4>
+    <div className="flex flex-col md:flex-row justify-between items-center gap-6 mt-12 bg-gradient-to-r from-nurse-purple/5 to-nurse-purple/10 p-6 rounded-xl">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-nurse-purple/20 flex items-center justify-center">
+          <Shield className="h-5 w-5 text-nurse-purple" />
         </div>
-        <div className="flex flex-wrap gap-4">
-          <Badge variant="outline" className="bg-white text-[#9b87f5] border-[#9b87f5]/20 px-3 py-1">
-            24/7 Availability
-          </Badge>
-          <Badge variant="outline" className="bg-white text-[#9b87f5] border-[#9b87f5]/20 px-3 py-1">
-            Secure Consultations
-          </Badge>
-          <Badge variant="outline" className="bg-white text-[#9b87f5] border-[#9b87f5]/20 px-3 py-1">
-            Medical Board Certified
-          </Badge>
+        <div>
+          <p className="font-medium text-nurse-dark">HIPAA Compliant</p>
+          <p className="text-sm text-gray-600">Secure & protected communication</p>
         </div>
       </div>
-      <div className="mt-4 text-sm text-gray-600">
-        <p>Our healthcare professionals are licensed medical practitioners with years of experience in remote care. All communications are HIPAA-compliant and securely encrypted.</p>
+      
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-nurse-purple/20 flex items-center justify-center">
+          <Award className="h-5 w-5 text-nurse-purple" />
+        </div>
+        <div>
+          <p className="font-medium text-nurse-dark">Board Certified</p>
+          <p className="text-sm text-gray-600">Licensed healthcare professionals</p>
+        </div>
       </div>
-      <div className="mt-4 flex justify-end">
-        <Button variant="link" className="text-[#9b87f5]">
-          <MessageSquare className="mr-2 h-4 w-4" />
-          Learn more about our professional standards
-        </Button>
+      
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-nurse-purple/20 flex items-center justify-center">
+          <Star className="h-5 w-5 text-nurse-purple" />
+        </div>
+        <div>
+          <p className="font-medium text-nurse-dark">4.9 Star Rating</p>
+          <p className="text-sm text-gray-600">From over 10,000 patient reviews</p>
+        </div>
       </div>
     </div>
   );

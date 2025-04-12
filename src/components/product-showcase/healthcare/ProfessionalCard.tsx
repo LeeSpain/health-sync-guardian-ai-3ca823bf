@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check, Calendar } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from '../types';
@@ -12,39 +12,43 @@ interface ProfessionalCardProps {
 
 const ProfessionalCard = ({ professional }: ProfessionalCardProps) => {
   return (
-    <Card className="overflow-hidden border-0 shadow-xl bg-white group">
+    <Card className="overflow-hidden border-0 shadow-lg bg-white group border border-nurse-purple/30 hover:border-nurse-purple/50 transition-all duration-300">
       <div className="relative pb-1">
-        <div className="flex flex-col md:flex-row items-start gap-6 p-6">
-          <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200 flex-shrink-0 bg-gray-50 flex items-center justify-center">
-            <img
-              src={professional.image}
-              alt={professional.name}
-              className="w-auto h-auto max-width-full max-height-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          
-          <div className="flex-1">
-            <div className="flex items-center justify-between">
-              <h4 className="text-xl font-bold text-gray-800">{professional.name}</h4>
-              <Badge 
-                className="bg-gray-100 text-gray-700 border-gray-200 px-2 py-0.5 text-xs"
-              >
-                {professional.type}
-              </Badge>
+        <div className="absolute top-0 left-0 w-full h-1 bg-nurse-purple"></div>
+        
+        <div className="p-6">
+          <div className="flex flex-col items-start gap-4">
+            <div className="flex items-start w-full">
+              <div className="w-16 h-16 rounded-full bg-white border-2 border-nurse-purple/20 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                <img
+                  src={professional.image}
+                  alt={`${professional.name} Icon`}
+                  className="w-3/4 h-3/4 object-contain"
+                />
+              </div>
+              
+              <div className="flex-1 ml-4">
+                <div className="flex flex-col w-full">
+                  <h4 className="text-nurse-purple text-xl font-bold mb-1">{professional.name}</h4>
+                  <Badge 
+                    className="self-start bg-nurse-purple/10 text-nurse-purple px-3 py-0.5 rounded-full text-xs"
+                  >
+                    {professional.type}
+                  </Badge>
+                </div>
+                
+                <p className="mt-2 text-gray-600 text-sm">
+                  {professional.description}
+                </p>
+              </div>
             </div>
             
-            <p className="mt-2 text-sm text-gray-500">{professional.description}</p>
-            
             {professional.benefits && (
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
-                {professional.benefits.map((benefit, i) => (
-                  <div 
-                    key={i} 
-                    className="flex items-start text-gray-500 text-sm"
-                  >
-                    <div className="mt-0.5 rounded-full p-1 mr-2 flex-shrink-0 bg-gray-100">
-                      <Check className="h-3 w-3 text-gray-500" />
+              <div className="grid grid-cols-1 gap-3 w-full mt-2">
+                {professional.benefits.slice(0, 3).map((benefit, index) => (
+                  <div key={index} className="flex items-center text-gray-600 text-sm">
+                    <div className="w-5 h-5 rounded-full bg-nurse-purple/10 flex items-center justify-center mr-2 flex-shrink-0">
+                      <Check className="h-3 w-3 text-nurse-purple" />
                     </div>
                     <span>{benefit}</span>
                   </div>
@@ -52,21 +56,12 @@ const ProfessionalCard = ({ professional }: ProfessionalCardProps) => {
               </div>
             )}
             
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button 
-                className="bg-gray-800 hover:bg-gray-700 text-white group"
-              >
-                <span>Connect Now</span>
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-gray-300 text-gray-700 hover:bg-gray-100"
-              >
-                <Calendar className="mr-2 h-4 w-4" />
-                <span>Schedule</span>
-              </Button>
-            </div>
+            <Button 
+              className="mt-2 bg-nurse-purple hover:bg-nurse-purple/90 text-white rounded-md w-full group"
+            >
+              <span>Learn More</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
           </div>
         </div>
       </div>

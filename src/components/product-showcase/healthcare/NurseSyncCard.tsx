@@ -4,8 +4,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Calendar } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
+import { Product } from '../types';
 
-const NurseSyncCard = () => {
+interface NurseSyncCardProps {
+  product: Product;
+}
+
+const NurseSyncCard = ({ product }: NurseSyncCardProps) => {
   return (
     <Card className="overflow-hidden border-0 shadow-xl bg-white group border-2 border-[#1A1F2C]">
       <div className="relative pb-1">
@@ -24,7 +29,7 @@ const NurseSyncCard = () => {
               
               <div className="flex-1 ml-6">
                 <div className="flex flex-col w-full">
-                  <h4 className="text-[#1A1F2C] text-2xl font-bold mb-2">Nurse-Sync</h4>
+                  <h4 className="text-[#1A1F2C] text-2xl font-bold mb-2">{product.name}</h4>
                   <Badge 
                     className="self-start bg-[#1A1F2C]/10 text-[#1A1F2C] px-4 py-1 rounded-full text-sm"
                   >
@@ -33,36 +38,20 @@ const NurseSyncCard = () => {
                 </div>
                 
                 <p className="mt-3 text-gray-600 text-base">
-                  Connect with certified nursing professionals for remote health consultations and care coordination.
+                  {product.description}
                 </p>
               </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-4">
-              <div className="flex items-center text-gray-600">
-                <div className="w-6 h-6 rounded-full bg-[#1A1F2C]/10 flex items-center justify-center mr-3">
-                  <Check className="h-4 w-4 text-[#1A1F2C]" />
+              {product.benefits && product.benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center text-gray-600">
+                  <div className="w-6 h-6 rounded-full bg-[#1A1F2C]/10 flex items-center justify-center mr-3">
+                    <Check className="h-4 w-4 text-[#1A1F2C]" />
+                  </div>
+                  <span>{benefit}</span>
                 </div>
-                <span>24/7 access to nursing professionals</span>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <div className="w-6 h-6 rounded-full bg-[#1A1F2C]/10 flex items-center justify-center mr-3">
-                  <Check className="h-4 w-4 text-[#1A1F2C]" />
-                </div>
-                <span>Medication management assistance</span>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <div className="w-6 h-6 rounded-full bg-[#1A1F2C]/10 flex items-center justify-center mr-3">
-                  <Check className="h-4 w-4 text-[#1A1F2C]" />
-                </div>
-                <span>Personalized care plans</span>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <div className="w-6 h-6 rounded-full bg-[#1A1F2C]/10 flex items-center justify-center mr-3">
-                  <Check className="h-4 w-4 text-[#1A1F2C]" />
-                </div>
-                <span>Regular health assessments</span>
-              </div>
+              ))}
             </div>
             
             <div className="mt-6 flex gap-4">
