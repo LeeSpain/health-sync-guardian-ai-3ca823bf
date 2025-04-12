@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Heart, Bell, Calendar, MessageSquare, Activity, Monitor, Thermometer, Shield, Battery } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -241,26 +240,7 @@ const Features: React.FC = () => {
           </div>
         </div>
         
-        {/* New CTA button */}
-        <div className="text-center mt-14">
-          <Button size="lg" className="bg-brand-teal hover:bg-brand-teal/90 text-white group shadow-lg shadow-brand-teal/20">
-            Explore All Features
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </Button>
-        </div>
+        {/* Removed the CTA button */}
       </div>
     </section>
   );
