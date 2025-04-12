@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Check, ArrowRight, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { OptimizedImage } from '@/components/ui/optimized-image';
+import { Link } from 'react-router-dom';
 
 interface ProfessionalService {
   id: string;
@@ -24,51 +24,58 @@ const ServiceFeature = memo(({ feature }: { feature: string }) => (
   </li>
 ));
 
-const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
-  <Card
-    key={service.id}
-    className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
-  >
-    <div className="flex flex-col h-full">
-      {/* Image container - fixed height with position relative for absolute positioning of the image */}
-      <div className="h-64 w-full relative overflow-hidden bg-white flex items-center justify-center">
-        <img
-          src={service.image}
-          alt={service.name}
-          className="w-full h-full object-contain p-4"
-          loading="lazy"
-        />
-      </div>
-      
-      <CardHeader className="pb-2 flex-grow-0 pt-5">
-        <CardTitle className="text-xl font-bold text-brand-orange flex items-center">
-          {service.name}
-        </CardTitle>
-        <div className="mt-3 flex items-baseline">
-          <span className="text-2xl font-bold">{service.price}</span>
-          <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
-            {service.subscription}
-          </Badge>
+const ServiceCard = memo(({ service }: { service: ProfessionalService }) => {
+  // Create URL-friendly slug from service name
+  const serviceSlug = service.name.toLowerCase().replace(/\s+/g, '-');
+  
+  return (
+    <Card
+      key={service.id}
+      className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
+    >
+      <div className="flex flex-col h-full">
+        {/* Image container - fixed height with position relative for absolute positioning of the image */}
+        <div className="h-64 w-full relative overflow-hidden bg-white flex items-center justify-center">
+          <img
+            src={service.image}
+            alt={service.name}
+            className="w-full h-full object-contain p-4"
+            loading="lazy"
+          />
         </div>
-        <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
-      </CardHeader>
-      <CardContent className="flex-grow pt-2">
-        <ul className="space-y-3">
-          {service.features.map((feature, i) => (
-            <ServiceFeature key={i} feature={feature} />
-          ))}
-        </ul>
-      </CardContent>
-      <CardFooter className="mt-auto pt-2 pb-6">
-        <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group relative overflow-hidden shadow-md">
-          <span className="relative z-10">{service.cta}</span>
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 relative z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-orange to-brand-orange/90 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        </Button>
-      </CardFooter>
-    </div>
-  </Card>
-));
+        
+        <CardHeader className="pb-2 flex-grow-0 pt-5">
+          <CardTitle className="text-xl font-bold text-brand-orange flex items-center">
+            {service.name}
+          </CardTitle>
+          <div className="mt-3 flex items-baseline">
+            <span className="text-2xl font-bold">{service.price}</span>
+            <Badge className="ml-2 bg-brand-orange/10 text-brand-orange border-brand-orange">
+              {service.subscription}
+            </Badge>
+          </div>
+          <p className="text-xs text-gray-400 mt-1">Price excludes applicable taxes</p>
+        </CardHeader>
+        <CardContent className="flex-grow pt-2">
+          <ul className="space-y-3">
+            {service.features.map((feature, i) => (
+              <ServiceFeature key={i} feature={feature} />
+            ))}
+          </ul>
+        </CardContent>
+        <CardFooter className="mt-auto pt-2 pb-6">
+          <Link to={`/product/${serviceSlug}`} className="w-full block">
+            <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group relative overflow-hidden shadow-md">
+              <span className="relative z-10">{service.cta}</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-brand-orange to-brand-orange/90 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </Button>
+          </Link>
+        </CardFooter>
+      </div>
+    </Card>
+  );
+});
 
 // Memoize the entire component to prevent unnecessary re-renders
 const ServicesTab: React.FC = memo(() => {

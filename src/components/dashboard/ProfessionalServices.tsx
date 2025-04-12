@@ -4,6 +4,7 @@ import { User, Users, Video, MessageSquare, Calendar, ArrowRight } from 'lucide-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
 
 const ProfessionalServices: React.FC = () => {
   return (
@@ -13,9 +14,11 @@ const ProfessionalServices: React.FC = () => {
           <User className="h-5 w-5" />
           Professional Services
         </h2>
-        <Button variant="ghost" size="sm" className="text-brand-teal">
-          View All <ArrowRight className="ml-1 h-4 w-4" />
-        </Button>
+        <Link to="/pricing">
+          <Button variant="ghost" size="sm" className="text-brand-teal">
+            View All <ArrowRight className="ml-1 h-4 w-4" />
+          </Button>
+        </Link>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -119,9 +122,11 @@ const ProfessionalServices: React.FC = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="bg-brand-orange hover:bg-brand-orange/90 w-full">
-              Upgrade to MedicSync
-            </Button>
+            <Link to="/pricing" className="w-full block">
+              <Button className="bg-brand-orange hover:bg-brand-orange/90 w-full">
+                Upgrade to MedicSync
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </div>

@@ -5,6 +5,7 @@ import { ArrowRight, Check, Shield } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
+import { Link } from 'react-router-dom';
 
 interface ProfessionalServicesSectionProps {
   products: Product[];
@@ -42,6 +43,9 @@ export const ProfessionalServicesSection = ({ products }: ProfessionalServicesSe
 };
 
 const ServiceCard = ({ product }: { product: Product }) => {
+  // Convert product name to URL-friendly slug
+  const productSlug = product.name.toLowerCase().replace(/\s+/g, '-');
+  
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
@@ -72,11 +76,13 @@ const ServiceCard = ({ product }: { product: Product }) => {
           )}
           
           <div className="mt-auto">
-            <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group relative overflow-hidden shadow-md">
-              <span className="relative z-10">Learn More</span>
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-brand-orange to-brand-orange/90 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </Button>
+            <Link to={`/product/${productSlug}`} className="w-full block">
+              <Button className="w-full bg-brand-orange hover:bg-brand-orange/90 group relative overflow-hidden shadow-md">
+                <span className="relative z-10">Learn More</span>
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 relative z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-orange to-brand-orange/90 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
