@@ -16,7 +16,7 @@ const MemberDashboardHeader: React.FC = () => {
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center flex-shrink-0">
             <Link to="/" className="flex items-center">
               <Logo />
               <span className="ml-2 text-lg font-semibold text-brand-teal hidden md:inline-block">Member Portal</span>
@@ -24,14 +24,14 @@ const MemberDashboardHeader: React.FC = () => {
           </div>
           
           <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-            <Link to="/dashboard/help" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1">
+            <Link to="/dashboard/help" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
               <HelpCircle className="h-4 w-4" />
               Support
             </Link>
             <Button 
               variant="outline" 
               size="sm"
-              className="text-gray-700 hover:text-brand-teal relative"
+              className="text-gray-700 hover:text-brand-teal relative whitespace-nowrap"
             >
               <Bell className="h-4 w-4" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -40,7 +40,7 @@ const MemberDashboardHeader: React.FC = () => {
             </Button>
             <Button 
               variant="outline" 
-              className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1"
+              className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 flex items-center gap-1 whitespace-nowrap"
             >
               <LogOut className="h-4 w-4" />
               Sign Out
