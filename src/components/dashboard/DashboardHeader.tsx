@@ -53,7 +53,7 @@ const DashboardHeader: React.FC = () => {
               4 Devices Active
             </Badge>
             <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-              Last sync: {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+              Last sync: {currentTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
             </Badge>
           </div>
         </div>
