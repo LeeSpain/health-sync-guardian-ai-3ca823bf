@@ -16,27 +16,30 @@ const Navbar: React.FC = () => {
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center space-x-8">
+          {/* Logo centered in the navbar */}
+          <div className="flex-1 flex justify-start">
             <Link to="/" className="flex-shrink-0">
               <Logo />
             </Link>
-            
-            <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              <a href="#features" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Features</a>
-              <a href="#products" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Products</a>
-              <Link to="/pricing" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
-                <ShoppingCart className="h-4 w-4" />
-                Pricing
-              </Link>
-              <Link to="/dashboard" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
-                <LayoutDashboard className="h-4 w-4" />
-                Dashboard
-              </Link>
-              <a href="#about" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">About Us</a>
-            </nav>
           </div>
           
-          <div className="hidden md:flex items-center space-x-2">
+          {/* Navigation links centered in the navbar */}
+          <nav className="hidden md:flex items-center space-x-6 flex-1 justify-center">
+            <a href="#features" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Features</a>
+            <a href="#products" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Products</a>
+            <Link to="/pricing" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
+              <ShoppingCart className="h-4 w-4" />
+              Pricing
+            </Link>
+            <Link to="/dashboard" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
+              <LayoutDashboard className="h-4 w-4" />
+              Dashboard
+            </Link>
+            <a href="#about" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">About Us</a>
+          </nav>
+          
+          {/* Action buttons on the right */}
+          <div className="hidden md:flex items-center space-x-2 flex-1 justify-end">
             <Button 
               variant="outline" 
               className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 whitespace-nowrap"
