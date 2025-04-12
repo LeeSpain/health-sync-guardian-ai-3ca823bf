@@ -8,6 +8,7 @@ import Index from './pages/Index';
 import PricingPage from './pages/PricingPage';
 import NotFound from './pages/NotFound';
 import MemberDashboard from './pages/MemberDashboard';
+import ProductDetailPage from './pages/ProductDetailPage';
 import ScrollToTop from '@/components/ScrollToTop';
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/" element={<Index />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/dashboard" element={<MemberDashboard />} />
+        <Route path="/product/:productId" element={<ProductDetailPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

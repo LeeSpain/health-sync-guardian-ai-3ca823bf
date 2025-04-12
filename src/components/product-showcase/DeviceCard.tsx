@@ -5,7 +5,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from './types';
-import { OptimizedImage } from '@/components/ui/optimized-image';
+import { Link } from 'react-router-dom';
 
 interface DeviceCardProps {
   product: Product;
@@ -19,6 +19,9 @@ export const DeviceCard = memo(({ product, priorityImage = false }: DeviceCardPr
     product.name === "Guardian Button" || 
     product.name === "Bed Sensor" || 
     product.name === "Thermometer";
+    
+  // Create a URL-friendly slug from the product name
+  const productSlug = product.name.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group bg-white h-full flex flex-col">
@@ -72,10 +75,12 @@ export const DeviceCard = memo(({ product, priorityImage = false }: DeviceCardPr
         
         {/* Action footer */}
         <div className="mt-auto pt-4 border-t border-gray-100">
-          <Button className="w-full bg-white hover:bg-brand-teal/5 text-brand-teal border border-brand-teal/30 group/btn">
-            <span>View Details</span>
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-          </Button>
+          <Link to={`/product/${productSlug}`}>
+            <Button className="w-full bg-white hover:bg-brand-teal/5 text-brand-teal border border-brand-teal/30 group/btn">
+              <span>View Details</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+            </Button>
+          </Link>
         </div>
       </div>
     </Card>
