@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -30,11 +31,11 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
   >
     <div className="flex flex-col h-full">
       {/* Image container - fixed height with position relative for absolute positioning of the image */}
-      <div className="h-64 w-full relative overflow-hidden bg-white">
+      <div className="h-64 w-full relative overflow-hidden bg-white flex items-center justify-center">
         <img
           src={service.image}
           alt={service.name}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-full object-contain p-4"
           loading="lazy"
         />
       </div>
