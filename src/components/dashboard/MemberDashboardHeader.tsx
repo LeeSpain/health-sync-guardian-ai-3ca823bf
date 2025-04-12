@@ -14,26 +14,31 @@ const MemberDashboardHeader: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto flex h-16 items-center justify-between">
-          {/* Logo on the left */}
-          <div className="flex items-center">
+      <div className="container mx-auto px-0 md:px-4">
+        <div className="flex h-16 items-center">
+          {/* Logo on the left - no max width constraint */}
+          <div className="pl-4 md:pl-0">
             <Link to="/" className="flex items-center">
               <Logo />
               <span className="ml-2 text-lg font-semibold text-brand-teal hidden md:inline-block">Member Portal</span>
             </Link>
           </div>
           
-          {/* Navigation in the center */}
-          <nav className="hidden md:flex items-center justify-center">
-            <Link to="/dashboard/help" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
-              <HelpCircle className="h-4 w-4" />
-              Support
-            </Link>
-          </nav>
+          {/* Center content with max-width */}
+          <div className="flex-1 flex justify-center">
+            <div className="max-w-6xl w-full flex items-center justify-center">
+              {/* Navigation in the center */}
+              <nav className="hidden md:flex items-center justify-center">
+                <Link to="/dashboard/help" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
+                  <HelpCircle className="h-4 w-4" />
+                  Support
+                </Link>
+              </nav>
+            </div>
+          </div>
 
           {/* Action buttons on the right */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4 pr-4 md:pr-0">
             <Button 
               variant="outline" 
               size="sm"
@@ -54,7 +59,7 @@ const MemberDashboardHeader: React.FC = () => {
           </div>
 
           <button 
-            className="md:hidden text-gray-700" 
+            className="md:hidden text-gray-700 pr-4" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
