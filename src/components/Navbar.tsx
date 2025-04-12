@@ -14,11 +14,11 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="max-w-full w-full">
+      <div className="w-full">
         <div className="w-full flex h-16 items-center justify-between">
-          {/* Logo on the left - removing all left padding */}
+          {/* Logo on the left - completely flush */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center ml-2 sm:ml-4">
+            <Link to="/" className="flex items-center pl-0">
               <Logo />
             </Link>
           </div>
