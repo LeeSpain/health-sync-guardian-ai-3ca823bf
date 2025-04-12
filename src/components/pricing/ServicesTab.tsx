@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,12 +29,12 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
   >
     <div className="flex flex-col h-full">
-      {/* Image container with improved sizing */}
-      <div className="h-64 relative overflow-hidden bg-white">
+      {/* Image container with full card height and width */}
+      <div className="h-64 relative overflow-hidden bg-white flex items-center justify-center">
         <img
           src={service.image}
           alt={service.name}
-          className="w-full h-full object-contain transform scale-125"
+          className="w-full h-full object-cover"
           loading="lazy"
         />
       </div>
