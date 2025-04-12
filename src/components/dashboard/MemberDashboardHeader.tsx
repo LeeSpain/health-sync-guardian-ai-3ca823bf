@@ -15,22 +15,25 @@ const MemberDashboardHeader: React.FC = () => {
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex-1 flex justify-start">
+        <div className="flex h-16 items-center">
+          {/* Logo on the left */}
+          <div className="flex items-center mr-auto">
             <Link to="/" className="flex items-center">
               <Logo />
               <span className="ml-2 text-lg font-semibold text-brand-teal hidden md:inline-block">Member Portal</span>
             </Link>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-center">
+          {/* Navigation in the center */}
+          <nav className="hidden md:flex items-center justify-center">
             <Link to="/dashboard/help" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
               <HelpCircle className="h-4 w-4" />
               Support
             </Link>
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4 flex-1 justify-end">
+          {/* Action buttons on the right */}
+          <div className="hidden md:flex items-center space-x-4 ml-auto">
             <Button 
               variant="outline" 
               size="sm"
@@ -51,7 +54,7 @@ const MemberDashboardHeader: React.FC = () => {
           </div>
 
           <button 
-            className="md:hidden text-gray-700" 
+            className="md:hidden text-gray-700 ml-auto" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
