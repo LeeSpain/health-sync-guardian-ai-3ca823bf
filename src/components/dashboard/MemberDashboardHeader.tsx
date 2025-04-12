@@ -14,8 +14,8 @@ const MemberDashboardHeader: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="container mx-auto px-4 flex justify-center">
-        <div className="flex h-16 items-center justify-between w-full max-w-6xl">
+      <div className="w-full mx-auto flex justify-center">
+        <div className="w-full max-w-6xl px-4 flex h-16 items-center justify-between">
           {/* Logo on the left */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
