@@ -14,11 +14,11 @@ const MemberDashboardHeader: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="container mx-auto px-0 sm:px-2">
+      <div className="max-w-full w-full">
         <div className="w-full flex h-16 items-center justify-between">
-          {/* Logo on the left */}
-          <div className="flex-shrink-0 pl-4">
-            <Link to="/" className="flex items-center">
+          {/* Logo on the left - removing all left padding */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center ml-2 sm:ml-4">
               <Logo />
               <span className="ml-2 text-lg font-semibold text-brand-teal hidden md:inline-block">Member Portal</span>
             </Link>
