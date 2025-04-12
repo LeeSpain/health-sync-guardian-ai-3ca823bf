@@ -1,4 +1,3 @@
-
 import { 
   Heart, 
   Shield, 
@@ -94,7 +93,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "SOS Call Centre",
-    image: "/lovable-uploads/3bc60e76-02c6-4226-972b-87293e92d1cf.png", 
+    image: "/lovable-uploads/139e6469-3f44-4cc6-b211-ed884dacb27b.png", 
     description: "Professional emergency response team available 24/7 at the touch of a button.",
     category: "service",
     type: "Professional Services",
