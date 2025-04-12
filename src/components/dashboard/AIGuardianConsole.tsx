@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Bot, SendHorizonal } from 'lucide-react';
+import { Bot, SendHorizonal, Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -26,7 +26,7 @@ const AIGuardianConsole: React.FC = () => {
     <Card className="border-brand-teal/20 shadow-sm bg-white rounded-xl mb-4">
       <CardHeader className="pb-2">
         <CardTitle className="text-xs flex items-center gap-2 text-brand-teal">
-          <Bot className="h-3 w-3" />
+          <Shield className="h-3 w-3" />
           AI Guardian
         </CardTitle>
       </CardHeader>
@@ -63,6 +63,16 @@ const AIGuardianConsole: React.FC = () => {
             </div>
             <div className="bg-gray-100 rounded-lg p-1 text-[8px] text-gray-700 max-w-[85%]">
               <p>Of course! You slept for 7.5 hours last night. Your deep sleep was 2.1 hours, which is excellent. Your sleep efficiency was 92%, which is above your weekly average.</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-1">
+            <div className="rounded-full bg-brand-teal/10 p-0.5 flex-shrink-0">
+              <Sparkles className="h-2 w-2 text-brand-teal" />
+            </div>
+            <div className="bg-brand-teal/5 border border-brand-teal/10 rounded-lg p-1 text-[8px] text-gray-700 max-w-[85%]">
+              <p className="font-medium">Wellness Tip:</p>
+              <p>Try to maintain consistent sleep and wake times to improve your sleep quality further.</p>
             </div>
           </div>
         </div>
