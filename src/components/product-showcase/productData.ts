@@ -1,3 +1,4 @@
+
 import { 
   Heart, 
   Shield, 
@@ -119,7 +120,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Glucose Monitor",
-    image: "/lovable-uploads/db9b76be-b145-473e-a52d-4e6dd3a111e4.png",
+    image: "/lovable-uploads/7b9205c5-b9a8-4900-b5bb-0f128b1210e6.png",
     description: "Continuous glucose tracking with alerts and trend analysis.",
     category: "service",
     type: "Professional Services",
