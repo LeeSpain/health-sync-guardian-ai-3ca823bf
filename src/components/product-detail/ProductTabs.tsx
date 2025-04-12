@@ -104,6 +104,78 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ productName }) => {
             </p>
           </div>
         );
+      case "SOS Call Centre":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Product Details</h3>
+            <p className="mb-4">
+              The SOS Call Centre provides professional emergency response services available 24/7 at the touch 
+              of a button. Our dedicated team of trained emergency professionals is ready to respond 
+              immediately to any crisis situation, providing peace of mind for both users and their families.
+            </p>
+            <p className="mb-4">
+              When an emergency alert is triggered, our response team quickly assesses the situation, 
+              contacts the user, and dispatches appropriate emergency services if needed. The service 
+              also notifies designated family members or caregivers about the emergency.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Comprehensive Emergency Support</h4>
+            <p>
+              Our emergency response professionals are trained to handle a wide range of situations, 
+              from medical emergencies to safety concerns. They stay on the line with the user until 
+              help arrives, providing guidance and reassurance throughout the emergency. The service 
+              works seamlessly with all iHealth emergency devices, including the Guardian Button, 
+              providing an additional layer of safety and security.
+            </p>
+          </div>
+        );
+      case "Medication Dispenser":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Product Details</h3>
+            <p className="mb-4">
+              The Medication Dispenser offers automated medication management with timely reminders 
+              and verification. This smart device ensures that medications are taken on schedule, 
+              in the correct dosages, and with proper tracking for caregivers and healthcare providers.
+            </p>
+            <p className="mb-4">
+              The dispenser can be programmed to release medications at specific times and will provide 
+              audible and visual reminders when it's time to take medication. It also tracks when medications 
+              are dispensed and alerts caregivers if doses are missed.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Advanced Medication Management</h4>
+            <p>
+              The system can handle multiple medication schedules and different types of pills or capsules. 
+              It includes security features to prevent unauthorized access and double-dosing protection to 
+              prevent medication errors. The dispenser connects to the iHealth Dashboard, allowing caregivers 
+              to remotely monitor medication adherence and receive alerts about any issues or when refills 
+              are needed.
+            </p>
+          </div>
+        );
+      case "Glucose Monitor":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Product Details</h3>
+            <p className="mb-4">
+              The Glucose Monitor provides continuous glucose tracking with automatic alerts and comprehensive 
+              trend analysis. This advanced monitoring system helps users maintain optimal glucose levels 
+              by providing real-time information and insights about their blood sugar patterns.
+            </p>
+            <p className="mb-4">
+              The monitor uses a small sensor placed under the skin to continuously measure glucose levels 
+              in interstitial fluid. Readings are automatically sent to the iHealth Dashboard, where they 
+              can be viewed by the user and shared with caregivers or healthcare providers.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Comprehensive Glucose Management</h4>
+            <p>
+              The system provides customizable alerts for high or low glucose levels, allowing for quick 
+              intervention before serious issues develop. The historical data tracking and trend analysis 
+              helps users and healthcare providers identify patterns and make informed decisions about 
+              diet, exercise, and medication. The monitor is designed for comfort and convenience, with 
+              a sensor that can be worn for up to 14 days before replacement.
+            </p>
+          </div>
+        );
       default: // iHealth Dashboard Tablet and others
         return (
           <div className="prose max-w-none">
@@ -304,6 +376,138 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ productName }) => {
                   <li>Weight: 350g</li>
                   <li>Water-resistant design</li>
                   <li>Hypoallergenic materials</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      case "SOS Call Centre":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Technical Specifications</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Response Service</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>24/7 emergency response coverage</li>
+                  <li>Multilingual support staff</li>
+                  <li>Average response time: < 30 seconds</li>
+                  <li>Medical emergency protocols</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Connectivity</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Works with all iHealth emergency devices</li>
+                  <li>Cellular and landline compatibility</li>
+                  <li>GPS location tracking</li>
+                  <li>Multiple contact options</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Communication</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Two-way voice communication</li>
+                  <li>Text message notifications</li>
+                  <li>Email status updates</li>
+                  <li>Family notification system</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Additional Features</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Emergency service coordination</li>
+                  <li>Monthly wellness checks</li>
+                  <li>Detailed activity reporting</li>
+                  <li>Fall detection response</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      case "Medication Dispenser":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Technical Specifications</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Capacity</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>28 individual medication compartments</li>
+                  <li>Up to 4 dispensing times per day</li>
+                  <li>Multiple medication types support</li>
+                  <li>7-day capacity for most regimens</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Connectivity</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Wi-Fi enabled</li>
+                  <li>Bluetooth connectivity</li>
+                  <li>Automatic sync with iHealth Dashboard</li>
+                  <li>Remote management capabilities</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Power</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>AC power with 48-hour battery backup</li>
+                  <li>Low battery alerts</li>
+                  <li>Power outage notification</li>
+                  <li>Energy-efficient design</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Physical</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Dimensions: 22cm x 18cm x 8cm</li>
+                  <li>Weight: 1.2kg</li>
+                  <li>Tamper-resistant locking mechanism</li>
+                  <li>High-contrast LCD display</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      case "Glucose Monitor":
+        return (
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Technical Specifications</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Measurement</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Continuous glucose monitoring</li>
+                  <li>Reading range: 40-400 mg/dL</li>
+                  <li>Accuracy: ±10% MARD</li>
+                  <li>Readings every 5 minutes</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Connectivity</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Bluetooth 5.0</li>
+                  <li>NFC enabled for scanning</li>
+                  <li>Automatic sync with iHealth Dashboard</li>
+                  <li>Data sharing with healthcare providers</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Sensor</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Wear time: up to 14 days</li>
+                  <li>Water-resistant (IP27)</li>
+                  <li>Factory calibrated</li>
+                  <li>Filament: 5mm flexible</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Reader/App</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Customizable glucose target ranges</li>
+                  <li>Trend arrow indicators</li>
+                  <li>Comprehensive reporting</li>
+                  <li>Multi-user data access</li>
                 </ul>
               </div>
             </div>
