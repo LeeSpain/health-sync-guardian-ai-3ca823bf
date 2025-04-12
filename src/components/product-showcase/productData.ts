@@ -107,7 +107,7 @@ export const getProductsData = (): Product[] => [
   },
   {
     name: "Medication Dispenser",
-    image: "/lovable-uploads/ec896c74-bd8c-4ee2-95b2-419128012e1d.png",
+    image: "/lovable-uploads/dd50253f-e6a9-4104-8c09-34792b48fab9.png",
     description: "Automated medication management with reminders and verification",
     category: "service",
     type: "Professional Services",
