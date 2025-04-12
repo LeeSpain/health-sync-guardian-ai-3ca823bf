@@ -2,23 +2,23 @@
 export const getProductPrice = (productName: string): string => {
   switch (productName) {
     case "iHealth Dashboard Tablet":
-      return "€99.99";
+      return "€120.99";
     case "Guardian Button":
-      return "€49.99";
+      return "€60.49";
     case "Heart Rate Monitor":
-      return "€79.99";
+      return "€96.79";
     case "Smart Scales":
-      return "€89.99";
+      return "€108.89";
     case "Thermometer":
-      return "€39.99";
+      return "€48.39";
     case "Bed Sensor":
-      return "€129.99";
+      return "€157.29";
     case "SOS Call Centre":
-      return "€89.99";
+      return "€108.89";
     case "Medication Dispenser":
-      return "€199.99";
+      return "€241.99";
     case "Glucose Monitor":
-      return "€199.99";
+      return "€241.99";
     case "Nurse-Sync":
       return "€149.99";
     case "Medic-Sync":
