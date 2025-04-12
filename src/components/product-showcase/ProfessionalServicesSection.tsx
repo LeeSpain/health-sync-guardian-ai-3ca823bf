@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, Shield } from 'lucide-react';
@@ -45,12 +44,13 @@ const ServiceCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 h-full">
       <div className="flex flex-col h-full">
-        {/* Simplified image container - removed transforms */}
-        <div className="relative h-64 w-full overflow-hidden bg-white p-4 flex items-center justify-center">
+        {/* Image container - position relative with fixed height */}
+        <div className="relative h-64 w-full overflow-hidden bg-white">
           <img 
             src={product.image}
             alt={product.name}
-            className="max-h-full max-w-full object-contain"
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         

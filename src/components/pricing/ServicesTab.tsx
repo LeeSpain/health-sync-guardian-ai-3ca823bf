@@ -1,9 +1,9 @@
-
 import React, { memo } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Check, ArrowRight, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface ProfessionalService {
   id: string;
@@ -29,8 +29,8 @@ const ServiceCard = memo(({ service }: { service: ProfessionalService }) => (
     className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full group"
   >
     <div className="flex flex-col h-full">
-      {/* Image container with full card height and width */}
-      <div className="h-64 relative overflow-hidden bg-white flex items-center justify-center">
+      {/* Image container - fixed height with position relative for absolute positioning of the image */}
+      <div className="h-64 w-full relative overflow-hidden bg-white">
         <img
           src={service.image}
           alt={service.name}
