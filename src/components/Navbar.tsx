@@ -14,10 +14,10 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="w-full mx-auto flex justify-center">
-        <div className="w-full max-w-6xl px-4 flex h-16 items-center justify-between">
+      <div className="container mx-auto px-0 sm:px-2">
+        <div className="w-full flex h-16 items-center justify-between">
           {/* Logo on the left */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 pl-4">
             <Link to="/" className="flex items-center">
               <Logo />
             </Link>
@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
           </nav>
           
           {/* Action buttons on the right */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-2 pr-4">
             <Button 
               variant="outline" 
               className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 whitespace-nowrap"
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
 
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-gray-700" 
+            className="md:hidden text-gray-700 pr-4" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >

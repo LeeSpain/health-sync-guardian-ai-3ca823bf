@@ -27,7 +27,7 @@ const DashboardHeader: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 md:p-5">
+    <div className="bg-white rounded-xl shadow-sm p-4 md:p-5 mt-3">
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
