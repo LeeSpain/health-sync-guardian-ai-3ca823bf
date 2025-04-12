@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, User, Heart, Clock, ClipboardList } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Product } from '../types';
@@ -40,6 +40,36 @@ const NurseSyncCard = ({ product }: NurseSyncCardProps) => {
                 <p className="mt-3 text-gray-600 text-base">
                   {product.description}
                 </p>
+              </div>
+            </div>
+            
+            <div className="w-full bg-[#008B8B]/5 rounded-lg p-4 border border-[#008B8B]/10">
+              <h5 className="font-semibold text-[#008B8B] mb-3">Professional Services</h5>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-[#008B8B]/10 flex items-center justify-center">
+                    <User className="h-4 w-4 text-[#008B8B]" />
+                  </div>
+                  <span className="text-gray-700 text-sm">Dedicated Nurse</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-[#008B8B]/10 flex items-center justify-center">
+                    <Heart className="h-4 w-4 text-[#008B8B]" />
+                  </div>
+                  <span className="text-gray-700 text-sm">Health Monitoring</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-[#008B8B]/10 flex items-center justify-center">
+                    <Clock className="h-4 w-4 text-[#008B8B]" />
+                  </div>
+                  <span className="text-gray-700 text-sm">24/7 Availability</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-[#008B8B]/10 flex items-center justify-center">
+                    <ClipboardList className="h-4 w-4 text-[#008B8B]" />
+                  </div>
+                  <span className="text-gray-700 text-sm">Care Plans</span>
+                </div>
               </div>
             </div>
             
