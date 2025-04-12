@@ -82,7 +82,7 @@ const ProductDetail: React.FC = () => {
           
           {/* Product details tabs */}
           <div className="mt-16">
-            <ProductTabs />
+            <ProductTabs productName={product.name} />
           </div>
           
           {/* Back to products */}
