@@ -391,7 +391,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ productName }) => {
                 <ul className="list-disc pl-5 space-y-1 text-gray-600">
                   <li>24/7 emergency response coverage</li>
                   <li>Multilingual support staff</li>
-                  <li>Average response time: < 30 seconds</li>
+                  <li>Average response time: &lt; 30 seconds</li>
                   <li>Medical emergency protocols</li>
                 </ul>
               </div>
