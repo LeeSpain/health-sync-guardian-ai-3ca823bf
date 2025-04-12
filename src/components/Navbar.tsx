@@ -14,17 +14,17 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b shadow-sm">
-      <div className="w-full">
-        <div className="w-full flex h-16 items-center justify-between">
+      <div className="w-full px-4">
+        <div className="w-full flex h-16 items-center justify-between max-w-[1920px] mx-auto">
           {/* Logo on the left - completely flush */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center pl-0">
+            <Link to="/" className="flex items-center">
               <Logo />
             </Link>
           </div>
           
           {/* Navigation in the center */}
-          <nav className="hidden md:flex items-center space-x-6 flex-grow justify-center">
+          <nav className="hidden md:flex items-center space-x-6 mx-4">
             <a href="#features" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Features</a>
             <a href="#products" className="text-gray-700 hover:text-brand-teal transition-colors whitespace-nowrap">Products</a>
             <Link to="/pricing" className="text-gray-700 hover:text-brand-teal transition-colors flex items-center gap-1 whitespace-nowrap">
@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
           </nav>
           
           {/* Action buttons on the right */}
-          <div className="hidden md:flex items-center space-x-2 pr-4">
+          <div className="hidden md:flex items-center space-x-2">
             <Button 
               variant="outline" 
               className="text-brand-teal border-brand-teal hover:bg-brand-teal/10 whitespace-nowrap"
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
 
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-gray-700 pr-4" 
+            className="md:hidden text-gray-700" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
