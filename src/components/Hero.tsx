@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 const Hero: React.FC = () => {
   return (
     <section className="relative overflow-hidden pt-10 pb-20 sm:pb-32">
-      {/* Updated Background elements */}
+      {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/10 to-brand-teal/5 z-0" />
       <div 
         className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-5 z-0"
@@ -24,6 +24,26 @@ const Hero: React.FC = () => {
       <div 
         className="absolute left-10 bottom-20 w-72 h-72 rounded-full bg-brand-teal/5 filter blur-3xl z-0"
       />
+      
+      {/* Video container - positioned in the top right */}
+      <div className="absolute top-4 right-4 md:top-6 md:right-6 lg:top-8 lg:right-12 z-20 w-40 md:w-48 lg:w-64 xl:w-72">
+        <div className="relative bg-white/90 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-brand-teal/20 transform hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative pb-[56.25%] h-0">
+            <iframe 
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/7nmvNHFRG3M?rel=0&modestbranding=1"
+              title="iHealth-Sync Introduction Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-transparent to-brand-teal/5 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 right-0 bg-brand-teal/80 text-white text-xs md:text-sm py-1 px-2 text-center font-medium">
+            Watch Introduction
+          </div>
+        </div>
+      </div>
       
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
