@@ -25,8 +25,8 @@ const Hero: React.FC = () => {
         className="absolute left-10 bottom-20 w-72 h-72 rounded-full bg-brand-teal/5 filter blur-3xl z-0"
       />
       
-      {/* Video container - positioned in the top right */}
-      <div className="absolute top-4 right-4 md:top-6 md:right-6 lg:top-8 lg:right-12 z-20 w-40 md:w-48 lg:w-64 xl:w-72">
+      {/* Fixed Video container - positioned in the top right of the viewport */}
+      <div className="fixed top-20 right-4 md:right-6 lg:right-8 z-50 w-40 md:w-48 lg:w-64 xl:w-72">
         <div className="relative bg-white/90 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-brand-teal/20 transform hover:scale-[1.02] transition-transform duration-300">
           <div className="relative pb-[56.25%] h-0">
             <iframe 
